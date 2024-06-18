@@ -8,8 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		E57E3FB12C22018800A567EE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57E3FB02C22018800A567EE /* User.swift */; };
-		E57E3FB32C2201D400A567EE /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57E3FB22C2201D400A567EE /* Networking.swift */; };
-		E57E3FB52C220B1500A567EE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57E3FB42C220B1500A567EE /* Constants.swift */; };
+		E57E3FB32C2201D400A567EE /* UserNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57E3FB22C2201D400A567EE /* UserNetwork.swift */; };
+		E57E3FB52C220B1500A567EE /* NetworkConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57E3FB42C220B1500A567EE /* NetworkConstants.swift */; };
+		E57E3FB82C22178800A567EE /* NetworkModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57E3FB72C22178800A567EE /* NetworkModels.swift */; };
 		E5EEA0852C21F00B008A06BB /* CarPassApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EEA0842C21F00B008A06BB /* CarPassApp.swift */; };
 		E5EEA0872C21F00B008A06BB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EEA0862C21F00B008A06BB /* ContentView.swift */; };
 		E5EEA0892C21F00B008A06BB /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EEA0882C21F00B008A06BB /* Item.swift */; };
@@ -19,8 +20,9 @@
 
 /* Begin PBXFileReference section */
 		E57E3FB02C22018800A567EE /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		E57E3FB22C2201D400A567EE /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
-		E57E3FB42C220B1500A567EE /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		E57E3FB22C2201D400A567EE /* UserNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNetwork.swift; sourceTree = "<group>"; };
+		E57E3FB42C220B1500A567EE /* NetworkConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConstants.swift; sourceTree = "<group>"; };
+		E57E3FB72C22178800A567EE /* NetworkModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkModels.swift; sourceTree = "<group>"; };
 		E5EEA0812C21F00B008A06BB /* CarPass.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarPass.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5EEA0842C21F00B008A06BB /* CarPassApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarPassApp.swift; sourceTree = "<group>"; };
 		E5EEA0862C21F00B008A06BB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -51,11 +53,20 @@
 		E57E3FAF2C22017700A567EE /* Backend */ = {
 			isa = PBXGroup;
 			children = (
-				E57E3FB42C220B1500A567EE /* Constants.swift */,
 				E57E3FB02C22018800A567EE /* User.swift */,
-				E57E3FB22C2201D400A567EE /* Networking.swift */,
+				E57E3FB62C2214B600A567EE /* Networking */,
 			);
 			path = Backend;
+			sourceTree = "<group>";
+		};
+		E57E3FB62C2214B600A567EE /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				E57E3FB42C220B1500A567EE /* NetworkConstants.swift */,
+				E57E3FB72C22178800A567EE /* NetworkModels.swift */,
+				E57E3FB22C2201D400A567EE /* UserNetwork.swift */,
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 		E5EEA0782C21F00B008A06BB = {
@@ -168,11 +179,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				E57E3FB12C22018800A567EE /* User.swift in Sources */,
-				E57E3FB32C2201D400A567EE /* Networking.swift in Sources */,
+				E57E3FB32C2201D400A567EE /* UserNetwork.swift in Sources */,
 				E5EEA0872C21F00B008A06BB /* ContentView.swift in Sources */,
+				E57E3FB82C22178800A567EE /* NetworkModels.swift in Sources */,
 				E5EEA0892C21F00B008A06BB /* Item.swift in Sources */,
 				E5EEA0852C21F00B008A06BB /* CarPassApp.swift in Sources */,
-				E57E3FB52C220B1500A567EE /* Constants.swift in Sources */,
+				E57E3FB52C220B1500A567EE /* NetworkConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
