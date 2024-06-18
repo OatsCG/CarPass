@@ -72,7 +72,7 @@ class CarPass:
         user = {
             "name": name,
             "id": str(uuid4()),
-            "car": []
+            "car": None
         }
         self.users.append(user)
         self.update_storage()
@@ -89,6 +89,19 @@ class CarPass:
             if user["id"] == uuid:
                 return user
         return None
+    
+    def remove_from_car(self, carID: UUID, userID: UUID) -> bool:
+        car = self.get_car(carID)
+        if car == None:
+            return False
+        else:
+            user = self.get_user(userID)
+            if (user == None):
+                return False
+            else:
+                car["users"].remove(userID)
+                user["car"] = None
+            self.update_storage()
     
     def invite_to_car(self, carID: UUID, userID: UUID) -> bool:
         car = self.get_car(carID)

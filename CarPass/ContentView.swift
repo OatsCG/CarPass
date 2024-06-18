@@ -8,11 +8,19 @@
 import SwiftUI
 
 struct ContentView: View {
+    @Environment(User.self) var user
     var body: some View {
-        Text("hello!")
+        if (user.fetchStatus == .waiting) {
+            ProgressView()
+        } else if user.fetchStatus == .failed {
+            ContentUnavailableView("No Connection to Server", systemImage: "network.slash", description: Text("Try again later."))
+        } else {
+            HomeView()
+        }
     }
 }
 
 #Preview {
     ContentView()
+        .environment(User())
 }

@@ -15,7 +15,7 @@ func serverEndpoint(_ endpoint: String) -> String {
 }
 
 func fetchServerEndpoint<T: Decodable>(endpoint: String, fetchHash: UUID, decodeAs: T.Type, completion: @escaping (Result<T, Error>, UUID) -> Void) {
-    var url = serverEndpoint(endpoint)
+    let url = serverEndpoint(endpoint)
     
     guard let url = URL(string: url) else {
         print("Invalid endpoint \(endpoint)")

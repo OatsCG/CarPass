@@ -9,22 +9,28 @@ import Foundation
 
 typealias UserID = String
 typealias CarID = String
+typealias RangeID = String
 
 
 class FetchedUser: Codable {
     var name: String
-    var id: String
-    var car: [CarID]
+    var id: UserID
+    var car: CarID?
 }
 
 class FetchedCar: Codable {
     var name: String
-    var id: String
-    var pendingInvites: []
-    var pendingRanges: []
-    var confirmedRanges: []
+    var id: CarID
+    var pendingInvites: [UserID]
+    var pendingRanges: [FetchedRange]
+    var confirmedRanges: [FetchedRange]
 }
 
-
-
-class FetchedNewUser
+class FetchedRange: Codable {
+    var id: RangeID
+    var user: UserID
+    var reason: String
+    var accepted: [UserID]
+    var start: Int
+    var end: Int
+}
