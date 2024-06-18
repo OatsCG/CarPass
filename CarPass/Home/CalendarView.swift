@@ -12,25 +12,30 @@ struct CalendarView: View {
         VStack(spacing: 3) {
             HStack {
                 Button(action: {
-                    
+                    // go back one month
                 }) {
                     Image(systemName: "arrowshape.backward.circle.fill")
                         .font(.largeTitle)
                         .symbolRenderingMode(.hierarchical)
                 }
-                .tint(.primary)
-                Spacer()
-                Text("June 2024")
-                    .font(.title3 .bold())
+                    .tint(.primary)
                 Spacer()
                 Button(action: {
-                    
+                    // open month/year picker
+                }) {
+                    Text("June 2024")
+                        .font(.title3 .bold())
+                }
+                    .tint(.primary)
+                Spacer()
+                Button(action: {
+                    // go forward one month
                 }) {
                     Image(systemName: "arrowshape.forward.circle.fill")
                         .font(.largeTitle)
                         .symbolRenderingMode(.hierarchical)
                 }
-                .tint(.primary)
+                    .tint(.primary)
             }
                 .frame(height: 30)
                 .safeAreaPadding()
@@ -78,6 +83,8 @@ struct CalendarDayView: View {
                     .foregroundStyle(.primary)
                 Spacer()
             }
+//            Rectangle().fill(.red)
+//                .frame(height: 20)
             Spacer()
         }
         .padding(.vertical, 3)
