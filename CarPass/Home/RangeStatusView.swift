@@ -28,7 +28,8 @@ struct RangeStatusView: View {
                 Spacer()
             }
         }
-            .padding(8)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 5)
             .background(.blue.gradient)
             .clipShape(RoundedRectangle(cornerRadius: 10))
     }
