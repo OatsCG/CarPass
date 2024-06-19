@@ -10,7 +10,7 @@ import SwiftUI
 struct CarStatusView: View {
     var body: some View {
         HStack(alignment: .bottom) {
-            VStack(spacing: 14) {
+            VStack(spacing: 15) {
                 //Spacer()
                 HStack {
                     Image(systemName: "car.fill")
@@ -41,9 +41,13 @@ struct CarStatusView: View {
                 
             }
             .safeAreaPadding(.horizontal, 20)
-            .safeAreaPadding(.top, 20)
+            .safeAreaPadding(.top, 15)
         }
-        .background(.cyan.gradient)
+        .background {
+            Rectangle().fill(.shadow(.inner(color: .blue.opacity(0.15), radius: 20)))
+                .foregroundStyle(.ultraThinMaterial)
+                .ignoresSafeArea()
+        }
     }
 }
 
