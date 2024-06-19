@@ -15,7 +15,7 @@ import SwiftUI
     var username: String = ""
     var myColor: CustomColor = .blue
     var car: CarID? = nil
-    var carUsers: [FetchedUser] = []
+    var carUsers: [FetchedCarUser] = []
     var whohasthecar: FetchedUser? = nil
     var pendingAlerts: [PendingAlert] = []
     var confirmedAlerts: [ConfirmedAlert] = []
@@ -53,7 +53,7 @@ import SwiftUI
                             switch result {
                             case .success(let data):
                                 self.userID = data
-                                self.username = "username"
+                                self.username = "Username"
                                 UserDefaults.standard.setValue(data, forKey: "userID")
                                 withAnimation {
                                     self.fetchStatus = .success
@@ -82,7 +82,7 @@ import SwiftUI
                 switch result {
                 case .success(let data):
                     self.userID = data
-                    self.username = "username"
+                    self.username = "Username"
                     UserDefaults.standard.setValue(data, forKey: "userID")
                     withAnimation {
                         self.fetchStatus = .success
@@ -97,13 +97,14 @@ import SwiftUI
         }
         
         // start fetch timer
-        self.syncedTimer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { _ in
+        self.syncedTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true) { _ in
             self.fetchLoop()
         }
     }
     
     func fetchLoop() {
         self.fetchCar()
+        self.fetchUsers()
     }
     
     func fetchCar() {
@@ -164,12 +165,52 @@ import SwiftUI
         }
     }
     
+    func fetchUsers() {
+        if let carid = self.car {
+            self.isFetchingCar = true
+            fetchServerEndpoint(endpoint: "getusers?carid=\(carid)", fetchHash: UUID(), decodeAs: FetchedCarUsers.self) { (result, returnHash) in
+                if (self.isPushUpdatingInfo) {
+                    self.isFetchingCar = false
+                    return
+                }
+                switch result {
+                case .success(let data):
+                    withAnimation {
+                        self.carUsers = data.users
+                    }
+                    self.isFetchingCar = false
+                case .failure(let error):
+                    print(error)
+                    self.isFetchingCar = false
+                }
+            }
+        }
+    }
+    
     func update_color(to color: CustomColor) {
         self.isPushUpdatingInfo = true
-        self.myColor = color
+        withAnimation {
+            self.myColor = color
+        }
         fetchServerEndpoint(endpoint: "updatecolor?userid=\(self.userID)&color=\(cctostr(color))", fetchHash: UUID(), decodeAs: Bool.self) { (result, returnHash) in
             switch result {
-            case .success(let data):
+            case .success(_):
+                self.isPushUpdatingInfo = false
+            case .failure(let error):
+                print(error)
+                self.isPushUpdatingInfo = false
+            }
+        }
+    }
+    
+    func update_name(to name: String) {
+        self.isPushUpdatingInfo = true
+        withAnimation {
+            self.username = name
+        }
+        fetchServerEndpoint(endpoint: "updatename?userid=\(self.userID)&name=\(name)", fetchHash: UUID(), decodeAs: Bool.self) { (result, returnHash) in
+            switch result {
+            case .success(_):
                 self.isPushUpdatingInfo = false
             case .failure(let error):
                 print(error)

@@ -73,6 +73,14 @@ def updatecolor():
     ret = carPass.update_color(userid, color)
     return jsonify(ret)
 
+# /carpassapi/updatename?userid=UUID&name=String   returns bool
+@app.route('/carpassapi/updatename', methods=['GET'])
+def updatename():
+    userid = request.args.get('userid', default='', type=str)
+    name = request.args.get('name', default='', type=str)
+    ret = carPass.update_name(userid, name)
+    return jsonify(ret)
+
 
 
 if __name__ == '__main__':

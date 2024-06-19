@@ -36,10 +36,11 @@ struct ActionButtonsView: View {
                 .foregroundStyle(.custombackground)
                 .ignoresSafeArea()
         }
+        .background(.custombackground)
         .compositingGroup()
         .shadow(radius: 10)
         .sheet(isPresented: $showingProfileSheet, content: {
-            ProfileSheet()
+            ProfileSheet(showingProfileSheet: $showingProfileSheet)
                 .environment(user)
         })
     }

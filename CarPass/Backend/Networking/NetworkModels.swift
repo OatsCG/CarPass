@@ -32,6 +32,7 @@ class FetchedCar: Codable {
     var whohas: UserID
     var whohasusername: String
     var whohasusercolor: String
+    var users: [UserID]
     var pendingInvites: [UserID]
     var pendingRanges: [FetchedPendingRange]
     var confirmedRanges: [FetchedConfirmedRange]

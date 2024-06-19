@@ -63,12 +63,13 @@ class CarPass:
             "whohas": user["id"],
             "whohasusername": user["name"],
             "whohasusercolor": user["color"],
-            "users": [],
+            "users": [user["id"]],
             "pendingInvites": [],
             "pendingRanges": [],
             "confirmedRanges": []
         }
         self.cars.append(car)
+        user["car"] = car["id"]
         self.update_storage()
         return car["id"]
     
@@ -81,6 +82,7 @@ class CarPass:
         }
         self.users.append(user)
         self.update_storage()
+        self.new_car(user["id"], "Car 1")
         return user["id"]
 
     def get_car(self, uuid: UUID) -> dict | None:
@@ -122,7 +124,8 @@ class CarPass:
             return None
         else:
             carusers = []
-            for user in car["users"]:
+            for userid in car["users"]:
+                user = self.get_user(userid)
                 carusers.append({
                     "id": user["id"],
                     "name": user["name"],
@@ -147,6 +150,14 @@ class CarPass:
             return False
         else:
             user["color"] = color
+            self.update_storage()
+    
+    def update_name(self, userID: UUID, name: str) -> bool:
+        user = self.get_user(userID)
+        if user == None:
+            return False
+        else:
+            user["name"] = name
             self.update_storage()
     
     def i_have_car(self, carID: UUID, userID: UUID) -> bool:
@@ -247,12 +258,12 @@ class CarPass:
 if __name__ == "__main__":
     carPass = CarPass()
     meID = carPass.new_user("charlie")
-    bmwID = carPass.new_car(meID, "beemer")
+    #bmwID = carPass.new_car(meID, "beemer")
     
     benID = carPass.new_user("ben")
-    carPass.invite_to_car(bmwID, benID)
-    carPass.accept_invite(bmwID, benID)
+    carPass.invite_to_car(carPass.get_user(benID)["car"], meID)
+    carPass.accept_invite(carPass.get_user(benID)["car"], meID)
 
-    rangeID = carPass.new_timerange(bmwID, meID, 123, 456)
+    # rangeID = carPass.new_timerange(bmwID, meID, 123, 456)
 
-    carPass.accept_timerange(bmwID, benID, rangeID)
+    # carPass.accept_timerange(bmwID, benID, rangeID)

@@ -13,6 +13,7 @@
 		E55A58EE2C232859000E6EA8 /* SymbolButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55A58ED2C232859000E6EA8 /* SymbolButton.swift */; };
 		E560EBB82C233414007EE00D /* ProfileSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E560EBB72C233414007EE00D /* ProfileSheet.swift */; };
 		E560EBBB2C233A0E007EE00D /* Splotch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E560EBBA2C233A0E007EE00D /* Splotch.swift */; };
+		E56374362C2357DB00DB91AC /* CarProfileCapsule.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56374352C2357DB00DB91AC /* CarProfileCapsule.swift */; };
 		E57E3FB12C22018800A567EE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57E3FB02C22018800A567EE /* User.swift */; };
 		E57E3FB52C220B1500A567EE /* NetworkConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57E3FB42C220B1500A567EE /* NetworkConstants.swift */; };
 		E57E3FB82C22178800A567EE /* NetworkModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57E3FB72C22178800A567EE /* NetworkModels.swift */; };
@@ -38,6 +39,7 @@
 		E55A58ED2C232859000E6EA8 /* SymbolButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolButton.swift; sourceTree = "<group>"; };
 		E560EBB72C233414007EE00D /* ProfileSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSheet.swift; sourceTree = "<group>"; };
 		E560EBBA2C233A0E007EE00D /* Splotch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Splotch.swift; sourceTree = "<group>"; };
+		E56374352C2357DB00DB91AC /* CarProfileCapsule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarProfileCapsule.swift; sourceTree = "<group>"; };
 		E57E3FB02C22018800A567EE /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E57E3FB42C220B1500A567EE /* NetworkConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConstants.swift; sourceTree = "<group>"; };
 		E57E3FB72C22178800A567EE /* NetworkModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkModels.swift; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 				E57E3FC42C226BBB00A567EE /* CircleButton.swift */,
 				E57E3FC82C22865900A567EE /* CapsuleButton.swift */,
 				E55A58ED2C232859000E6EA8 /* SymbolButton.swift */,
+				E56374352C2357DB00DB91AC /* CarProfileCapsule.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -241,6 +244,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E56374362C2357DB00DB91AC /* CarProfileCapsule.swift in Sources */,
 				E55A58EA2C2310E6000E6EA8 /* RangeAlert.swift in Sources */,
 				E57E3FB12C22018800A567EE /* User.swift in Sources */,
 				E560EBB82C233414007EE00D /* ProfileSheet.swift in Sources */,
