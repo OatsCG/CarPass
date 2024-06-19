@@ -1,17 +1,18 @@
 //
-//  CarRequestAlert.swift
+//  CarUpcomingEvent.swift
 //  CarPass
 //
-//  Created by Charlie Giannis on 2024-06-18.
+//  Created by Charlie Giannis on 2024-06-19.
 //
 
 import SwiftUI
 
-struct CarRequestAlert: View {
+struct CarUpcomingEvent: View {
     var name: String
     var reason: String
     var range: String
     var color: CustomColor
+    var mustBring: Bool
     var body: some View {
         HStack(alignment: .bottom) {
             VStack(spacing: 18) {
@@ -43,22 +44,18 @@ struct CarRequestAlert: View {
                             Spacer()
                         }
                     }
+                    if mustBring {
+                        HStack {
+                            Text("\(Image(systemName: "steeringwheel")) You must bring the car to \(Text("Simon").fontWeight(.medium))")
+                                .foregroundStyle(cc(color, style: .primary))
+                                .multilineTextAlignment(.leading)
+                            Spacer()
+                        }
+                    }
                 }
                 .padding(.top, 5)
                 .padding(.horizontal, 10)
-                HStack(spacing: 8) {
-                    Button(action: {
-
-                    }) {
-                        CapsuleButton(text: Text("\(Image(systemName: "checkmark")) Accept").font(.title3).fontWeight(.medium), lit: true, height: 45, color: color)
-                    }
-                    .buttonStyle(.plain)
-                    Button(action: {}) {
-                        CapsuleButton(text: Text("\(Image(systemName: "xmark"))").font(.title3).fontWeight(.medium), lit: true, height: 45, color: color)
-                            .frame(width: 45)
-                    }
-                    .buttonStyle(.plain)
-                }
+                .padding(.bottom, 5)
             }
             .padding(.all, 10)
             //.safeAreaPadding(.horizontal, 20)
@@ -74,6 +71,6 @@ struct CarRequestAlert: View {
 }
 
 #Preview {
-    CarRequestAlert(name: "Simon", reason: "I just want it", range: "Tomorrow", color: .orange)
+    CarUpcomingEvent(name: "Simon", reason: "I just want it", range: "Tomorrow", color: .orange, mustBring: true)
         .padding(10)
 }

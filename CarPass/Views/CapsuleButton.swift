@@ -51,5 +51,5 @@ struct CapsuleButton: View {
 
 
 #Preview {
-    CapsuleButton(text: Text("Request Car"), lit: true, color: .yellow)
+    CapsuleButton(text: Text("Request Car"), lit: true, color: .red)
 }

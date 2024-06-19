@@ -13,14 +13,37 @@ struct HomeView: View {
         VStack(spacing: 3) {
             //ActionButtonsView()
             CarStatusView()
+                .safeAreaPadding([.horizontal, .top])
             ScrollView {
                 CalendarView()
-                VStack {
-                    CarRequestAlert(name: "Simon", reason: "I just want it", range: "Today", accepted: false, color: .red)
-                    CarRequestAlert(name: "Simon", reason: "I just want it", range: "Today", accepted: false, color: .red)
-                    CarRequestAlert(name: "Simon", reason: "I just want it", range: "Today", accepted: false, color: .red)
+                Spacer(minLength: 30)
+                VStack(spacing: 10) {
+                    HStack {
+                        Text("Pending")
+                            .foregroundStyle(.secondary)
+                            .font(.title3 .bold())
+                        Spacer()
+                    }
+                    .padding()
+                    CarRequestAlert(name: "Simon", reason: "I just want it", range: "Tomorrow", color: .pink)
+                    CarRequestAlert(name: "Ben", reason: "for cottage", range: "Tomorrow", color: .red)
+                }
+                Spacer(minLength: 30)
+                VStack(spacing: 10) {
+                    HStack {
+                        Text("Upcoming")
+                            .foregroundStyle(.secondary)
+                            .font(.title3 .bold())
+                        Spacer()
+                    }
+                    .padding()
+                    CarUpcomingEvent(name: "Simon", reason: "school cause im too lazy to walk 5 minutes", range: "Tomorrow", color: .pink, mustBring: true)
+                        .padding(.bottom, 10)
+                    CarUpcomingEvent(name: "Dad", reason: "check engine", range: "Tomorrow", color: .orange, mustBring: false)
+                    CarUpcomingEvent(name: "Charlie", reason: "work stuff", range: "Tomorrow", color: .blue, mustBring: false)
                 }
             }
+            .scrollIndicators(.hidden)
             .safeAreaPadding()
         }
     }
