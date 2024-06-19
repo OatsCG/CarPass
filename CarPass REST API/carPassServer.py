@@ -67,7 +67,7 @@ def getusers():
 
 # /carpassapi/updatecolor?userid=UUID&color=Color   returns bool
 @app.route('/carpassapi/updatecolor', methods=['GET'])
-def getusers():
+def updatecolor():
     userid = request.args.get('userid', default='', type=str)
     color = request.args.get('color', default='', type=str)
     ret = carPass.update_color(userid, color)

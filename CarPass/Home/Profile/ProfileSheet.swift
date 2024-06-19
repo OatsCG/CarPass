@@ -21,6 +21,13 @@ struct ProfileSheet: View {
                         
                     }) {
                         Text("Done")
+                            .padding(.horizontal, 15)
+                            .padding(.vertical, 7)
+                            .background {
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(.backgroundsecondary)
+                                    .strokeBorder(.secondary)
+                            }
                     }
                 }
                 // Name editor

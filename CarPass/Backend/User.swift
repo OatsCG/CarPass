@@ -40,6 +40,7 @@ import SwiftUI
                     if let data = data {
                         self.userID = data.id
                         self.username = data.name
+                        self.myColor = strtocc(data.color)
                         self.car = data.car
                         withAnimation {
                             self.fetchStatus = .success
@@ -165,7 +166,8 @@ import SwiftUI
     
     func update_color(to color: CustomColor) {
         self.isPushUpdatingInfo = true
-        fetchServerEndpoint(endpoint: "updatecolor?userid=UUID&color=\(cctostr(color))", fetchHash: UUID(), decodeAs: UserID.self) { (result, returnHash) in
+        self.myColor = color
+        fetchServerEndpoint(endpoint: "updatecolor?userid=\(self.userID)&color=\(cctostr(color))", fetchHash: UUID(), decodeAs: Bool.self) { (result, returnHash) in
             switch result {
             case .success(let data):
                 self.isPushUpdatingInfo = false
