@@ -11,6 +11,8 @@
 		E55A58EA2C2310E6000E6EA8 /* RangeAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55A58E92C2310E6000E6EA8 /* RangeAlert.swift */; };
 		E55A58EC2C2317B3000E6EA8 /* EpochDescriptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55A58EB2C2317B3000E6EA8 /* EpochDescriptions.swift */; };
 		E55A58EE2C232859000E6EA8 /* SymbolButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55A58ED2C232859000E6EA8 /* SymbolButton.swift */; };
+		E560EBB82C233414007EE00D /* ProfileSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E560EBB72C233414007EE00D /* ProfileSheet.swift */; };
+		E560EBBB2C233A0E007EE00D /* Splotch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E560EBBA2C233A0E007EE00D /* Splotch.swift */; };
 		E57E3FB12C22018800A567EE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57E3FB02C22018800A567EE /* User.swift */; };
 		E57E3FB52C220B1500A567EE /* NetworkConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57E3FB42C220B1500A567EE /* NetworkConstants.swift */; };
 		E57E3FB82C22178800A567EE /* NetworkModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57E3FB72C22178800A567EE /* NetworkModels.swift */; };
@@ -34,6 +36,8 @@
 		E55A58E92C2310E6000E6EA8 /* RangeAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeAlert.swift; sourceTree = "<group>"; };
 		E55A58EB2C2317B3000E6EA8 /* EpochDescriptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpochDescriptions.swift; sourceTree = "<group>"; };
 		E55A58ED2C232859000E6EA8 /* SymbolButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolButton.swift; sourceTree = "<group>"; };
+		E560EBB72C233414007EE00D /* ProfileSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSheet.swift; sourceTree = "<group>"; };
+		E560EBBA2C233A0E007EE00D /* Splotch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Splotch.swift; sourceTree = "<group>"; };
 		E57E3FB02C22018800A567EE /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E57E3FB42C220B1500A567EE /* NetworkConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConstants.swift; sourceTree = "<group>"; };
 		E57E3FB72C22178800A567EE /* NetworkModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkModels.swift; sourceTree = "<group>"; };
@@ -74,6 +78,15 @@
 			path = Alerts;
 			sourceTree = "<group>";
 		};
+		E560EBB92C2339FC007EE00D /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				E560EBB72C233414007EE00D /* ProfileSheet.swift */,
+				E560EBBA2C233A0E007EE00D /* Splotch.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		E57E3FAE2C22017000A567EE /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -112,6 +125,7 @@
 				E57E3FBE2C2230AA00A567EE /* CarStatusView.swift */,
 				E57E3FBC2C222E1800A567EE /* CalendarView.swift */,
 				E57E3FC02C22330F00A567EE /* RangeStatusView.swift */,
+				E560EBB92C2339FC007EE00D /* Profile */,
 				E560EBB62C232FBF007EE00D /* Alerts */,
 			);
 			path = Home;
@@ -229,6 +243,7 @@
 			files = (
 				E55A58EA2C2310E6000E6EA8 /* RangeAlert.swift in Sources */,
 				E57E3FB12C22018800A567EE /* User.swift in Sources */,
+				E560EBB82C233414007EE00D /* ProfileSheet.swift in Sources */,
 				E57E3FC32C2239CB00A567EE /* ActionButtonsView.swift in Sources */,
 				E57E3FBA2C222CB100A567EE /* HomeView.swift in Sources */,
 				E57E3FC52C226BBB00A567EE /* CircleButton.swift in Sources */,
@@ -243,6 +258,7 @@
 				E55A58E82C229CEA000E6EA8 /* CarUpcomingEvent.swift in Sources */,
 				E57E3FB82C22178800A567EE /* NetworkModels.swift in Sources */,
 				E57E3FC72C2283A000A567EE /* CarRequestAlert.swift in Sources */,
+				E560EBBB2C233A0E007EE00D /* Splotch.swift in Sources */,
 				E5EEA0852C21F00B008A06BB /* CarPassApp.swift in Sources */,
 				E57E3FB52C220B1500A567EE /* NetworkConstants.swift in Sources */,
 			);
@@ -386,8 +402,8 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -424,8 +440,8 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";

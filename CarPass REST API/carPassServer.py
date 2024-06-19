@@ -65,6 +65,14 @@ def getusers():
     ret = carPass.get_car_users(carid)
     return jsonify(ret)
 
+# /carpassapi/updatecolor?userid=UUID&color=Color   returns bool
+@app.route('/carpassapi/updatecolor', methods=['GET'])
+def getusers():
+    userid = request.args.get('userid', default='', type=str)
+    color = request.args.get('color', default='', type=str)
+    ret = carPass.update_color(userid, color)
+    return jsonify(ret)
+
 
 
 if __name__ == '__main__':

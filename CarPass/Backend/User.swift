@@ -22,20 +22,48 @@ import SwiftUI
     var outdatedAlerts: [ConfirmedAlert] = []
     
     private var isFetchingCar: Bool = false
+    var isPushUpdatingInfo: Bool = false
+    
+    private var syncedTimer: Timer? = nil
     
     init() {
         // update UserID
         let userID: String? = UserDefaults.standard.string(forKey: "userID")
         if let userID = userID {
             // fetch user data from server with userID
-            fetchServerEndpoint(endpoint: "getuser?id=\(userID)", fetchHash: UUID(), decodeAs: FetchedUser.self) { (result, returnHash) in
+            fetchServerEndpoint(endpoint: "getuser?id=\(userID)", fetchHash: UUID(), decodeAs: FetchedUser?.self) { (result, returnHash) in
+                if (self.isPushUpdatingInfo) {
+                    return
+                }
                 switch result {
                 case .success(let data):
-                    self.userID = data.id
-                    self.username = data.name
-                    self.car = data.car
-                    withAnimation {
-                        self.fetchStatus = .success
+                    if let data = data {
+                        self.userID = data.id
+                        self.username = data.name
+                        self.car = data.car
+                        withAnimation {
+                            self.fetchStatus = .success
+                        }
+                    } else {
+                        fetchServerEndpoint(endpoint: "newuser", fetchHash: UUID(), decodeAs: UserID.self) { (result, returnHash) in
+                            if (self.isPushUpdatingInfo) {
+                                return
+                            }
+                            switch result {
+                            case .success(let data):
+                                self.userID = data
+                                self.username = "username"
+                                UserDefaults.standard.setValue(data, forKey: "userID")
+                                withAnimation {
+                                    self.fetchStatus = .success
+                                }
+                            case .failure(let error):
+                                print(error)
+                                withAnimation {
+                                    self.fetchStatus = .failed
+                                }
+                            }
+                        }
                     }
                 case .failure(let error):
                     print(error)
@@ -47,6 +75,9 @@ import SwiftUI
         } else {
             // create new user from server
             fetchServerEndpoint(endpoint: "newuser", fetchHash: UUID(), decodeAs: UserID.self) { (result, returnHash) in
+                if (self.isPushUpdatingInfo) {
+                    return
+                }
                 switch result {
                 case .success(let data):
                     self.userID = data
@@ -65,6 +96,9 @@ import SwiftUI
         }
         
         // start fetch timer
+        self.syncedTimer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { _ in
+            self.fetchLoop()
+        }
     }
     
     func fetchLoop() {
@@ -97,8 +131,8 @@ import SwiftUI
                         // Get Confirmed Ranges
                         var tempConfirmedAlerts: [ConfirmedAlert] = []
                         var tempOutdatedAlerts: [ConfirmedAlert] = []
-                        var sortedRanges: [FetchedConfirmedRange] = data.confirmedRanges.sorted(by: { $0.start > $1.start })
-                        var currentDate: Date = Date()
+                        let sortedRanges: [FetchedConfirmedRange] = data.confirmedRanges.sorted(by: { $0.start > $1.start })
+                        let currentDate: Date = Date()
                         for confirmedRange in sortedRanges {
                             let rangeDescription: String = epochToDescription(epoch: confirmedRange.start)
                             let rangeRelativeDescription: String = epochToRelativeDescription(epoch: confirmedRange.start)
@@ -122,9 +156,22 @@ import SwiftUI
                     }
                     
                     
-                case .failure(let error):
+                case .failure(_):
                     self.isFetchingCar = false
                 }
+            }
+        }
+    }
+    
+    func update_color(to color: CustomColor) {
+        self.isPushUpdatingInfo = true
+        fetchServerEndpoint(endpoint: "updatecolor?userid=UUID&color=\(cctostr(color))", fetchHash: UUID(), decodeAs: UserID.self) { (result, returnHash) in
+            switch result {
+            case .success(let data):
+                self.isPushUpdatingInfo = false
+            case .failure(let error):
+                print(error)
+                self.isPushUpdatingInfo = false
             }
         }
     }

@@ -119,3 +119,22 @@ func strtocc(_ str: String) -> CustomColor {
         return .blue
     }
 }
+
+func cctostr(_ color: CustomColor) -> String {
+    switch color {
+    case .red:
+        return "red"
+    case .orange:
+        return "orange"
+    case .yellow:
+        return "yellow"
+    case .green:
+        return "green"
+    case .blue:
+        return "blue"
+    case .purple:
+        return "purple"
+    case .pink:
+        return "pink"
+    }
+}

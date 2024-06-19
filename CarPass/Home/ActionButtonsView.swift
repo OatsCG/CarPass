@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ActionButtonsView: View {
     @Environment(User.self) var user
+    @State var showingProfileSheet: Bool = false
     var body: some View {
         VStack {
             HStack {
@@ -17,8 +18,9 @@ struct ActionButtonsView: View {
                 Spacer()
                 Button(action: {
                     // open profile sheet
+                    showingProfileSheet = true
                 }) {
-                    SymbolButton(systemName: "person.text.rectangle.fill")
+                    SymbolButton(systemName: "person.text.rectangle.fill", color: user.myColor)
                         .font(.largeTitle)
                         .foregroundStyle(cc(user.myColor, style: .primary))
                         //.scaleEffect(2)
@@ -28,6 +30,7 @@ struct ActionButtonsView: View {
         }
         .frame(height: 30)
         .padding([.horizontal, .bottom], 15)
+        .padding(.top, 10)
         .background {
             UnevenRoundedRectangle(cornerRadii: .init(topLeading: 47, bottomLeading: 10, bottomTrailing: 10, topTrailing: 47), style: .continuous).fill(.shadow(.inner(color: cc(user.myColor, style: .thin), radius: 30)))
                 .foregroundStyle(.custombackground)
@@ -35,7 +38,10 @@ struct ActionButtonsView: View {
         }
         .compositingGroup()
         .shadow(radius: 10)
-        //.shadow(color: .black, radius: 5, y: 2)
+        .sheet(isPresented: $showingProfileSheet, content: {
+            ProfileSheet()
+                .environment(user)
+        })
     }
 }
 

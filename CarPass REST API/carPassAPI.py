@@ -141,6 +141,14 @@ class CarPass:
                 "users": carusers
             })
     
+    def update_color(self, userID: UUID, color: str) -> bool:
+        user = self.get_user(userID)
+        if user == None:
+            return False
+        else:
+            user["color"] = color
+            self.update_storage()
+    
     def i_have_car(self, carID: UUID, userID: UUID) -> bool:
         car = self.get_car(carID)
         if car == None:
