@@ -42,7 +42,6 @@ struct HomeView: View {
                         }
                         .padding()
                         CarUpcomingEvent(name: "Simon", reason: "school cause im too lazy to walk 5 minutes", range: "Tomorrow", color: .pink, mustBring: true)
-                            .padding(.bottom, 10)
                         CarUpcomingEvent(name: "Dad", reason: "check engine", range: "Tomorrow", color: .orange, mustBring: false)
                         CarUpcomingEvent(name: "Charlie", reason: "work stuff", range: "Tomorrow", color: .blue, mustBring: false)
                     }

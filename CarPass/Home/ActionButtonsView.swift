@@ -14,13 +14,13 @@ struct ActionButtonsView: View {
             HStack {
                 Text("CarPass")
                     .font(.title3 .bold())
-                
                 Spacer()
                 Button(action: {
-                    // go back one month
+                    // open profile sheet
                 }) {
                     SymbolButton(systemName: "person.text.rectangle.fill")
                         .font(.largeTitle)
+                        .foregroundStyle(cc(user.myColor, style: .primary))
                         //.scaleEffect(2)
                 }
                     .tint(.primary)

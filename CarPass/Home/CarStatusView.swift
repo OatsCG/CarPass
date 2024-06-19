@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CarStatusView: View {
+    @Environment(User.self) var user
     var body: some View {
         VStack {
             Text("**Simon** has the car")
@@ -18,12 +19,12 @@ struct CarStatusView: View {
                 Button(action: {
                     
                 }) {
-                    CapsuleButton(text: Text("Request Car"), lit: true, color: .blue)
+                    CapsuleButton(text: Text("Request Car"), lit: true, color: user.myColor)
                 }
                 Button(action: {
                     
                 }) {
-                    CapsuleButton(text: Text("I Have The Car"), lit: false, color: .blue)
+                    CapsuleButton(text: Text("I Have The Car"), lit: false, color: user.myColor)
                 }
             }
             .bold()

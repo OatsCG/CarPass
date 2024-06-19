@@ -65,8 +65,8 @@ struct CarUpcomingEvent: View {
             RoundedRectangle(cornerRadius: 30, style: .circular)
                 .fill(cc(color, style: .thin))
                 .stroke(.quaternary)
-            
         }
+        .padding(.bottom, mustBring ? 10 : 0)
     }
 }
 
