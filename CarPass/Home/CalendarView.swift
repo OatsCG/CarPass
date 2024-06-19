@@ -75,21 +75,26 @@ struct CalendarWeekView: View {
 
 struct CalendarDayView: View {
     var body: some View {
-        VStack {
-            HStack {
-                Spacer()
-                Text("4")
-                    .font(.subheadline)
-                    .foregroundStyle(.primary)
-                Spacer()
+        Circle()
+            .fill(.ultraThinMaterial)
+            .overlay {
+                VStack {
+                    Spacer()
+                    HStack {
+                        Spacer()
+                        Text("4")
+                            .font(.body .bold())
+                            .foregroundStyle(.primary)
+                        Spacer()
+                    }
+                    //            Rectangle().fill(.red)
+                    //                .frame(height: 20)
+                    Spacer()
+                }
+                //.padding(.vertical, 3)
+                //.background(.ultraThinMaterial)
+                //.clipShape(RoundedRectangle(cornerRadius: 3))
             }
-//            Rectangle().fill(.red)
-//                .frame(height: 20)
-            Spacer()
-        }
-        .padding(.vertical, 3)
-        .background(.ultraThinMaterial)
-        .clipShape(RoundedRectangle(cornerRadius: 3))
     }
 }
 

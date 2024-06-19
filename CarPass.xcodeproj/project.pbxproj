@@ -16,6 +16,10 @@
 		E57E3FBF2C2230AA00A567EE /* CarStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57E3FBE2C2230AA00A567EE /* CarStatusView.swift */; };
 		E57E3FC12C22330F00A567EE /* RangeStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57E3FC02C22330F00A567EE /* RangeStatusView.swift */; };
 		E57E3FC32C2239CB00A567EE /* ActionButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57E3FC22C2239CB00A567EE /* ActionButtonsView.swift */; };
+		E57E3FC52C226BBB00A567EE /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57E3FC42C226BBB00A567EE /* CircleButton.swift */; };
+		E57E3FC72C2283A000A567EE /* CarRequestAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57E3FC62C2283A000A567EE /* CarRequestAlert.swift */; };
+		E57E3FC92C22865900A567EE /* CapsuleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57E3FC82C22865900A567EE /* CapsuleButton.swift */; };
+		E57E3FCB2C22910800A567EE /* ColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57E3FCA2C22910800A567EE /* ColorManager.swift */; };
 		E5EEA0852C21F00B008A06BB /* CarPassApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EEA0842C21F00B008A06BB /* CarPassApp.swift */; };
 		E5EEA0872C21F00B008A06BB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EEA0862C21F00B008A06BB /* ContentView.swift */; };
 		E5EEA08B2C21F00D008A06BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5EEA08A2C21F00D008A06BB /* Assets.xcassets */; };
@@ -32,6 +36,10 @@
 		E57E3FBE2C2230AA00A567EE /* CarStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarStatusView.swift; sourceTree = "<group>"; };
 		E57E3FC02C22330F00A567EE /* RangeStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeStatusView.swift; sourceTree = "<group>"; };
 		E57E3FC22C2239CB00A567EE /* ActionButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionButtonsView.swift; sourceTree = "<group>"; };
+		E57E3FC42C226BBB00A567EE /* CircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButton.swift; sourceTree = "<group>"; };
+		E57E3FC62C2283A000A567EE /* CarRequestAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarRequestAlert.swift; sourceTree = "<group>"; };
+		E57E3FC82C22865900A567EE /* CapsuleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapsuleButton.swift; sourceTree = "<group>"; };
+		E57E3FCA2C22910800A567EE /* ColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorManager.swift; sourceTree = "<group>"; };
 		E5EEA0812C21F00B008A06BB /* CarPass.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarPass.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5EEA0842C21F00B008A06BB /* CarPassApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarPassApp.swift; sourceTree = "<group>"; };
 		E5EEA0862C21F00B008A06BB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -54,6 +62,8 @@
 		E57E3FAE2C22017000A567EE /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E57E3FC42C226BBB00A567EE /* CircleButton.swift */,
+				E57E3FC82C22865900A567EE /* CapsuleButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -62,6 +72,7 @@
 			isa = PBXGroup;
 			children = (
 				E57E3FB02C22018800A567EE /* User.swift */,
+				E57E3FCA2C22910800A567EE /* ColorManager.swift */,
 				E57E3FB62C2214B600A567EE /* Networking */,
 			);
 			path = Backend;
@@ -82,6 +93,7 @@
 			children = (
 				E57E3FBC2C222E1800A567EE /* CalendarView.swift */,
 				E57E3FBE2C2230AA00A567EE /* CarStatusView.swift */,
+				E57E3FC62C2283A000A567EE /* CarRequestAlert.swift */,
 				E57E3FC02C22330F00A567EE /* RangeStatusView.swift */,
 				E57E3FC22C2239CB00A567EE /* ActionButtonsView.swift */,
 			);
@@ -201,12 +213,16 @@
 				E57E3FB12C22018800A567EE /* User.swift in Sources */,
 				E57E3FC32C2239CB00A567EE /* ActionButtonsView.swift in Sources */,
 				E57E3FBA2C222CB100A567EE /* HomeView.swift in Sources */,
+				E57E3FC52C226BBB00A567EE /* CircleButton.swift in Sources */,
 				E57E3FBD2C222E1800A567EE /* CalendarView.swift in Sources */,
 				E57E3FB32C2201D400A567EE /* UserNetwork.swift in Sources */,
+				E57E3FCB2C22910800A567EE /* ColorManager.swift in Sources */,
 				E5EEA0872C21F00B008A06BB /* ContentView.swift in Sources */,
+				E57E3FC92C22865900A567EE /* CapsuleButton.swift in Sources */,
 				E57E3FBF2C2230AA00A567EE /* CarStatusView.swift in Sources */,
 				E57E3FC12C22330F00A567EE /* RangeStatusView.swift in Sources */,
 				E57E3FB82C22178800A567EE /* NetworkModels.swift in Sources */,
+				E57E3FC72C2283A000A567EE /* CarRequestAlert.swift in Sources */,
 				E5EEA0852C21F00B008A06BB /* CarPassApp.swift in Sources */,
 				E57E3FB52C220B1500A567EE /* NetworkConstants.swift in Sources */,
 			);

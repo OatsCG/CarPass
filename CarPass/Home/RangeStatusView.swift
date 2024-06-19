@@ -16,21 +16,22 @@ struct RangeStatusView: View {
                     .textCase(.uppercase)
                     .lineLimit(1)
                     .bold()
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(.white.secondary)
                 Spacer()
                 Image(systemName: "arrowshape.forward.fill")
-                    .foregroundStyle(.tertiary)
+                    .foregroundStyle(.white.tertiary)
             }
             HStack {
                 Text("June 5 - June 10")
                     .bold()
                     .font(.subheadline)
+                    .foregroundStyle(.white)
                 Spacer()
             }
         }
             .padding(.horizontal, 8)
             .padding(.vertical, 5)
-            .background(.blue.gradient)
+            .background(.green.gradient)
             .clipShape(RoundedRectangle(cornerRadius: 10))
     }
 }

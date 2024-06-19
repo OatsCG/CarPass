@@ -37,4 +37,4 @@ def getcar():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='192.168.2.231', port=5000, debug=True)

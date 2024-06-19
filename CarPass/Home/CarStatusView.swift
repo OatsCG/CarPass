@@ -9,45 +9,28 @@ import SwiftUI
 
 struct CarStatusView: View {
     var body: some View {
-        HStack(alignment: .bottom) {
-            VStack(spacing: 15) {
-                //Spacer()
-                HStack {
-                    Image(systemName: "car.fill")
-                        .font(.title)
-                    Spacer()
-                    Text("**Charlie** has the car.")
-                        .font(.title2)
-                        .multilineTextAlignment(.leading)
+        VStack {
+            Text("**Simon** has the car")
+                .font(.title2)
+            Text("Until Friday")
+                .foregroundStyle(.secondary)
+            HStack(spacing: 10) {
+                Button(action: {
+                    
+                }) {
+                    CapsuleButton(text: Text("Request Car"), lit: true, color: .blue)
                 }
-                ScrollView(.horizontal) {
-                    HStack {
-                        RangeStatusView()
-                            .containerRelativeFrame(.horizontal, count: 2, spacing: 10.0)
-                        RangeStatusView()
-                            .containerRelativeFrame(.horizontal, count: 2, spacing: 10.0)
-                        RangeStatusView()
-                            .containerRelativeFrame(.horizontal, count: 2, spacing: 10.0)
-                        RangeStatusView()
-                            .containerRelativeFrame(.horizontal, count: 2, spacing: 10.0)
-                        RangeStatusView()
-                            .containerRelativeFrame(.horizontal, count: 2, spacing: 10.0)
-                    }
-                    .scrollTargetLayout()
-                    .padding(.bottom, 10)
+                Button(action: {
+                    
+                }) {
+                    CapsuleButton(text: Text("I Have The Car"), lit: false, color: .blue)
                 }
-                .scrollTargetBehavior(.viewAligned)
-                //.safeAreaPadding(.horizontal, 10)
-                
             }
-            .safeAreaPadding(.horizontal, 20)
-            .safeAreaPadding(.top, 15)
+            .bold()
+            .buttonStyle(.plain)
+            .padding(.vertical, 10)
         }
-        .background {
-            Rectangle().fill(.shadow(.inner(color: .blue.opacity(0.15), radius: 20)))
-                .foregroundStyle(.ultraThinMaterial)
-                .ignoresSafeArea()
-        }
+            .multilineTextAlignment(.leading)
     }
 }
 
