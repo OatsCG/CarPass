@@ -14,7 +14,7 @@ struct CalendarView: View {
                 Button(action: {
                     // go back one month
                 }) {
-                    Image(systemName: "arrowshape.backward.circle.fill")
+                    Image(systemName: "chevron.backward")
                         .font(.largeTitle)
                         .symbolRenderingMode(.hierarchical)
                 }
@@ -31,7 +31,7 @@ struct CalendarView: View {
                 Button(action: {
                     // go forward one month
                 }) {
-                    Image(systemName: "arrowshape.forward.circle.fill")
+                    Image(systemName: "chevron.forward")
                         .font(.largeTitle)
                         .symbolRenderingMode(.hierarchical)
                 }

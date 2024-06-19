@@ -98,3 +98,24 @@ func cc(_ color: CustomColor, style: CustomStyle = .primary) -> Color {
         }
     }
 }
+
+
+func strtocc(_ str: String) -> CustomColor {
+    if (str == "red") {
+        return .red
+    } else if (str == "orange") {
+        return .orange
+    } else if (str == "yellow") {
+        return .yellow
+    } else if (str == "green") {
+        return .green
+    } else if (str == "blue") {
+        return .blue
+    } else if (str == "purple") {
+        return .purple
+    } else if (str == "pink") {
+        return .pink
+    } else {
+        return .blue
+    }
+}

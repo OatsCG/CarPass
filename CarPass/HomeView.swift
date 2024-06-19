@@ -25,6 +25,7 @@ struct HomeView: View {
                         Spacer()
                     }
                     .padding()
+                    
                     CarRequestAlert(name: "Simon", reason: "I just want it", range: "Tomorrow", color: .pink)
                     CarRequestAlert(name: "Ben", reason: "for cottage", range: "Tomorrow", color: .red)
                 }

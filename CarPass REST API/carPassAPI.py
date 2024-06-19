@@ -55,10 +55,14 @@ class CarPass:
             print(f"Error: {e}")
             return False
 
-    def new_car(self, name: str) -> UUID:
+    def new_car(self, userID: UUID, name: str) -> UUID:
+        user = self.get_user(userID)
         car = {
             "name": name,
             "id": str(uuid4()),
+            "whohas": user["id"],
+            "whohasusername": user["name"],
+            "whohasusercolor": user["color"],
             "users": [],
             "pendingInvites": [],
             "pendingRanges": [],
@@ -72,6 +76,7 @@ class CarPass:
         user = {
             "name": name,
             "id": str(uuid4()),
+            "color": "red", #red, orange, yellow, green, blue, indigo, violet
             "car": None
         }
         self.users.append(user)
@@ -110,6 +115,39 @@ class CarPass:
         else:
             car["pendingInvites"].append(userID)
             self.update_storage()
+    
+    def get_car_users(self, carID: UUID) -> dict | None:
+        car = self.get_car(carID)
+        if car == None:
+            return None
+        else:
+            carusers = []
+            for user in car["users"]:
+                carusers.append({
+                    "id": user["id"],
+                    "name": user["name"],
+                    "color": user["color"],
+                    "confirmed": True
+                })
+            for invite in car["pendingInvites"]:
+                user = self.get_user(invite)
+                carusers.append({
+                    "id": user["id"],
+                    "name": user["name"],
+                    "color": user["color"],
+                    "confirmed": True
+                })
+            return({
+                "users": carusers
+            })
+    
+    def i_have_car(self, carID: UUID, userID: UUID) -> bool:
+        car = self.get_car(carID)
+        if car == None:
+            return False
+        else:
+            car["whohas"] = userID
+            self.update_storage()
 
 
     def check_invites(self, userID: UUID) -> UUID | None:
@@ -137,9 +175,12 @@ class CarPass:
             return None
         else:
             try:
+                user = self.get_user(userID)
                 range = {
                     "id": str(uuid4()),
                     "user": userID,
+                    "username": user["name"],
+                    "usercolor": user["color"],
                     "reason": "smd",
                     "accepted": [],
                     "start": startEpoch,
@@ -160,17 +201,23 @@ class CarPass:
         else:
             for range in car["pendingRanges"]:
                 if range["id"] == rangeID:
-                    confirmedRange = {
-                        "id": range["id"],
-                        "user": range["user"],
-                        "reason": range["reason"],
-                        "start": range["start"],
-                        "end": range["end"]
-                    }
-                    car["confirmedRanges"].append(confirmedRange)
-                    car["pendingRanges"].remove(range)
-                    self.update_storage()
-                    return True
+                    try:
+                        user = self.get_user(range["user"])
+                        confirmedRange = {
+                            "id": range["id"],
+                            "user": range["user"],
+                            "username": user["name"],
+                            "usercolor": user["color"],
+                            "reason": range["reason"],
+                            "start": range["start"],
+                            "end": range["end"]
+                        }
+                        car["confirmedRanges"].append(confirmedRange)
+                        car["pendingRanges"].remove(range)
+                        self.update_storage()
+                        return True
+                    except:
+                        return False
             return False
     
     def accept_timerange(self, carID: UUID, userID: UUID, rangeID: UUID) -> bool:
@@ -191,12 +238,12 @@ class CarPass:
 
 if __name__ == "__main__":
     carPass = CarPass()
-    bmwID = carPass.new_car("beemer")
     meID = carPass.new_user("charlie")
+    bmwID = carPass.new_car(meID, "beemer")
     
-    carPass.set_car(bmwID, meID)
     benID = carPass.new_user("ben")
-    carPass.set_car(bmwID, benID)
+    carPass.invite_to_car(bmwID, benID)
+    carPass.accept_invite(bmwID, benID)
 
     rangeID = carPass.new_timerange(bmwID, meID, 123, 456)
 

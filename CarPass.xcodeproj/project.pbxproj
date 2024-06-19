@@ -8,8 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		E55A58E82C229CEA000E6EA8 /* CarUpcomingEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55A58E72C229CEA000E6EA8 /* CarUpcomingEvent.swift */; };
+		E55A58EA2C2310E6000E6EA8 /* RangeAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55A58E92C2310E6000E6EA8 /* RangeAlert.swift */; };
+		E55A58EC2C2317B3000E6EA8 /* EpochDescriptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55A58EB2C2317B3000E6EA8 /* EpochDescriptions.swift */; };
 		E57E3FB12C22018800A567EE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57E3FB02C22018800A567EE /* User.swift */; };
-		E57E3FB32C2201D400A567EE /* UserNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57E3FB22C2201D400A567EE /* UserNetwork.swift */; };
 		E57E3FB52C220B1500A567EE /* NetworkConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57E3FB42C220B1500A567EE /* NetworkConstants.swift */; };
 		E57E3FB82C22178800A567EE /* NetworkModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57E3FB72C22178800A567EE /* NetworkModels.swift */; };
 		E57E3FBA2C222CB100A567EE /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57E3FB92C222CB100A567EE /* HomeView.swift */; };
@@ -29,8 +30,9 @@
 
 /* Begin PBXFileReference section */
 		E55A58E72C229CEA000E6EA8 /* CarUpcomingEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarUpcomingEvent.swift; sourceTree = "<group>"; };
+		E55A58E92C2310E6000E6EA8 /* RangeAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeAlert.swift; sourceTree = "<group>"; };
+		E55A58EB2C2317B3000E6EA8 /* EpochDescriptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpochDescriptions.swift; sourceTree = "<group>"; };
 		E57E3FB02C22018800A567EE /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		E57E3FB22C2201D400A567EE /* UserNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNetwork.swift; sourceTree = "<group>"; };
 		E57E3FB42C220B1500A567EE /* NetworkConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConstants.swift; sourceTree = "<group>"; };
 		E57E3FB72C22178800A567EE /* NetworkModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkModels.swift; sourceTree = "<group>"; };
 		E57E3FB92C222CB100A567EE /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -74,6 +76,7 @@
 			isa = PBXGroup;
 			children = (
 				E57E3FB02C22018800A567EE /* User.swift */,
+				E55A58EB2C2317B3000E6EA8 /* EpochDescriptions.swift */,
 				E57E3FCA2C22910800A567EE /* ColorManager.swift */,
 				E57E3FB62C2214B600A567EE /* Networking */,
 			);
@@ -85,7 +88,7 @@
 			children = (
 				E57E3FB42C220B1500A567EE /* NetworkConstants.swift */,
 				E57E3FB72C22178800A567EE /* NetworkModels.swift */,
-				E57E3FB22C2201D400A567EE /* UserNetwork.swift */,
+				E55A58E92C2310E6000E6EA8 /* RangeAlert.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -213,13 +216,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E55A58EA2C2310E6000E6EA8 /* RangeAlert.swift in Sources */,
 				E57E3FB12C22018800A567EE /* User.swift in Sources */,
 				E57E3FC32C2239CB00A567EE /* ActionButtonsView.swift in Sources */,
 				E57E3FBA2C222CB100A567EE /* HomeView.swift in Sources */,
 				E57E3FC52C226BBB00A567EE /* CircleButton.swift in Sources */,
 				E57E3FBD2C222E1800A567EE /* CalendarView.swift in Sources */,
-				E57E3FB32C2201D400A567EE /* UserNetwork.swift in Sources */,
 				E57E3FCB2C22910800A567EE /* ColorManager.swift in Sources */,
+				E55A58EC2C2317B3000E6EA8 /* EpochDescriptions.swift in Sources */,
 				E5EEA0872C21F00B008A06BB /* ContentView.swift in Sources */,
 				E57E3FC92C22865900A567EE /* CapsuleButton.swift in Sources */,
 				E57E3FBF2C2230AA00A567EE /* CarStatusView.swift in Sources */,

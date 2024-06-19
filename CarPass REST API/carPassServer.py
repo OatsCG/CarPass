@@ -33,6 +33,37 @@ def getcar():
     user = carPass.get_car(id)
     return jsonify(user)
 
+# /carpassapi/acceptrange?carid=UUID&userid=UUID&rangeid=UUID   returns bool
+@app.route('/carpassapi/acceptrange', methods=['GET'])
+def acceptrange():
+    carid = request.args.get('carid', default='', type=str)
+    userid = request.args.get('userid', default='', type=str)
+    rangeid = request.args.get('rangeid', default='', type=str)
+    ret = carPass.accept_timerange(carid, userid, rangeid)
+    return jsonify(ret)
+
+# /carpassapi/acceptinvite?carid=UUID&userid=UUID   returns bool
+@app.route('/carpassapi/acceptinvite', methods=['GET'])
+def acceptinvite():
+    carid = request.args.get('carid', default='', type=str)
+    userid = request.args.get('userid', default='', type=str)
+    invite = carPass.accept_invite(carid, userid)
+    return jsonify(invite)
+
+# /carpassapi/ihavecar?carid=UUID&userid=UUID   returns bool
+@app.route('/carpassapi/ihavecar', methods=['GET'])
+def ihavecar():
+    carid = request.args.get('carid', default='', type=str)
+    userid = request.args.get('userid', default='', type=str)
+    ret = carPass.i_have_car(carid, userid)
+    return jsonify(ret)
+
+# /carpassapi/getusers?carid=UUID   returns dict
+@app.route('/carpassapi/getusers', methods=['GET'])
+def getusers():
+    carid = request.args.get('carid', default='', type=str)
+    ret = carPass.get_car_users(carid)
+    return jsonify(ret)
 
 
 
