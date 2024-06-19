@@ -76,7 +76,7 @@ class CarPass:
         user = {
             "name": name,
             "id": str(uuid4()),
-            "color": "red", #red, orange, yellow, green, blue, indigo, violet
+            "color": "blue", #red, orange, yellow, green, blue, indigo, violet
             "car": None
         }
         self.users.append(user)

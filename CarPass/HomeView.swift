@@ -10,42 +10,51 @@ import SwiftUI
 struct HomeView: View {
     @Environment(User.self) var user
     var body: some View {
-        VStack(spacing: 3) {
-            //ActionButtonsView()
-            CarStatusView()
-                .safeAreaPadding([.horizontal, .top])
-            ScrollView {
-                CalendarView()
-                Spacer(minLength: 30)
-                VStack(spacing: 10) {
-                    HStack {
-                        Text("Pending")
-                            .foregroundStyle(.secondary)
-                            .font(.title3 .bold())
-                        Spacer()
+        ZStack {
+            VStack(spacing: 0) {
+                ActionButtonsView()
+                    .hidden()
+                ScrollView {
+                    CarStatusView()
+                    Spacer(minLength: 30)
+                    Divider()
+                    CalendarView()
+                    Divider()
+                    Spacer(minLength: 30)
+                    VStack(spacing: 10) {
+                        HStack {
+                            Text("Pending")
+                                .foregroundStyle(.secondary)
+                                .font(.title3 .bold())
+                            Spacer()
+                        }
+                        .padding()
+                        CarRequestAlert(name: "Simon", reason: "I just want it", range: "Tomorrow", color: .pink)
+                        CarRequestAlert(name: "Ben", reason: "for cottage", range: "Tomorrow", color: .red)
                     }
-                    .padding()
-                    
-                    CarRequestAlert(name: "Simon", reason: "I just want it", range: "Tomorrow", color: .pink)
-                    CarRequestAlert(name: "Ben", reason: "for cottage", range: "Tomorrow", color: .red)
-                }
-                Spacer(minLength: 30)
-                VStack(spacing: 10) {
-                    HStack {
-                        Text("Upcoming")
-                            .foregroundStyle(.secondary)
-                            .font(.title3 .bold())
-                        Spacer()
+                    Spacer(minLength: 30)
+                    VStack(spacing: 10) {
+                        HStack {
+                            Text("Upcoming")
+                                .foregroundStyle(.secondary)
+                                .font(.title3 .bold())
+                            Spacer()
+                        }
+                        .padding()
+                        CarUpcomingEvent(name: "Simon", reason: "school cause im too lazy to walk 5 minutes", range: "Tomorrow", color: .pink, mustBring: true)
+                            .padding(.bottom, 10)
+                        CarUpcomingEvent(name: "Dad", reason: "check engine", range: "Tomorrow", color: .orange, mustBring: false)
+                        CarUpcomingEvent(name: "Charlie", reason: "work stuff", range: "Tomorrow", color: .blue, mustBring: false)
                     }
-                    .padding()
-                    CarUpcomingEvent(name: "Simon", reason: "school cause im too lazy to walk 5 minutes", range: "Tomorrow", color: .pink, mustBring: true)
-                        .padding(.bottom, 10)
-                    CarUpcomingEvent(name: "Dad", reason: "check engine", range: "Tomorrow", color: .orange, mustBring: false)
-                    CarUpcomingEvent(name: "Charlie", reason: "work stuff", range: "Tomorrow", color: .blue, mustBring: false)
                 }
+                .scrollIndicators(.hidden)
+                .safeAreaPadding()
+                .background(.custombackground)
             }
-            .scrollIndicators(.hidden)
-            .safeAreaPadding()
+            VStack {
+                ActionButtonsView()
+                Spacer()
+            }
         }
     }
 }

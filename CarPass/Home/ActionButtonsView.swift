@@ -8,28 +8,18 @@
 import SwiftUI
 
 struct ActionButtonsView: View {
+    @Environment(User.self) var user
     var body: some View {
         VStack {
             HStack {
-                Button(action: {
-                    // go back one month
-                }) {
-                    Text("Request Car")
-                        .bold()
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 8)
-                        .background {
-                            RoundedRectangle(cornerRadius: 8).fill(.shadow(.drop(color: .black.opacity(0.2), radius: 3, x: 0, y: 2)))
-                                .foregroundStyle(.bar)
-                        }
-                }
-                    .tint(.primary)
+                Text("CarPass")
+                    .font(.title3 .bold())
                 
                 Spacer()
                 Button(action: {
                     // go back one month
                 }) {
-                    CircleButton(systemName: "person.circle.fill")
+                    SymbolButton(systemName: "person.text.rectangle.fill")
                         .font(.largeTitle)
                         //.scaleEffect(2)
                 }
@@ -37,12 +27,15 @@ struct ActionButtonsView: View {
             }
         }
         .frame(height: 30)
-        .padding(15)
+        .padding([.horizontal, .bottom], 15)
         .background {
-            Rectangle().fill(.shadow(.inner(color: .black.opacity(0.1), radius: 20)))
-                .foregroundStyle(.ultraThinMaterial)
+            UnevenRoundedRectangle(cornerRadii: .init(topLeading: 47, bottomLeading: 10, bottomTrailing: 10, topTrailing: 47), style: .continuous).fill(.shadow(.inner(color: cc(user.myColor, style: .thin), radius: 30)))
+                .foregroundStyle(.custombackground)
                 .ignoresSafeArea()
         }
+        .compositingGroup()
+        .shadow(radius: 10)
+        //.shadow(color: .black, radius: 5, y: 2)
     }
 }
 

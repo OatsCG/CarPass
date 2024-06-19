@@ -39,7 +39,7 @@ struct CalendarView: View {
             }
                 .frame(height: 30)
                 .safeAreaPadding()
-                .background(.regularMaterial)
+                //.background(Color(white: 0.05))
             CalendarMonthView()
         }
     }

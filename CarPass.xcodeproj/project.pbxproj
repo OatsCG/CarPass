@@ -10,6 +10,7 @@
 		E55A58E82C229CEA000E6EA8 /* CarUpcomingEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55A58E72C229CEA000E6EA8 /* CarUpcomingEvent.swift */; };
 		E55A58EA2C2310E6000E6EA8 /* RangeAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55A58E92C2310E6000E6EA8 /* RangeAlert.swift */; };
 		E55A58EC2C2317B3000E6EA8 /* EpochDescriptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55A58EB2C2317B3000E6EA8 /* EpochDescriptions.swift */; };
+		E55A58EE2C232859000E6EA8 /* SymbolButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55A58ED2C232859000E6EA8 /* SymbolButton.swift */; };
 		E57E3FB12C22018800A567EE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57E3FB02C22018800A567EE /* User.swift */; };
 		E57E3FB52C220B1500A567EE /* NetworkConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57E3FB42C220B1500A567EE /* NetworkConstants.swift */; };
 		E57E3FB82C22178800A567EE /* NetworkModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57E3FB72C22178800A567EE /* NetworkModels.swift */; };
@@ -32,6 +33,7 @@
 		E55A58E72C229CEA000E6EA8 /* CarUpcomingEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarUpcomingEvent.swift; sourceTree = "<group>"; };
 		E55A58E92C2310E6000E6EA8 /* RangeAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeAlert.swift; sourceTree = "<group>"; };
 		E55A58EB2C2317B3000E6EA8 /* EpochDescriptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpochDescriptions.swift; sourceTree = "<group>"; };
+		E55A58ED2C232859000E6EA8 /* SymbolButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolButton.swift; sourceTree = "<group>"; };
 		E57E3FB02C22018800A567EE /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E57E3FB42C220B1500A567EE /* NetworkConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConstants.swift; sourceTree = "<group>"; };
 		E57E3FB72C22178800A567EE /* NetworkModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkModels.swift; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 			children = (
 				E57E3FC42C226BBB00A567EE /* CircleButton.swift */,
 				E57E3FC82C22865900A567EE /* CapsuleButton.swift */,
+				E55A58ED2C232859000E6EA8 /* SymbolButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -96,12 +99,12 @@
 		E57E3FBB2C222DFA00A567EE /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				E57E3FBC2C222E1800A567EE /* CalendarView.swift */,
+				E57E3FC22C2239CB00A567EE /* ActionButtonsView.swift */,
 				E57E3FBE2C2230AA00A567EE /* CarStatusView.swift */,
+				E57E3FBC2C222E1800A567EE /* CalendarView.swift */,
 				E57E3FC62C2283A000A567EE /* CarRequestAlert.swift */,
 				E55A58E72C229CEA000E6EA8 /* CarUpcomingEvent.swift */,
 				E57E3FC02C22330F00A567EE /* RangeStatusView.swift */,
-				E57E3FC22C2239CB00A567EE /* ActionButtonsView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -227,6 +230,7 @@
 				E5EEA0872C21F00B008A06BB /* ContentView.swift in Sources */,
 				E57E3FC92C22865900A567EE /* CapsuleButton.swift in Sources */,
 				E57E3FBF2C2230AA00A567EE /* CarStatusView.swift in Sources */,
+				E55A58EE2C232859000E6EA8 /* SymbolButton.swift in Sources */,
 				E57E3FC12C22330F00A567EE /* RangeStatusView.swift in Sources */,
 				E55A58E82C229CEA000E6EA8 /* CarUpcomingEvent.swift in Sources */,
 				E57E3FB82C22178800A567EE /* NetworkModels.swift in Sources */,

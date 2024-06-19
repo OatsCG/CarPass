@@ -31,10 +31,7 @@ struct CarStatusView: View {
             .padding(.vertical, 10)
         }
             .multilineTextAlignment(.leading)
-            .background {
-                Rectangle().fill(Color.black.gradient)
-                    .ignoresSafeArea()
-            }
+            .padding(.top, 30)
     }
 }
 
