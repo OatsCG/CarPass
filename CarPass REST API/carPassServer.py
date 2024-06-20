@@ -33,6 +33,17 @@ def getcar():
     user = carPass.get_car(id)
     return jsonify(user)
 
+# /carpassapi/sendrangerequest?carid=UUID&userid=UUID&start=int&end=int&reason=str   returns bool
+@app.route('/carpassapi/sendrangerequest', methods=['GET'])
+def sendrangerequest():
+    carid = request.args.get('carid', default='', type=str)
+    userid = request.args.get('userid', default='', type=str)
+    start = request.args.get('start', default=0, type=int)
+    end = request.args.get('end', default=1, type=int)
+    reason = request.args.get('reason', default='', type=str)
+    ret = carPass.new_timerange(carid, userid, start, end)
+    return jsonify(ret != None)
+
 # /carpassapi/acceptrange?carid=UUID&userid=UUID&rangeid=UUID   returns bool
 @app.route('/carpassapi/acceptrange', methods=['GET'])
 def acceptrange():
@@ -69,6 +80,14 @@ def forceacceptinvite():
         return jsonify(inv)
     else:
         return False
+
+# /carpassapi/dismissinvite?carid=UUID&userid=UUID   returns bool
+@app.route('/carpassapi/dismissinvite', methods=['GET'])
+def dismissinvite():
+    carid = request.args.get('carid', default='', type=str)
+    userid = request.args.get('userid', default='', type=str)
+    #invite = carPass.dismiss_invite(carid, userid)
+    return jsonify(invite)
 
 # /carpassapi/checkinvites?userid=UUID   returns dict or None
 @app.route('/carpassapi/checkinvites', methods=['GET'])

@@ -345,6 +345,23 @@ import SwiftUI
         }
     }
     
+    func send_car_request(start: Int, end: Int, reason: String) {
+        self.isPushUpdatingInfo = true
+        if let car = self.car {
+            fetchServerEndpoint(endpoint: "sendrangerequest?carid=\(car)&userid=\(self.userID)&start=\(start)&end=\(end)&reason=\(reason)", fetchHash: UUID(), decodeAs: Bool.self) { (result, returnHash) in
+                switch result {
+                case .success(_):
+                    self.isPushUpdatingInfo = false
+                case .failure(let error):
+                    print(error)
+                    self.isPushUpdatingInfo = false
+                }
+            }
+        } else {
+            self.isPushUpdatingInfo = false
+        }
+    }
+    
 }
 
 enum FetchStatus {

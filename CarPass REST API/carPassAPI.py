@@ -215,7 +215,7 @@ class CarPass:
         self.update_storage()
         return True
 
-    def new_timerange(self, carID: UUID, userID: UUID, startEpoch: int, endEpoch: int) -> UUID | None:
+    def new_timerange(self, carID: UUID, userID: UUID, startEpoch: int, endEpoch: int, reason: str) -> UUID | None:
         car = self.get_car(carID)
         if car == None:
             return None
@@ -227,7 +227,7 @@ class CarPass:
                     "user": userID,
                     "username": user["name"],
                     "usercolor": user["color"],
-                    "reason": "smd",
+                    "reason": reason,
                     "accepted": [],
                     "start": startEpoch,
                     "end": endEpoch
