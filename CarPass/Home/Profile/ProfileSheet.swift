@@ -96,12 +96,12 @@ struct ProfileSheet: View {
                             ForEach(user.carUsers, id: \.id) { caruser in
                                 CarProfileCapsule(text: Text("\(caruser.name)"), pending: !caruser.confirmed, color: strtocc(caruser.color), isMe: caruser.id == user.userID)
                             }
-                            Button(action: {
-                                
-                            }) {
-                                CapsuleButton(text: Text("Invite..."), lit: false, color: .red)
+                            if let car = user.car {
+                                ShareLink(item: URL(string: "carpassapp://invite/\(car)")!) {
+                                    CapsuleButton(text: Text("Invite..."), lit: false, color: .red)
+                                }
+                                .buttonStyle(.plain)
                             }
-                            .buttonStyle(.plain)
                         }
                     }
                 }

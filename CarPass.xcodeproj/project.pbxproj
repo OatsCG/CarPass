@@ -33,6 +33,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E53E659B2C23EEE900B9B7C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		E55A58E72C229CEA000E6EA8 /* CarUpcomingEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarUpcomingEvent.swift; sourceTree = "<group>"; };
 		E55A58E92C2310E6000E6EA8 /* RangeAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeAlert.swift; sourceTree = "<group>"; };
 		E55A58EB2C2317B3000E6EA8 /* EpochDescriptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpochDescriptions.swift; sourceTree = "<group>"; };
@@ -153,6 +154,7 @@
 		E5EEA0832C21F00B008A06BB /* CarPass */ = {
 			isa = PBXGroup;
 			children = (
+				E53E659B2C23EEE900B9B7C8 /* Info.plist */,
 				E5EEA0842C21F00B008A06BB /* CarPassApp.swift */,
 				E5EEA0862C21F00B008A06BB /* ContentView.swift */,
 				E57E3FB92C222CB100A567EE /* HomeView.swift */,
@@ -398,6 +400,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CarPass/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -436,6 +439,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CarPass/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;

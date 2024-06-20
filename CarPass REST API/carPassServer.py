@@ -50,6 +50,21 @@ def acceptinvite():
     invite = carPass.accept_invite(carid, userid)
     return jsonify(invite)
 
+# /carpassapi/forceacceptinvite?carid=UUID&userid=UUID   returns bool
+@app.route('/carpassapi/forceacceptinvite', methods=['GET'])
+def forceacceptinvite():
+    carid = request.args.get('carid', default='', type=str)
+    userid = request.args.get('userid', default='', type=str)
+    print("inviting...")
+    invite = carPass.invite_to_car(carid, userid)
+    if (invite == True):
+        print("accepting...")
+        inv = carPass.accept_invite(carid, userid)
+        print(inv)
+        return jsonify(inv)
+    else:
+        return False
+
 # /carpassapi/ihavecar?carid=UUID&userid=UUID   returns bool
 @app.route('/carpassapi/ihavecar', methods=['GET'])
 def ihavecar():
@@ -84,4 +99,5 @@ def updatename():
 
 
 if __name__ == '__main__':
-    app.run(host='192.168.2.231', port=5000, debug=True)
+    #app.run(host='192.168.2.231', port=5000, debug=True)
+    app.run(host='192.168.2.18', port=5000, debug=True)

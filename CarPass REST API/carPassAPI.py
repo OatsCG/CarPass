@@ -117,6 +117,7 @@ class CarPass:
         else:
             car["pendingInvites"].append(userID)
             self.update_storage()
+            return True
     
     def get_car_users(self, carID: UUID) -> dict | None:
         car = self.get_car(carID)
@@ -138,7 +139,7 @@ class CarPass:
                     "id": user["id"],
                     "name": user["name"],
                     "color": user["color"],
-                    "confirmed": True
+                    "confirmed": False
                 })
             return({
                 "users": carusers
@@ -177,16 +178,13 @@ class CarPass:
         return None
 
     def accept_invite(self, carID: UUID, userID: UUID) -> bool:
-        for car in self.cars:
-            if car["id"] == carID:
-                car["users"].append(userID)
-                car["pendingInvites"].remove(userID)
-                for user in self.users:
-                    if user["id"] == userID:
-                        user["car"] = carID
-                        self.update_storage()
-                        return True
-        return False
+        car = self.get_car(carID)
+        car["users"].append(userID)
+        car["pendingInvites"].remove(userID)
+        user = self.get_user(userID)
+        user["car"] = carID
+        self.update_storage()
+        return True
 
     def new_timerange(self, carID: UUID, userID: UUID, startEpoch: int, endEpoch: int) -> UUID | None:
         car = self.get_car(carID)

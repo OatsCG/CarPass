@@ -23,10 +23,26 @@ import SwiftUI
     
     private var isFetchingCar: Bool = false
     var isPushUpdatingInfo: Bool = false
+    var isPushUpdatingCar: Bool = false
     
     private var syncedTimer: Timer? = nil
     
     init() {
+        fetchUser()
+        
+        // start fetch timer
+        self.syncedTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true) { _ in // should be 0.3
+            self.fetchLoop()
+        }
+    }
+    
+    func fetchLoop() {
+        self.fetchUser()
+        self.fetchCar()
+        self.fetchUsers()
+    }
+    
+    func fetchUser() {
         // update UserID
         let userID: String? = UserDefaults.standard.string(forKey: "userID")
         if let userID = userID {
@@ -95,16 +111,6 @@ import SwiftUI
                 }
             }
         }
-        
-        // start fetch timer
-        self.syncedTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true) { _ in
-            self.fetchLoop()
-        }
-    }
-    
-    func fetchLoop() {
-        self.fetchCar()
-        self.fetchUsers()
     }
     
     func fetchCar() {
@@ -162,6 +168,8 @@ import SwiftUI
                     self.isFetchingCar = false
                 }
             }
+        } else {
+            self.isFetchingCar = false
         }
     }
     
@@ -169,7 +177,7 @@ import SwiftUI
         if let carid = self.car {
             self.isFetchingCar = true
             fetchServerEndpoint(endpoint: "getusers?carid=\(carid)", fetchHash: UUID(), decodeAs: FetchedCarUsers.self) { (result, returnHash) in
-                if (self.isPushUpdatingInfo) {
+                if (self.isPushUpdatingInfo || self.isPushUpdatingCar) {
                     self.isFetchingCar = false
                     return
                 }
@@ -216,6 +224,45 @@ import SwiftUI
                 print(error)
                 self.isPushUpdatingInfo = false
             }
+        }
+    }
+    
+    func accept_invite(carID: CarID) {
+        withAnimation {
+            self.isPushUpdatingCar = true
+        }
+        fetchServerEndpoint(endpoint: "forceacceptinvite?carid=\(carID)&userid=\(self.userID)", fetchHash: UUID(), decodeAs: Bool.self) { (result, returnHash) in
+            switch result {
+            case .success(_):
+                withAnimation {
+                    self.isPushUpdatingCar = false
+                }
+            case .failure(let error):
+                print(error)
+                withAnimation {
+                    self.isPushUpdatingCar = false
+                }
+            }
+        }
+    }
+    
+    func update_ihavecar() {
+        self.isPushUpdatingInfo = true
+        withAnimation {
+            self.whohasthecar = FetchedUser(name: self.username, id: self.userID, color: cctostr(self.myColor))
+        }
+        if let car = self.car {
+            fetchServerEndpoint(endpoint: "ihavecar?carid=\(car)&userid=\(self.userID)", fetchHash: UUID(), decodeAs: Bool.self) { (result, returnHash) in
+                switch result {
+                case .success(_):
+                    self.isPushUpdatingInfo = false
+                case .failure(let error):
+                    print(error)
+                    self.isPushUpdatingInfo = false
+                }
+            }
+        } else {
+            self.isPushUpdatingInfo = false
         }
     }
     

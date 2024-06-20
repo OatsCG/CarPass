@@ -22,7 +22,7 @@ struct CarStatusView: View {
                     CapsuleButton(text: Text("Request Car"), lit: true, color: user.myColor)
                 }
                 Button(action: {
-                    
+                    user.update_ihavecar()
                 }) {
                     CapsuleButton(text: Text("I Have The Car"), lit: false, color: user.myColor)
                 }
