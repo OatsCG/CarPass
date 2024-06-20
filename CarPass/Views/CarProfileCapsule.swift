@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct CarProfileCapsule: View {
-    @State var text: String
-    @State var pending: Bool
+    var text: String
+    var pending: Bool
     @State var height: CGFloat = 55
     var color: CustomColor
     var isMe: Bool

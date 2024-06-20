@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct CapsuleButton: View {
-    @State var text: Text
-    @State var lit: Bool
+    var text: Text
+    var lit: Bool
     @State var height: CGFloat = 55
     var color: CustomColor
     var body: some View {
