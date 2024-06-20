@@ -141,7 +141,7 @@ struct ProfileSheet: View {
             InviteUserSheet(showingInviteSheet: $showingInviteSheet)
         })
         .sheet(isPresented: $showingJoinSheet, content: {
-            Text("join sheet")
+            JoinCarSheet(showingJoinSheet: $showingJoinSheet)
         })
     }
 }
