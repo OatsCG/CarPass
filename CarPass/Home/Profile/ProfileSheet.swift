@@ -10,6 +10,8 @@ import SwiftUI
 struct ProfileSheet: View {
     @Environment(User.self) var user
     @State var nameEditor: String = "Username"
+    @State var showingInviteSheet: Bool = false
+    @State var showingJoinSheet: Bool = false
     @Binding var showingProfileSheet: Bool
     var body: some View {
         VStack(spacing: 0) {
@@ -43,10 +45,11 @@ struct ProfileSheet: View {
                     VStack {
                         HStack {
                             Text("Name")
-                                .font(.subheadline)
-                                .foregroundStyle(.secondary)
                             Spacer()
+                            Text("User ID: **\(user.userID)**")
                         }
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
                         .padding(.horizontal, 8)
                         TextField("Username", text: $nameEditor)
                             .font(.headline .weight(.medium))
@@ -62,8 +65,16 @@ struct ProfileSheet: View {
                             .padding(.horizontal, 16)
                             .padding(.vertical, 12)
                             .background {
-                                Capsule().fill(.backgroundsecondary)
-                                    .stroke(.quaternary)
+                                ZStack {
+                                    Capsule().fill(.backgroundsecondary)
+                                        .stroke(.quaternary)
+                                    HStack {
+                                        Spacer()
+                                        Image(systemName: "pencil")
+                                            .foregroundStyle(.secondary)
+                                    }
+                                    .padding()
+                                }
                             }
                     }
                     VStack {
@@ -87,29 +98,51 @@ struct ProfileSheet: View {
                     VStack {
                         HStack {
                             Text("Car")
-                                .font(.subheadline)
-                                .foregroundStyle(.secondary)
                             Spacer()
+                            if let car = user.car {
+                                Text("Car ID: **\(car)**")
+                            }
                         }
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
                         .padding(.horizontal, 8)
                         VStack(spacing: 10) {
                             ForEach(user.carUsers, id: \.id) { caruser in
-                                CarProfileCapsule(text: Text("\(caruser.name)"), pending: !caruser.confirmed, color: strtocc(caruser.color), isMe: caruser.id == user.userID)
+                                CarProfileCapsule(text: caruser.name, pending: !caruser.confirmed, color: strtocc(caruser.color), isMe: caruser.id == user.userID)
                             }
-                            if let car = user.car {
-                                ShareLink(item: URL(string: "carpassapp://invite/\(car)")!) {
-                                    CapsuleButton(text: Text("Invite..."), lit: false, color: .red)
-                                }
-                                .buttonStyle(.plain)
+                            Button(action: {
+                                showingInviteSheet = true
+                            }) {
+                                CapsuleButton(text: Text("**Invite...**"), lit: false, color: .red)
+                            }
+                            .buttonStyle(.plain)
+                        }
+                        
+                        VStack(spacing: 10) {
+                            ForEach(user.carInvites, id: \.self) { carid in
+                                CarInviteAlert(carID: carid)
                             }
                         }
+                        .padding(.vertical, 20)
+                        
+                        Button(action: {
+                            showingJoinSheet = true
+                        }) {
+                            CapsuleButton(text: Text("**Join Another Car...**"), lit: false, color: .red)
+                        }
+                        .buttonStyle(.plain)
                     }
                 }
             }
             .safeAreaPadding()
-            
             .background(.custombackground)
         }
+        .sheet(isPresented: $showingInviteSheet, content: {
+            InviteUserSheet(showingInviteSheet: $showingInviteSheet)
+        })
+        .sheet(isPresented: $showingJoinSheet, content: {
+            Text("join sheet")
+        })
     }
 }
 

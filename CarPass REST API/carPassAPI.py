@@ -1,6 +1,7 @@
 import os
 import json
-from uuid import UUID, uuid4
+import random
+from uuid import UUID
 
 # generate cars if doesnt exist
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -27,6 +28,16 @@ def get_data() -> dict:
         print(f"Error: {e}")
         return None
 
+hashbucket = []
+characters = "ABCDEFGHKMNPQRSTUVWXYZ23456789"
+def uuid4() -> str:
+    rand = ''.join(random.choices(characters, k=4))
+    if rand in hashbucket:
+        return uuid4()
+    else:
+        hashbucket.append(rand)
+        return rand
+
 
 class CarPass:
     cars: list[dict]
@@ -40,6 +51,10 @@ class CarPass:
         else:
             self.cars = d["cars"]
             self.users = d["users"]
+            for car in self.cars:
+                hashbucket.append(car["id"])
+            for user in self.users:
+                hashbucket.append(user["id"])
     
     def update_storage(self) -> bool:
         # returns true if successful
@@ -170,12 +185,15 @@ class CarPass:
             self.update_storage()
 
 
-    def check_invites(self, userID: UUID) -> UUID | None:
+    def check_invites(self, userID: UUID) -> dict | None:
+        invitelist = []
         for car in self.cars:
             invites = car["pendingInvites"]
             if userID in invites:
-                return car["id"]
-        return None
+                invitelist.append(car["id"])
+        return {
+            "invites": invitelist
+        }
 
     def accept_invite(self, carID: UUID, userID: UUID) -> bool:
         car = self.get_car(carID)

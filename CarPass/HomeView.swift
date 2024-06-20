@@ -60,7 +60,7 @@ struct HomeView: View {
         .onOpenURL { url in
             if let host = url.host, url.scheme == "carpassapp", url.pathComponents.count > 1 {
                 let carID = url.pathComponents[1]
-                user.accept_invite(carID: carID)
+                user.force_accept_invite(carID: carID)
             }
         }
     }

@@ -42,6 +42,14 @@ def acceptrange():
     ret = carPass.accept_timerange(carid, userid, rangeid)
     return jsonify(ret)
 
+# /carpassapi/pendinvite?carid=UUID&userid=UUID   returns bool
+@app.route('/carpassapi/pendinvite', methods=['GET'])
+def pendinvite():
+    carid = request.args.get('carid', default='', type=str)
+    userid = request.args.get('userid', default='', type=str)
+    invite = carPass.invite_to_car(carid, userid)
+    return jsonify(invite)
+
 # /carpassapi/acceptinvite?carid=UUID&userid=UUID   returns bool
 @app.route('/carpassapi/acceptinvite', methods=['GET'])
 def acceptinvite():
@@ -55,15 +63,19 @@ def acceptinvite():
 def forceacceptinvite():
     carid = request.args.get('carid', default='', type=str)
     userid = request.args.get('userid', default='', type=str)
-    print("inviting...")
     invite = carPass.invite_to_car(carid, userid)
     if (invite == True):
-        print("accepting...")
         inv = carPass.accept_invite(carid, userid)
-        print(inv)
         return jsonify(inv)
     else:
         return False
+
+# /carpassapi/checkinvites?userid=UUID   returns dict or None
+@app.route('/carpassapi/checkinvites', methods=['GET'])
+def checkinvites():
+    userid = request.args.get('userid', default='', type=str)
+    invites = carPass.check_invites(userid)
+    return invites
 
 # /carpassapi/ihavecar?carid=UUID&userid=UUID   returns bool
 @app.route('/carpassapi/ihavecar', methods=['GET'])

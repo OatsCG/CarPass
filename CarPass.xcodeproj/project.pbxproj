@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E53E659D2C23FCD800B9B7C8 /* CarInviteAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53E659C2C23FCD800B9B7C8 /* CarInviteAlert.swift */; };
+		E53E659F2C2400FF00B9B7C8 /* InviteUserSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53E659E2C2400FF00B9B7C8 /* InviteUserSheet.swift */; };
 		E55A58E82C229CEA000E6EA8 /* CarUpcomingEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55A58E72C229CEA000E6EA8 /* CarUpcomingEvent.swift */; };
 		E55A58EA2C2310E6000E6EA8 /* RangeAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55A58E92C2310E6000E6EA8 /* RangeAlert.swift */; };
 		E55A58EC2C2317B3000E6EA8 /* EpochDescriptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55A58EB2C2317B3000E6EA8 /* EpochDescriptions.swift */; };
@@ -34,6 +36,8 @@
 
 /* Begin PBXFileReference section */
 		E53E659B2C23EEE900B9B7C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		E53E659C2C23FCD800B9B7C8 /* CarInviteAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarInviteAlert.swift; sourceTree = "<group>"; };
+		E53E659E2C2400FF00B9B7C8 /* InviteUserSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteUserSheet.swift; sourceTree = "<group>"; };
 		E55A58E72C229CEA000E6EA8 /* CarUpcomingEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarUpcomingEvent.swift; sourceTree = "<group>"; };
 		E55A58E92C2310E6000E6EA8 /* RangeAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeAlert.swift; sourceTree = "<group>"; };
 		E55A58EB2C2317B3000E6EA8 /* EpochDescriptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpochDescriptions.swift; sourceTree = "<group>"; };
@@ -86,6 +90,8 @@
 			children = (
 				E560EBB72C233414007EE00D /* ProfileSheet.swift */,
 				E560EBBA2C233A0E007EE00D /* Splotch.swift */,
+				E53E659E2C2400FF00B9B7C8 /* InviteUserSheet.swift */,
+				E53E659C2C23FCD800B9B7C8 /* CarInviteAlert.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -246,8 +252,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E53E659D2C23FCD800B9B7C8 /* CarInviteAlert.swift in Sources */,
 				E56374362C2357DB00DB91AC /* CarProfileCapsule.swift in Sources */,
 				E55A58EA2C2310E6000E6EA8 /* RangeAlert.swift in Sources */,
+				E53E659F2C2400FF00B9B7C8 /* InviteUserSheet.swift in Sources */,
 				E57E3FB12C22018800A567EE /* User.swift in Sources */,
 				E560EBB82C233414007EE00D /* ProfileSheet.swift in Sources */,
 				E57E3FC32C2239CB00A567EE /* ActionButtonsView.swift in Sources */,

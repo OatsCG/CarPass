@@ -17,6 +17,7 @@ import SwiftUI
     var car: CarID? = nil
     var carUsers: [FetchedCarUser] = []
     var whohasthecar: FetchedUser? = nil
+    var carInvites: [CarID] = []
     var pendingAlerts: [PendingAlert] = []
     var confirmedAlerts: [ConfirmedAlert] = []
     var outdatedAlerts: [ConfirmedAlert] = []
@@ -40,6 +41,7 @@ import SwiftUI
         self.fetchUser()
         self.fetchCar()
         self.fetchUsers()
+        self.fetchPendingCarInvites()
     }
     
     func fetchUser() {
@@ -54,10 +56,12 @@ import SwiftUI
                 switch result {
                 case .success(let data):
                     if let data = data {
-                        self.userID = data.id
-                        self.username = data.name
-                        self.myColor = strtocc(data.color)
-                        self.car = data.car
+                        withAnimation {
+                            self.userID = data.id
+                            self.username = data.name
+                            self.myColor = strtocc(data.color)
+                            self.car = data.car
+                        }
                         withAnimation {
                             self.fetchStatus = .success
                         }
@@ -195,6 +199,26 @@ import SwiftUI
         }
     }
     
+    func fetchPendingCarInvites() {
+        self.isFetchingCar = true
+        fetchServerEndpoint(endpoint: "checkinvites?userid=\(self.userID)", fetchHash: UUID(), decodeAs: FetchedInvites.self) { (result, returnHash) in
+            if (self.isPushUpdatingInfo || self.isPushUpdatingCar) {
+                self.isFetchingCar = false
+                return
+            }
+            switch result {
+            case .success(let data):
+                withAnimation {
+                    self.carInvites = data.invites
+                }
+                self.isFetchingCar = false
+            case .failure(let error):
+                print(error)
+                self.isFetchingCar = false
+            }
+        }
+    }
+    
     func update_color(to color: CustomColor) {
         self.isPushUpdatingInfo = true
         withAnimation {
@@ -231,6 +255,25 @@ import SwiftUI
         withAnimation {
             self.isPushUpdatingCar = true
         }
+        fetchServerEndpoint(endpoint: "acceptinvite?carid=\(carID)&userid=\(self.userID)", fetchHash: UUID(), decodeAs: Bool.self) { (result, returnHash) in
+            switch result {
+            case .success(_):
+                withAnimation {
+                    self.isPushUpdatingCar = false
+                }
+            case .failure(let error):
+                print(error)
+                withAnimation {
+                    self.isPushUpdatingCar = false
+                }
+            }
+        }
+    }
+    
+    func force_accept_invite(carID: CarID) {
+        withAnimation {
+            self.isPushUpdatingCar = true
+        }
         fetchServerEndpoint(endpoint: "forceacceptinvite?carid=\(carID)&userid=\(self.userID)", fetchHash: UUID(), decodeAs: Bool.self) { (result, returnHash) in
             switch result {
             case .success(_):
@@ -243,6 +286,23 @@ import SwiftUI
                     self.isPushUpdatingCar = false
                 }
             }
+        }
+    }
+    
+    func invite_user(userID: String) {
+        self.isPushUpdatingInfo = true
+        if let car = self.car {
+            fetchServerEndpoint(endpoint: "pendinvite?carid=\(car)&userid=\(userID)", fetchHash: UUID(), decodeAs: Bool.self) { (result, returnHash) in
+                switch result {
+                case .success(_):
+                    self.isPushUpdatingInfo = false
+                case .failure(let error):
+                    print(error)
+                    self.isPushUpdatingInfo = false
+                }
+            }
+        } else {
+            self.isPushUpdatingInfo = false
         }
     }
     

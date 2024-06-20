@@ -69,3 +69,7 @@ class FetchedConfirmedRange: Codable {
     var start: Int
     var end: Int
 }
+
+class FetchedInvites: Codable {
+    var invites: [CarID]
+}

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CarProfileCapsule: View {
-    @State var text: Text
+    @State var text: String
     @State var pending: Bool
     @State var height: CGFloat = 55
     var color: CustomColor
@@ -17,7 +17,7 @@ struct CarProfileCapsule: View {
         HStack {
             Image(systemName: "person.fill")
                 .foregroundStyle(cc(color, style: .primary))
-            Text("\(text)")
+            Text(text)
                 .foregroundStyle(.primary)
             Spacer()
             
@@ -49,7 +49,7 @@ struct CarProfileCapsule: View {
 #Preview {
     VStack {
         Spacer()
-        CarProfileCapsule(text: Text("Charlie").bold(), pending: true, color: .red, isMe: false)
+        CarProfileCapsule(text: "Charlie", pending: true, color: .red, isMe: false)
         Spacer()
     }
         .background(.custombackground)
