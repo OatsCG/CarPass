@@ -15,6 +15,7 @@ import SwiftUI
     var username: String = ""
     var myColor: CustomColor = .blue
     var car: CarID? = nil
+    var carname: String = ""
     var carUsers: [FetchedCarUser] = []
     var whohasthecar: FetchedUser? = nil
     var carInvites: [CarID] = []
@@ -129,6 +130,7 @@ import SwiftUI
                     self.isFetchingCar = false
                     withAnimation {
                         self.whohasthecar = FetchedUser(name: data.whohasusername, id: data.whohas, color: data.whohasusercolor)
+                        self.carname = data.name
                     }
                     
                     Task.detached { [weak self] in
@@ -251,6 +253,26 @@ import SwiftUI
         }
     }
     
+    func update_car_name(to name: String) {
+        self.isPushUpdatingInfo = true
+        withAnimation {
+            self.carname = name
+        }
+        if let car = self.car {
+            fetchServerEndpoint(endpoint: "updatecarname?carid=\(car)&name=\(name)", fetchHash: UUID(), decodeAs: Bool.self) { (result, returnHash) in
+                switch result {
+                case .success(_):
+                    self.isPushUpdatingInfo = false
+                case .failure(let error):
+                    print(error)
+                    self.isPushUpdatingInfo = false
+                }
+            }
+        } else {
+            self.isPushUpdatingInfo = false
+        }
+    }
+    
     func accept_invite(carID: CarID) {
         withAnimation {
             self.isPushUpdatingCar = true
@@ -308,9 +330,6 @@ import SwiftUI
     
     func update_ihavecar() {
         self.isPushUpdatingInfo = true
-        withAnimation {
-            self.whohasthecar = FetchedUser(name: self.username, id: self.userID, color: cctostr(self.myColor))
-        }
         if let car = self.car {
             fetchServerEndpoint(endpoint: "ihavecar?carid=\(car)&userid=\(self.userID)", fetchHash: UUID(), decodeAs: Bool.self) { (result, returnHash) in
                 switch result {

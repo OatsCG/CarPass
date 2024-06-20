@@ -10,6 +10,7 @@ import SwiftUI
 struct ProfileSheet: View {
     @Environment(User.self) var user
     @State var nameEditor: String = "Username"
+    @State var carNameEditor: String = "Car 1"
     @State var showingInviteSheet: Bool = false
     @State var showingJoinSheet: Bool = false
     @Binding var showingProfileSheet: Bool
@@ -57,8 +58,10 @@ struct ProfileSheet: View {
                                 nameEditor = user.username
                             }
                             .onSubmit {
-                                print("UPDATING NAME")
                                 user.update_name(to: nameEditor)
+                            }
+                            .onChange(of: user.username) {
+                                nameEditor = user.username
                             }
                             .submitLabel(.done)
                             .textFieldStyle(.plain)
@@ -106,6 +109,36 @@ struct ProfileSheet: View {
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                         .padding(.horizontal, 8)
+                        .padding(.top, 30)
+                        TextField("Car Name...", text: $carNameEditor)
+                            .font(.headline .weight(.medium))
+                            .onAppear {
+                                print("name: \(user.carname)")
+                                carNameEditor = user.carname
+                            }
+                            .onSubmit {
+                                print("UPDATING NAME")
+                                user.update_car_name(to: carNameEditor)
+                            }
+                            .onChange(of: user.carname) {
+                                carNameEditor = user.carname
+                            }
+                            .submitLabel(.done)
+                            .textFieldStyle(.plain)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 12)
+                            .background {
+                                ZStack {
+                                    Capsule().fill(.backgroundsecondary)
+                                        .stroke(.quaternary)
+                                    HStack {
+                                        Spacer()
+                                        Image(systemName: "pencil")
+                                            .foregroundStyle(.secondary)
+                                    }
+                                    .padding()
+                                }
+                            }
                         VStack(spacing: 10) {
                             ForEach(user.carUsers, id: \.id) { caruser in
                                 CarProfileCapsule(text: caruser.name, pending: !caruser.confirmed, color: strtocc(caruser.color), isMe: caruser.id == user.userID)
@@ -133,8 +166,8 @@ struct ProfileSheet: View {
                         .buttonStyle(.plain)
                     }
                 }
+                .safeAreaPadding()
             }
-            .safeAreaPadding()
             .background(.custombackground)
         }
         .sheet(isPresented: $showingInviteSheet, content: {

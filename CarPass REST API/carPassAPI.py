@@ -175,13 +175,24 @@ class CarPass:
         else:
             user["name"] = name
             self.update_storage()
-    
-    def i_have_car(self, carID: UUID, userID: UUID) -> bool:
+
+    def update_car_name(self, carID: UUID, name: str) -> bool:
         car = self.get_car(carID)
         if car == None:
             return False
         else:
+            car["name"] = name
+            self.update_storage()
+    
+    def i_have_car(self, carID: UUID, userID: UUID) -> bool:
+        car = self.get_car(carID)
+        user = self.get_user(userID)
+        if car == None or user == None:
+            return False
+        else:
             car["whohas"] = userID
+            car["whohasusername"] = user["name"]
+            car["whohasusercolor"] = user["color"]
             self.update_storage()
 
 

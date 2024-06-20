@@ -108,6 +108,14 @@ def updatename():
     ret = carPass.update_name(userid, name)
     return jsonify(ret)
 
+# /carpassapi/updatecarname?carid=UUID&name=String   returns bool
+@app.route('/carpassapi/updatecarname', methods=['GET'])
+def updatecarname():
+    carid = request.args.get('carid', default='', type=str)
+    name = request.args.get('name', default='', type=str)
+    ret = carPass.update_car_name(carid, name)
+    return jsonify(ret)
+
 
 
 if __name__ == '__main__':

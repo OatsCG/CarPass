@@ -9,20 +9,24 @@ import SwiftUI
 
 struct CarStatusView: View {
     @Environment(User.self) var user
+    @State var showingHaveCarAlert: Bool = false
+    @State var showingRequestSheet: Bool = false
     var body: some View {
         VStack {
-            Text("**Simon** has the car")
-                .font(.title2)
-            Text("Until Friday")
-                .foregroundStyle(.secondary)
+            if let whohasthecar = user.whohasthecar {
+                Text("**\(whohasthecar.name)** has the car")
+                    .font(.title2)
+                Text("Until Friday")
+                    .foregroundStyle(.secondary)
+            }
             HStack(spacing: 10) {
                 Button(action: {
-                    
+                    showingRequestSheet = true
                 }) {
                     CapsuleButton(text: Text("Request Car"), lit: true, color: user.myColor)
                 }
                 Button(action: {
-                    user.update_ihavecar()
+                    showingHaveCarAlert = true
                 }) {
                     CapsuleButton(text: Text("I Have The Car"), lit: false, color: user.myColor)
                 }
@@ -33,6 +37,18 @@ struct CarStatusView: View {
         }
             .multilineTextAlignment(.leading)
             .padding(.top, 30)
+            .alert(isPresented: $showingHaveCarAlert) {
+                Alert(
+                    title: Text("Do you really have the car?"),
+                    primaryButton: .default(Text("Yes")) {
+                        user.update_ihavecar()
+                    },
+                    secondaryButton: .cancel()
+                )
+            }
+            .sheet(isPresented: $showingRequestSheet, content: {
+                Text("request away!")
+            })
     }
 }
 
