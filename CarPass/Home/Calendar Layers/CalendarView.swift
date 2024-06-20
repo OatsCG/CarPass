@@ -8,42 +8,16 @@
 import SwiftUI
 
 struct CalendarView: View {
+    @State var 
     var body: some View {
         VStack(spacing: 3) {
-            HStack {
-                Button(action: {
-                    // go back one month
-                }) {
-                    Image(systemName: "chevron.backward")
-                        .font(.largeTitle)
-                        .symbolRenderingMode(.hierarchical)
-                }
-                    .tint(.primary)
-                Spacer()
-                Button(action: {
-                    // open month/year picker
-                }) {
-                    Text("June 2024")
-                        .font(.title3 .bold())
-                }
-                    .tint(.primary)
-                Spacer()
-                Button(action: {
-                    // go forward one month
-                }) {
-                    Image(systemName: "chevron.forward")
-                        .font(.largeTitle)
-                        .symbolRenderingMode(.hierarchical)
-                }
-                    .tint(.primary)
-            }
-                .frame(height: 30)
-                .safeAreaPadding()
-                //.background(Color(white: 0.05))
+            CalendarHeader()
             CalendarMonthView()
         }
     }
 }
+
+
 
 struct CalendarMonthView: View {
     var body: some View {
@@ -103,7 +77,4 @@ struct CalendarDayView: View {
     HomeView()
         .environment(User())
 }
-
-
-
 

@@ -28,6 +28,8 @@
 		E57E3FC72C2283A000A567EE /* CarRequestAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57E3FC62C2283A000A567EE /* CarRequestAlert.swift */; };
 		E57E3FC92C22865900A567EE /* CapsuleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57E3FC82C22865900A567EE /* CapsuleButton.swift */; };
 		E57E3FCB2C22910800A567EE /* ColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57E3FCA2C22910800A567EE /* ColorManager.swift */; };
+		E5891EAE2C2491AC004B76C8 /* CalendarBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5891EAD2C2491AC004B76C8 /* CalendarBackend.swift */; };
+		E5891EB12C249463004B76C8 /* CalendarHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5891EB02C249463004B76C8 /* CalendarHeader.swift */; };
 		E5BAF82E2C24829D00CBF0B7 /* JoinCarSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BAF82D2C24829D00CBF0B7 /* JoinCarSheet.swift */; };
 		E5EEA0852C21F00B008A06BB /* CarPassApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EEA0842C21F00B008A06BB /* CarPassApp.swift */; };
 		E5EEA0872C21F00B008A06BB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EEA0862C21F00B008A06BB /* ContentView.swift */; };
@@ -58,6 +60,8 @@
 		E57E3FC62C2283A000A567EE /* CarRequestAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarRequestAlert.swift; sourceTree = "<group>"; };
 		E57E3FC82C22865900A567EE /* CapsuleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapsuleButton.swift; sourceTree = "<group>"; };
 		E57E3FCA2C22910800A567EE /* ColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorManager.swift; sourceTree = "<group>"; };
+		E5891EAD2C2491AC004B76C8 /* CalendarBackend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarBackend.swift; sourceTree = "<group>"; };
+		E5891EB02C249463004B76C8 /* CalendarHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHeader.swift; sourceTree = "<group>"; };
 		E5BAF82D2C24829D00CBF0B7 /* JoinCarSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinCarSheet.swift; sourceTree = "<group>"; };
 		E5EEA0812C21F00B008A06BB /* CarPass.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarPass.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5EEA0842C21F00B008A06BB /* CarPassApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarPassApp.swift; sourceTree = "<group>"; };
@@ -116,6 +120,7 @@
 				E57E3FB02C22018800A567EE /* User.swift */,
 				E55A58EB2C2317B3000E6EA8 /* EpochDescriptions.swift */,
 				E57E3FCA2C22910800A567EE /* ColorManager.swift */,
+				E5891EAD2C2491AC004B76C8 /* CalendarBackend.swift */,
 				E57E3FB62C2214B600A567EE /* Networking */,
 			);
 			path = Backend;
@@ -136,12 +141,21 @@
 			children = (
 				E57E3FC22C2239CB00A567EE /* ActionButtonsView.swift */,
 				E57E3FBE2C2230AA00A567EE /* CarStatusView.swift */,
-				E57E3FBC2C222E1800A567EE /* CalendarView.swift */,
+				E5891EAF2C249434004B76C8 /* Calendar Layers */,
 				E57E3FC02C22330F00A567EE /* RangeStatusView.swift */,
 				E560EBB92C2339FC007EE00D /* Profile */,
 				E560EBB62C232FBF007EE00D /* Alerts */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		E5891EAF2C249434004B76C8 /* Calendar Layers */ = {
+			isa = PBXGroup;
+			children = (
+				E57E3FBC2C222E1800A567EE /* CalendarView.swift */,
+				E5891EB02C249463004B76C8 /* CalendarHeader.swift */,
+			);
+			path = "Calendar Layers";
 			sourceTree = "<group>";
 		};
 		E5EEA0782C21F00B008A06BB = {
@@ -255,6 +269,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5891EB12C249463004B76C8 /* CalendarHeader.swift in Sources */,
 				E53E659D2C23FCD800B9B7C8 /* CarInviteAlert.swift in Sources */,
 				E56374362C2357DB00DB91AC /* CarProfileCapsule.swift in Sources */,
 				E55A58EA2C2310E6000E6EA8 /* RangeAlert.swift in Sources */,
@@ -274,6 +289,7 @@
 				E57E3FC12C22330F00A567EE /* RangeStatusView.swift in Sources */,
 				E55A58E82C229CEA000E6EA8 /* CarUpcomingEvent.swift in Sources */,
 				E57E3FB82C22178800A567EE /* NetworkModels.swift in Sources */,
+				E5891EAE2C2491AC004B76C8 /* CalendarBackend.swift in Sources */,
 				E57E3FC72C2283A000A567EE /* CarRequestAlert.swift in Sources */,
 				E5BAF82E2C24829D00CBF0B7 /* JoinCarSheet.swift in Sources */,
 				E560EBBB2C233A0E007EE00D /* Splotch.swift in Sources */,
