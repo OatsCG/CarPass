@@ -27,6 +27,30 @@ struct ActionButtonsView: View {
                 }
                     .tint(.primary)
             }
+            .overlay {
+                HStack {
+                    Spacer()
+                    if user.fetchStatus == .failed {
+                        Text("\(Image(systemName: "exclamationmark.triangle.fill")) No Connection")
+                            .font(.caption)
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 7)
+                            .background {
+                                ZStack {
+                                    Capsule().fill(.red)
+                                        .brightness(0.2)
+                                        .offset(y: -1)
+                                    Capsule().fill(.red)
+                                }
+                            }
+                    } else {
+                        Text("last updated: \(formatTime(user.lastUpdated))")
+                            .font(.caption)
+                            .foregroundStyle(.tertiary)
+                    }
+                    Spacer()
+                }
+            }
         }
         .frame(height: 30)
         .padding([.horizontal, .bottom], 15)
@@ -44,6 +68,12 @@ struct ActionButtonsView: View {
                 .environment(user)
         })
     }
+}
+
+func formatTime(_ date: Date) -> String {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "HH:mm:ss"
+    return formatter.string(from: date)
 }
 
 #Preview {

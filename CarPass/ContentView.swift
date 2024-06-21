@@ -12,13 +12,15 @@ struct ContentView: View {
     var body: some View {
         if (user.fetchStatus == .waiting || user.isPushUpdatingCar) {
             ProgressView()
-        } else if user.fetchStatus == .failed {
-            ContentUnavailableView("No Connection to Server", systemImage: "network.slash", description: Text("Try again later."))
         } else {
             HomeView()
         }
     }
 }
+
+//else if user.fetchStatus == .failed {
+//   ContentUnavailableView("No Connection to Server", systemImage: "network.slash", description: Text("Try again later."))
+//}
 
 #Preview {
     ContentView()

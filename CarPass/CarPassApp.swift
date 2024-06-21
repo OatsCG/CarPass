@@ -14,6 +14,7 @@ struct CarPassApp: App {
         WindowGroup {
             ContentView()
                 .environment(user)
+                .preferredColorScheme(.dark)
         }
     }
 }

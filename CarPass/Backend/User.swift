@@ -28,24 +28,43 @@ import SwiftUI
     var isPushUpdatingCar: Bool = false
     
     private var syncedTimer: Timer? = nil
+    var lastUpdated: Date = Date()
     
     init() {
-        fetchUser()
+        fetchUser() { boola in
+            if boola {
+                self.lastUpdated = Date()
+            }
+        }
         
         // start fetch timer
-        self.syncedTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true) { _ in // should be 0.3
+        self.syncedTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in // should be 0.3
             self.fetchLoop()
         }
     }
     
     func fetchLoop() {
-        self.fetchUser()
-        self.fetchCar()
-        self.fetchUsers()
-        self.fetchPendingCarInvites()
+        if self.isFetchingCar {
+            return
+        }
+        self.isFetchingCar = true
+        
+        self.fetchUser() { boola in
+            self.fetchCar() { boolb in
+                self.fetchUsers() { boolc in
+                    self.fetchPendingCarInvites() { boold in
+                        if boola && boolb && boolc && boold {
+                            self.lastUpdated = Date()
+                        }
+                        print("FINISHED LOOP!")
+                        self.isFetchingCar = false
+                    }
+                }
+            }
+        }
     }
     
-    func fetchUser() {
+    func fetchUser(completion: @escaping (Bool) -> Void) {
         // update UserID
         let userID: String? = UserDefaults.standard.string(forKey: "userID")
         if let userID = userID {
@@ -66,9 +85,11 @@ import SwiftUI
                         withAnimation {
                             self.fetchStatus = .success
                         }
+                        completion(true)
                     } else {
                         fetchServerEndpoint(endpoint: "newuser", fetchHash: UUID(), decodeAs: UserID.self) { (result, returnHash) in
                             if (self.isPushUpdatingInfo) {
+                                completion(true)
                                 return
                             }
                             switch result {
@@ -79,25 +100,27 @@ import SwiftUI
                                 withAnimation {
                                     self.fetchStatus = .success
                                 }
+                                completion(true)
                             case .failure(let error):
-                                print(error)
                                 withAnimation {
                                     self.fetchStatus = .failed
                                 }
+                                completion(false)
                             }
                         }
                     }
                 case .failure(let error):
-                    print(error)
                     withAnimation {
                         self.fetchStatus = .failed
                     }
+                    completion(true)
                 }
             }
         } else {
             // create new user from server
             fetchServerEndpoint(endpoint: "newuser", fetchHash: UUID(), decodeAs: UserID.self) { (result, returnHash) in
                 if (self.isPushUpdatingInfo) {
+                    completion(true)
                     return
                 }
                 switch result {
@@ -108,26 +131,22 @@ import SwiftUI
                     withAnimation {
                         self.fetchStatus = .success
                     }
+                    completion(true)
                 case .failure(let error):
-                    print(error)
                     withAnimation {
                         self.fetchStatus = .failed
                     }
+                    completion(false)
                 }
             }
         }
     }
     
-    func fetchCar() {
-        if self.isFetchingCar {
-            return
-        }
-        self.isFetchingCar = true
+    func fetchCar(completion: @escaping (Bool) -> Void) {
         if let carid = self.car {
             fetchServerEndpoint(endpoint: "getcar?id=\(carid)", fetchHash: UUID(), decodeAs: FetchedCar.self) { (result, returnHash) in
                 switch result {
                 case .success(let data):
-                    self.isFetchingCar = false
                     withAnimation {
                         self.whohasthecar = FetchedUser(name: data.whohasusername, id: data.whohas, color: data.whohasusercolor)
                         self.carname = data.name
@@ -168,23 +187,21 @@ import SwiftUI
                             }
                         }
                     }
-                    
-                    
+                    completion(true)
                 case .failure(_):
-                    self.isFetchingCar = false
+                    completion(false)
                 }
             }
         } else {
-            self.isFetchingCar = false
+            completion(true)
         }
     }
     
-    func fetchUsers() {
+    func fetchUsers(completion: @escaping (Bool) -> Void) {
         if let carid = self.car {
-            self.isFetchingCar = true
             fetchServerEndpoint(endpoint: "getusers?carid=\(carid)", fetchHash: UUID(), decodeAs: FetchedCarUsers.self) { (result, returnHash) in
                 if (self.isPushUpdatingInfo || self.isPushUpdatingCar) {
-                    self.isFetchingCar = false
+                    completion(true)
                     return
                 }
                 switch result {
@@ -192,20 +209,18 @@ import SwiftUI
                     withAnimation {
                         self.carUsers = data.users
                     }
-                    self.isFetchingCar = false
+                    completion(true)
                 case .failure(let error):
-                    print(error)
-                    self.isFetchingCar = false
+                    completion(false)
                 }
             }
         }
     }
     
-    func fetchPendingCarInvites() {
-        self.isFetchingCar = true
+    func fetchPendingCarInvites(completion: @escaping (Bool) -> Void) {
         fetchServerEndpoint(endpoint: "checkinvites?userid=\(self.userID)", fetchHash: UUID(), decodeAs: FetchedInvites.self) { (result, returnHash) in
             if (self.isPushUpdatingInfo || self.isPushUpdatingCar) {
-                self.isFetchingCar = false
+                completion(true)
                 return
             }
             switch result {
@@ -213,10 +228,9 @@ import SwiftUI
                 withAnimation {
                     self.carInvites = data.invites
                 }
-                self.isFetchingCar = false
+                completion(true)
             case .failure(let error):
-                print(error)
-                self.isFetchingCar = false
+                completion(false)
             }
         }
     }
