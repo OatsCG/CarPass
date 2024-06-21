@@ -19,6 +19,9 @@ struct CarStatusView: View {
                     .contentTransition(.numericText(countsDown: true))
                 Text("Until Friday")
                     .foregroundStyle(.secondary)
+            } else {
+                ProgressView()
+                    .padding()
             }
             HStack(spacing: 10) {
                 Button(action: {

@@ -88,7 +88,7 @@ func fullMonthSimpleArr(month: Int, year: Int) -> [CalDaySimple] {
         inMonthArr.append(CalDaySimple(year: year, month: month, day: i, isPartOfMonth: true))
     }
     
-    var weekdayNum: Int = firstWeekdayNumber(month: month, year: year)
+    let weekdayNum: Int = firstWeekdayNumber(month: month, year: year)
     
     let prevMonth: Int = previousMonthsMonth(month)
     let prevYear: Int = previousMonthsYear(m: month, y: year)
@@ -109,25 +109,6 @@ func fullMonthSimpleArr(month: Int, year: Int) -> [CalDaySimple] {
     return prevMonthArr + inMonthArr + nextMonthArr
 }
 
-func simpleToFullMonth(month: [CalDaySimple]) -> [CalDay] {
-    return month.map { calday in
-        let thisdate: DateInRegion = DateInRegion(year: calday.year, month: calday.month, day: calday.day)
-        var captype: CapType = .none
-        if (calday.day % 7 == 0) {
-            captype = .start
-        } else if (calday.day % 7 == 1) {
-            captype = .mid
-        } else if (calday.day % 7 == 2) {
-            captype = .end
-        } else if (calday.day % 7 == 4) {
-            captype = .start
-        } else if (calday.day % 7 == 5) {
-            captype = .end
-        }
-        return CalDay(dayNumber: calday.day, isPartOfMonth: calday.isPartOfMonth, isToday: thisdate.isToday, occupiedBy: nil, capType: captype)
-    }
-}
-
 func fullmonthToCalMonth(fullmonth: [CalDay], month: Int, year: Int) -> CalMonth? {
     if fullmonth.count == 42 {
         var weeks: [CalWeek] = []
@@ -146,7 +127,7 @@ func fullmonthToCalMonth(fullmonth: [CalDay], month: Int, year: Int) -> CalMonth
         }
         if weeks.count == 6 {
             if let monthname = MonthName.init(rawValue: month - 1) {
-                var calmonth: CalMonth = CalMonth(
+                let calmonth: CalMonth = CalMonth(
                     monthname: monthname,
                     year: year,
                     week1: weeks[0],
@@ -168,6 +149,22 @@ func fullmonthToCalMonth(fullmonth: [CalDay], month: Int, year: Int) -> CalMonth
     }
 }
 
+func dateStatus(rangeStart: Date, rangeEnd: Date, date1: Date) -> CapType {
+    let calendar = Calendar.current
+    
+    if (calendar.isDate(date1, inSameDayAs: rangeStart) && calendar.isDate(date1, inSameDayAs: rangeEnd)) {
+        return .startandend
+    } else if calendar.isDate(date1, inSameDayAs: rangeStart) {
+        return .start
+    } else if calendar.isDate(date1, inSameDayAs: rangeEnd) {
+        return .end
+    } else if date1 >= rangeStart && date1 <= rangeEnd {
+        return .mid
+    } else {
+        return .none
+    }
+}
+
 @Observable class CalendarModel {
     var month: CalMonth? = nil
     
@@ -179,19 +176,31 @@ func fullmonthToCalMonth(fullmonth: [CalDay], month: Int, year: Int) -> CalMonth
     }
     
     func updateCalendar(user: User) {
-        self.updateOccupiedRanges(user: user)
-        self.updateMonth()
+        self.updateMonth(user: user)
     }
     
-    private func updateOccupiedRanges(user: User) {
-        for alert in user.confirmedAlerts {
+    private func updateOccupiedRanges(month: [CalDaySimple], user: User) -> [CalDay] {
+        return month.map { calday in
+            let thisdate: DateInRegion = DateInRegion(year: calday.year, month: calday.month, day: calday.day)
+            let thisrealdate: Date = thisdate.date
             
+            var captype: CapType = .none
+            var occupant: Occupant? = nil
+            for alert in user.confirmedAlerts {
+                let dateCapType: CapType = dateStatus(rangeStart: alert.rangeStart, rangeEnd: alert.rangeEnd, date1: thisrealdate)
+                if dateCapType != .none {
+                    occupant = Occupant(name: alert.name, color: alert.color, start: Int(alert.rangeStart.timeIntervalSince1970), end: Int(alert.rangeEnd.timeIntervalSince1970), reason: alert.reason)
+                    captype = dateCapType
+                    break
+                }
+            }
+            return CalDay(dayNumber: calday.day, isPartOfMonth: calday.isPartOfMonth, isToday: thisdate.isToday, occupiedBy: occupant, capType: captype)
         }
     }
     
-    private func updateMonth() {
+    private func updateMonth(user: User) {
         let fullmonthsimple: [CalDaySimple] = fullMonthSimpleArr(month: 6, year: 2024)
-        let calmonth: CalMonth? = fullmonthToCalMonth(fullmonth: simpleToFullMonth(month: fullmonthsimple), month: 6, year: 2024)
+        let calmonth: CalMonth? = fullmonthToCalMonth(fullmonth: self.updateOccupiedRanges(month: fullmonthsimple, user: user), month: 6, year: 2024)
         if let calmonth = calmonth {
             self.month = calmonth
         }
@@ -248,5 +257,5 @@ struct Occupant {
 }
 
 enum CapType {
-    case none, passandstart, start, mid, end, endandpass
+    case none, start, mid, end, startandend
 }

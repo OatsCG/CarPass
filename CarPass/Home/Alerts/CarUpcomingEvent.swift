@@ -11,6 +11,7 @@ struct CarUpcomingEvent: View {
     var name: String
     var reason: String
     var range: String
+    var rangeRelative: String
     var color: CustomColor
     var mustBring: Bool
     var body: some View {
@@ -71,6 +72,6 @@ struct CarUpcomingEvent: View {
 }
 
 #Preview {
-    CarUpcomingEvent(name: "Simon", reason: "I just want it", range: "Tomorrow", color: .orange, mustBring: true)
+    CarUpcomingEvent(name: "Simon", reason: "I just want it", range: "Tomorrow", rangeRelative: "In 1 Day", color: .orange, mustBring: true)
         .padding(10)
 }

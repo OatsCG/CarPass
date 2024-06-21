@@ -11,6 +11,7 @@ struct CarRequestAlert: View {
     var name: String
     var reason: String
     var range: String
+    var rangeRelative: String
     var color: CustomColor
     var body: some View {
         HStack(alignment: .bottom) {
@@ -26,7 +27,7 @@ struct CarRequestAlert: View {
                             .font(.title2)
                             .multilineTextAlignment(.leading)
                         Spacer()
-                        Text("In 1 day")
+                        Text(rangeRelative)
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                     }
@@ -76,6 +77,6 @@ struct CarRequestAlert: View {
 }
 
 #Preview {
-    CarRequestAlert(name: "Simon", reason: "I just want it", range: "Tomorrow", color: .orange)
+    CarRequestAlert(name: "Simon", reason: "I just want it", range: "Tomorrow", rangeRelative: "In 1 Day", color: .orange)
         .padding(10)
 }

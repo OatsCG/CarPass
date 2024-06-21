@@ -8,16 +8,16 @@
 import SwiftUI
 
 struct CalendarDayCap: View {
-    var color: CustomColor
+    var color: CustomColor?
     var inMonth: Bool
     var paddingAmount: CGFloat
     var cap: CapType
     var body: some View {
         ZStack {
-            CalendarDayCapPicked(color: color, inMonth: inMonth, paddingAmount: paddingAmount, cap: cap)
+            CalendarDayCapPicked(color: color ?? .blue, inMonth: inMonth, paddingAmount: paddingAmount, cap: cap)
                 .brightness(0.07)
                 .offset(y: -1)
-            CalendarDayCapPicked(color: color, inMonth: inMonth, paddingAmount: paddingAmount, cap: cap)
+            CalendarDayCapPicked(color: color ?? .blue, inMonth: inMonth, paddingAmount: paddingAmount, cap: cap)
         }
     }
 }
@@ -29,15 +29,18 @@ struct CalendarDayCapPicked: View {
     var cap: CapType
     var body: some View {
         Group {
-            if (cap == .start) {
-                CalendarDayStartCap(color: color, inMonth: inMonth, paddingAmount: paddingAmount)
-            } else if (cap == .mid) {
-                CalendarDayMidCap(color: color, inMonth: inMonth, paddingAmount: paddingAmount)
-            } else if (cap == .end) {
-                CalendarDayEndCap(color: color, inMonth: inMonth, paddingAmount: paddingAmount)
-            } else {
+            switch cap {
+            case .none:
                 Circle()
                     .fill(.clear)
+            case .start:
+                CalendarDayStartCap(color: color, inMonth: inMonth, paddingAmount: paddingAmount)
+            case .mid:
+                CalendarDayMidCap(color: color, inMonth: inMonth, paddingAmount: paddingAmount)
+            case .end:
+                CalendarDayEndCap(color: color, inMonth: inMonth, paddingAmount: paddingAmount)
+            case .startandend:
+                CalendarDayStartandendCap(color: color, inMonth: inMonth, paddingAmount: paddingAmount)
             }
         }
     }
@@ -76,6 +79,17 @@ struct CalendarDayEndCap: View {
         UnevenRoundedRectangle(topLeadingRadius: 0, bottomLeadingRadius: 0, bottomTrailingRadius: 100, topTrailingRadius: 100)
             .fill(cc(color, style: inMonth ? .thick : .thin))
             .padding(.trailing, paddingAmount)
+            .padding(.vertical, paddingAmount / 2)
+    }
+}
+
+struct CalendarDayStartandendCap: View {
+    var color: CustomColor
+    var inMonth: Bool
+    var paddingAmount: CGFloat
+    var body: some View {
+        Circle()
+            .fill(cc(color, style: inMonth ? .thick : .thin))
             .padding(.vertical, paddingAmount / 2)
     }
 }

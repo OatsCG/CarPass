@@ -22,18 +22,21 @@ struct HomeView: View {
                         CalendarView(editingEnabled: false)
                         Divider()
                         Spacer(minLength: 30)
-                        VStack(spacing: 10) {
-                            HStack {
-                                Text("Pending")
-                                    .foregroundStyle(.secondary)
-                                    .font(.title3 .bold())
-                                Spacer()
+                        if user.pendingAlerts.count != 0 {
+                            VStack(spacing: 10) {
+                                HStack {
+                                    Text("Pending")
+                                        .foregroundStyle(.secondary)
+                                        .font(.title3 .bold())
+                                    Spacer()
+                                }
+                                .padding()
+                                ForEach(user.pendingAlerts, id: \.id) { alert in
+                                    CarRequestAlert(name: alert.name, reason: alert.reason, range: alert.rangeDescription, rangeRelative: alert.rangeRelativeDescription, color: alert.color)
+                                }
                             }
-                            .padding()
-                            CarRequestAlert(name: "Simon", reason: "I just want it", range: "Tomorrow", color: .pink)
-                            CarRequestAlert(name: "Ben", reason: "for cottage", range: "Tomorrow", color: .red)
+                            Spacer(minLength: 30)
                         }
-                        Spacer(minLength: 30)
                         VStack(spacing: 10) {
                             HStack {
                                 Text("Upcoming")
@@ -42,9 +45,16 @@ struct HomeView: View {
                                 Spacer()
                             }
                             .padding()
-                            CarUpcomingEvent(name: "Simon", reason: "school cause im too lazy to walk 5 minutes", range: "Tomorrow", color: .pink, mustBring: true)
-                            CarUpcomingEvent(name: "Dad", reason: "check engine", range: "Tomorrow", color: .orange, mustBring: false)
-                            CarUpcomingEvent(name: "Charlie", reason: "work stuff", range: "Tomorrow", color: .blue, mustBring: false)
+                            if user.confirmedAlerts.count == 0 {
+                                Text("No Upcoming Events")
+                                    .foregroundStyle(.tertiary)
+                                    .font(.headline)
+                                    .padding()
+                            } else {
+                                ForEach(user.confirmedAlerts, id: \.id) { alert in
+                                    CarUpcomingEvent(name: alert.name, reason: alert.reason, range: alert.rangeDescription, rangeRelative: alert.rangeRelativeDescription, color: alert.color, mustBring: alert.mustBring)
+                                }
+                            }
                         }
                     }
                     .safeAreaPadding()
@@ -57,12 +67,12 @@ struct HomeView: View {
                 Spacer()
             }
         }
-        .onOpenURL { url in
-            if let host = url.host, url.scheme == "carpassapp", url.pathComponents.count > 1 {
-                let carID = url.pathComponents[1]
-                user.force_accept_invite(carID: carID)
-            }
-        }
+//        .onOpenURL { url in
+//            if let host = url.host, url.scheme == "carpassapp", url.pathComponents.count > 1 {
+//                let carID = url.pathComponents[1]
+//                user.force_accept_invite(carID: carID)
+//            }
+//        }
     }
 }
 

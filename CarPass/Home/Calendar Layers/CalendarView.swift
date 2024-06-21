@@ -60,7 +60,7 @@ struct CalendarDayView: View {
     var calDay: CalDay?
     var paddingAmount: CGFloat = 5
     var body: some View {
-        CalendarDayCap(color: .green, inMonth: calDay?.isPartOfMonth ?? false, paddingAmount: paddingAmount, cap: calDay?.capType ?? .none)
+        CalendarDayCap(color: calDay?.occupiedBy?.color, inMonth: calDay?.isPartOfMonth ?? false, paddingAmount: paddingAmount, cap: calDay?.capType ?? .none)
             .overlay {
                 VStack {
                     Spacer()
@@ -74,7 +74,7 @@ struct CalendarDayView: View {
                     Spacer()
                 }
             }
-            .foregroundStyle((calDay?.isPartOfMonth ?? false) ? ((calDay?.isToday ?? false) ? .greenprimary : .white) : .customsecondary)
+            .foregroundStyle((calDay?.isPartOfMonth ?? false) ? ((calDay?.isToday ?? false) ? cc(calDay?.occupiedBy?.color ?? .blue, style: .primary) : .white) : .customsecondary)
     }
 }
 
