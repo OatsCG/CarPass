@@ -157,7 +157,7 @@ import SwiftUI
                         for pendingRange in data.pendingRanges {
                             let rangeDescription: String = epochToDescription(epoch: pendingRange.start)
                             let rangeRelativeDescription: String = epochToRelativeDescription(epoch: pendingRange.start)
-                            tempPendingAlerts.append(PendingAlert(id: pendingRange.id, userID: pendingRange.user, name: pendingRange.username, reason: pendingRange.reason, range: rangeDescription, rangeRelative: rangeRelativeDescription, color: strtocc(pendingRange.usercolor)))
+                            tempPendingAlerts.append(PendingAlert(id: pendingRange.id, userID: pendingRange.user, name: pendingRange.username, reason: pendingRange.reason, rangeStart: Date(timeIntervalSince1970: TimeInterval(pendingRange.start)), rangeEnd: Date(timeIntervalSince1970: TimeInterval(pendingRange.end)), rangeDescription: rangeDescription, rangeRelativeDescription: rangeRelativeDescription, color: strtocc(pendingRange.usercolor)))
                         }
                         
                         // Get Confirmed Ranges
@@ -170,12 +170,12 @@ import SwiftUI
                             let rangeRelativeDescription: String = epochToRelativeDescription(epoch: confirmedRange.start)
                             var mustBring: Bool = false
                             if (Int(currentDate.timeIntervalSince1970) > confirmedRange.start) { // if range start date is before now
-                                tempOutdatedAlerts.append(ConfirmedAlert(id: confirmedRange.id, userID: confirmedRange.user, name: confirmedRange.username, reason: confirmedRange.reason, range: rangeDescription, rangeRelative: rangeRelativeDescription, color: strtocc(confirmedRange.usercolor), mustBring: mustBring))
+                                tempOutdatedAlerts.append(ConfirmedAlert(id: confirmedRange.id, userID: confirmedRange.user, name: confirmedRange.username, reason: confirmedRange.reason, rangeStart: Date(timeIntervalSince1970: TimeInterval(confirmedRange.start)), rangeEnd: Date(timeIntervalSince1970: TimeInterval(confirmedRange.end)), rangeDescription: rangeDescription, rangeRelativeDescription: rangeRelativeDescription, color: strtocc(confirmedRange.usercolor), mustBring: mustBring))
                             } else { // if after now
                                 if (data.whohas == self?.userID && tempConfirmedAlerts.isEmpty) { // if I have the car and this range is next
                                     mustBring = true
                                 }
-                                tempConfirmedAlerts.append(ConfirmedAlert(id: confirmedRange.id, userID: confirmedRange.user, name: confirmedRange.username, reason: confirmedRange.reason, range: rangeDescription, rangeRelative: rangeRelativeDescription, color: strtocc(confirmedRange.usercolor), mustBring: mustBring))
+                                tempConfirmedAlerts.append(ConfirmedAlert(id: confirmedRange.id, userID: confirmedRange.user, name: confirmedRange.username, reason: confirmedRange.reason, rangeStart: Date(timeIntervalSince1970: TimeInterval(confirmedRange.start)), rangeEnd: Date(timeIntervalSince1970: TimeInterval(confirmedRange.end)), rangeDescription: rangeDescription, rangeRelativeDescription: rangeRelativeDescription, color: strtocc(confirmedRange.usercolor), mustBring: mustBring))
                             }
                         }
                         DispatchQueue.main.async { [weak self, tempPendingAlerts, tempOutdatedAlerts, tempConfirmedAlerts] in

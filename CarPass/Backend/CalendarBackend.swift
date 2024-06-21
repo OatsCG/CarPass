@@ -179,12 +179,14 @@ func fullmonthToCalMonth(fullmonth: [CalDay], month: Int, year: Int) -> CalMonth
     }
     
     func updateCalendar(user: User) {
-        self.updateOccupiedRanges()
+        self.updateOccupiedRanges(user: user)
         self.updateMonth()
     }
     
-    private func updateOccupiedRanges() {
-        
+    private func updateOccupiedRanges(user: User) {
+        for alert in user.confirmedAlerts {
+            
+        }
     }
     
     private func updateMonth() {

@@ -12,8 +12,10 @@ struct PendingAlert {
     var userID: UserID
     var name: String // Charlie
     var reason: String // just want it
-    var range: String // June 5
-    var rangeRelative: String // Tomorrow, In 2 days, etc
+    var rangeStart: Date
+    var rangeEnd: Date
+    var rangeDescription: String // June 5
+    var rangeRelativeDescription: String // Tomorrow, In 2 days, etc
     var color: CustomColor // .red
 }
 
@@ -22,8 +24,10 @@ struct ConfirmedAlert {
     var userID: UserID
     var name: String // Charlie
     var reason: String // just want it
-    var range: String // June 5
-    var rangeRelative: String // Tomorrow, In 2 days, etc
+    var rangeStart: Date
+    var rangeEnd: Date
+    var rangeDescription: String // June 5
+    var rangeRelativeDescription: String // Tomorrow, In 2 days, etc
     var color: CustomColor // .red
     var mustBring: Bool // true
 }
