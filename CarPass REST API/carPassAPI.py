@@ -214,6 +214,12 @@ class CarPass:
         user["car"] = carID
         self.update_storage()
         return True
+    
+    def dismiss_invite(self, carID: UUID, userID: UUID) -> bool:
+        car = self.get_car(carID)
+        car["pendingInvites"].remove(userID)
+        self.update_storage()
+        return True
 
     def new_timerange(self, carID: UUID, userID: UUID, startEpoch: int, endEpoch: int, reason: str) -> UUID | None:
         car = self.get_car(carID)

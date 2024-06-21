@@ -86,7 +86,7 @@ def forceacceptinvite():
 def dismissinvite():
     carid = request.args.get('carid', default='', type=str)
     userid = request.args.get('userid', default='', type=str)
-    #invite = carPass.dismiss_invite(carid, userid)
+    invite = carPass.dismiss_invite(carid, userid)
     return jsonify(invite)
 
 # /carpassapi/checkinvites?userid=UUID   returns dict or None

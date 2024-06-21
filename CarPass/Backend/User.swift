@@ -311,6 +311,25 @@ import SwiftUI
         }
     }
     
+    func dismiss_invite(carID: CarID) {
+        withAnimation {
+            self.isPushUpdatingCar = true
+        }
+        fetchServerEndpoint(endpoint: "dismissinvite?carid=\(carID)&userid=\(self.userID)", fetchHash: UUID(), decodeAs: Bool.self) { (result, returnHash) in
+            switch result {
+            case .success(_):
+                withAnimation {
+                    self.isPushUpdatingCar = false
+                }
+            case .failure(let error):
+                print(error)
+                withAnimation {
+                    self.isPushUpdatingCar = false
+                }
+            }
+        }
+    }
+    
     func invite_user(userID: String) {
         self.isPushUpdatingInfo = true
         if let car = self.car {

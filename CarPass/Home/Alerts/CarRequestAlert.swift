@@ -48,12 +48,14 @@ struct CarRequestAlert: View {
                 .padding(.horizontal, 10)
                 HStack(spacing: 8) {
                     Button(action: {
-
+                        
                     }) {
                         CapsuleButton(text: Text("\(Image(systemName: "checkmark")) Accept").font(.title3).fontWeight(.medium), lit: true, height: 45, color: color)
                     }
                     .buttonStyle(.plain)
-                    Button(action: {}) {
+                    Button(action: {
+                        
+                    }) {
                         CapsuleButton(text: Text("\(Image(systemName: "xmark"))").font(.title3).fontWeight(.medium), lit: true, height: 45, color: color)
                             .frame(width: 45)
                     }

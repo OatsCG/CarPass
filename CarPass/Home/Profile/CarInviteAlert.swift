@@ -35,7 +35,9 @@ struct CarInviteAlert: View {
                         CapsuleButton(text: Text("\(Image(systemName: "checkmark")) Accept").font(.title3).fontWeight(.medium), lit: false, height: 45, color: .red)
                     }
                     .buttonStyle(.plain)
-                    Button(action: {}) {
+                    Button(action: {
+                        user.dismiss_invite(carID: carID)
+                    }) {
                         CapsuleButton(text: Text("\(Image(systemName: "xmark"))").font(.title3).fontWeight(.medium), lit: false, height: 45, color: .red)
                             .frame(width: 45)
                     }
