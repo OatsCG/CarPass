@@ -16,6 +16,7 @@ struct CarStatusView: View {
             if let whohasthecar = user.whohasthecar {
                 Text("**\(whohasthecar.name)** has the car")
                     .font(.title2)
+                    .contentTransition(.numericText(countsDown: true))
                 Text("Until Friday")
                     .foregroundStyle(.secondary)
             }
