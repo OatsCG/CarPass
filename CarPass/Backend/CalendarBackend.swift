@@ -112,7 +112,19 @@ func fullMonthSimpleArr(month: Int, year: Int) -> [CalDaySimple] {
 func simpleToFullMonth(month: [CalDaySimple]) -> [CalDay] {
     return month.map { calday in
         let thisdate: DateInRegion = DateInRegion(year: calday.year, month: calday.month, day: calday.day)
-        return CalDay(dayNumber: calday.day, isPartOfMonth: calday.isPartOfMonth, occupiedBy: nil, capType: .none)
+        var captype: CapType = .none
+        if (calday.day % 7 == 0) {
+            captype = .start
+        } else if (calday.day % 7 == 1) {
+            captype = .mid
+        } else if (calday.day % 7 == 2) {
+            captype = .end
+        } else if (calday.day % 7 == 4) {
+            captype = .start
+        } else if (calday.day % 7 == 5) {
+            captype = .end
+        }
+        return CalDay(dayNumber: calday.day, isPartOfMonth: calday.isPartOfMonth, isToday: thisdate.isToday, occupiedBy: nil, capType: captype)
     }
 }
 
@@ -196,6 +208,7 @@ struct CalWeek {
 struct CalDay {
     var dayNumber: Int // number of day in the month
     var isPartOfMonth: Bool // true if the day is in the inputted month
+    var isToday: Bool
     var occupiedBy: Occupant?
     var capType: CapType
 }

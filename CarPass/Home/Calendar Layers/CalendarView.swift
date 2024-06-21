@@ -50,25 +50,28 @@ struct CalendarWeekView: View {
 
 struct CalendarDayView: View {
     var calDay: CalDay?
+    var paddingAmount: CGFloat = 5
     var body: some View {
-        Circle()
-            .fill(.ultraThinMaterial)
+        CalendarDayCap(color: .green, inMonth: calDay?.isPartOfMonth ?? false, paddingAmount: paddingAmount, cap: calDay?.capType ?? .none)
             .overlay {
                 VStack {
                     Spacer()
                     HStack {
                         Spacer()
                         Text("\(calDay?.dayNumber ?? 1)")
-                            .font(.body .bold())
-                            .foregroundStyle(.primary)
+                            .font(.subheadline .bold())
+                            //.foregroundStyle(.blueprimary)
                         Spacer()
                     }
                     Spacer()
                 }
             }
-            .padding(2)
+            .foregroundStyle((calDay?.isPartOfMonth ?? false) ? ((calDay?.isToday ?? false) ? .greenprimary : .white) : .customsecondary)
     }
 }
+
+
+
 
 
 #Preview {
