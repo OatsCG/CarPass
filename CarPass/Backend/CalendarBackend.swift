@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 import SwiftDate
 
 func currentYear() -> Int {
@@ -167,8 +168,10 @@ func dateStatus(rangeStart: Date, rangeEnd: Date, date1: Date) -> CapType {
 
 @Observable class CalendarModel {
     var month: CalMonth? = nil
-    
     var editing: Bool
+    var startEditDate: Date = Date()
+    var endEditDate: Date = Date()
+    
     init(editingEnabled: Bool) {
         self.editing = editingEnabled
         
@@ -194,7 +197,7 @@ func dateStatus(rangeStart: Date, rangeEnd: Date, date1: Date) -> CapType {
                     break
                 }
             }
-            return CalDay(dayNumber: calday.day, isPartOfMonth: calday.isPartOfMonth, isToday: thisdate.isToday, occupiedBy: occupant, capType: captype)
+            return CalDay(dayNumber: calday.day, isPartOfMonth: calday.isPartOfMonth, isToday: thisdate.isToday, isBeforeToday: (thisdate.isInPast && !thisdate.isToday), occupiedBy: occupant, capType: captype)
         }
     }
     
@@ -202,8 +205,17 @@ func dateStatus(rangeStart: Date, rangeEnd: Date, date1: Date) -> CapType {
         let fullmonthsimple: [CalDaySimple] = fullMonthSimpleArr(month: 6, year: 2024)
         let calmonth: CalMonth? = fullmonthToCalMonth(fullmonth: self.updateOccupiedRanges(month: fullmonthsimple, user: user), month: 6, year: 2024)
         if let calmonth = calmonth {
-            self.month = calmonth
+            withAnimation {
+                self.month = calmonth
+            }
         }
+    }
+    
+    func updateStartDate(to date: Date, user: User) {
+        self.startEditDate = date
+        
+        
+        self.updateCalendar(user: user)
     }
 }
 
@@ -237,6 +249,7 @@ struct CalDay {
     var dayNumber: Int // number of day in the month
     var isPartOfMonth: Bool // true if the day is in the inputted month
     var isToday: Bool
+    var isBeforeToday: Bool
     var occupiedBy: Occupant?
     var capType: CapType
 }
