@@ -81,41 +81,88 @@ func firstWeekdayNumber(month: Int, year: Int) -> Int {
 }
 
 
-func fullMonthArr(month: Int, year: Int) -> [CalDaySimple] {
+func fullMonthSimpleArr(month: Int, year: Int) -> [CalDaySimple] {
     let monthDayCount: Int = daysInMonth(month: month, year: year)
-    print("monthcount: \(monthDayCount)")
     var inMonthArr: [CalDaySimple] = []
     for i in 1...monthDayCount {
-        inMonthArr.append(CalDaySimple(dayNumber: i, isPartOfMonth: true))
+        inMonthArr.append(CalDaySimple(year: year, month: month, day: i, isPartOfMonth: true))
     }
     
     var weekdayNum: Int = firstWeekdayNumber(month: month, year: year)
-    print("weekdayNum: \(weekdayNum)")
     
-    let prevMonthDayCount: Int = daysInMonth(month: month, year: year)
-    print("prevMonthDayCount: \(prevMonthDayCount)")
+    let prevMonth: Int = previousMonthsMonth(month)
+    let prevYear: Int = previousMonthsYear(m: month, y: year)
+    let prevMonthDayCount: Int = daysInMonth(month: prevMonth, year: prevYear)
     var prevMonthArr: [CalDaySimple] = []
-    for i in (prevMonthDayCount-(weekdayNum-1)+2)...prevMonthDayCount+1 {
-        prevMonthArr.append(CalDaySimple(dayNumber: i, isPartOfMonth: false))
+    for i in (prevMonthDayCount-(weekdayNum-1)+1)...prevMonthDayCount {
+        prevMonthArr.append(CalDaySimple(year: prevYear, month: prevMonth, day: i, isPartOfMonth: false))
     }
     
+    let nextMonth: Int = nextMonthsMonth(month)
+    let nextYear: Int = nextMonthsYear(m: month, y: year)
     let remainingDays: Int = (6 * 7) - (inMonthArr.count + prevMonthArr.count)
-    print("remainingDays: \(remainingDays)")
     var nextMonthArr: [CalDaySimple] = []
     for i in 1...remainingDays {
-        nextMonthArr.append(CalDaySimple(dayNumber: i, isPartOfMonth: false))
+        nextMonthArr.append(CalDaySimple(year: nextYear, month: nextMonth, day: i, isPartOfMonth: false))
     }
     
     return prevMonthArr + inMonthArr + nextMonthArr
 }
 
+func simpleToFullMonth(month: [CalDaySimple]) -> [CalDay] {
+    return month.map { calday in
+        let thisdate: DateInRegion = DateInRegion(year: calday.year, month: calday.month, day: calday.day)
+        return CalDay(dayNumber: calday.day, isPartOfMonth: calday.isPartOfMonth, occupiedBy: nil, capType: .none)
+    }
+}
 
-class CalendarModel {
-    var months: [CalMonth] = []
+func fullmonthToCalMonth(fullmonth: [CalDay], month: Int, year: Int) -> CalMonth? {
+    if fullmonth.count == 42 {
+        var weeks: [CalWeek] = []
+        for a in 0...5 {
+            weeks.append(
+                CalWeek(
+                    sunday: fullmonth[a * 7],
+                    monday: fullmonth[(a * 7) + 1],
+                    tuesday: fullmonth[(a * 7) + 2],
+                    wednesday: fullmonth[(a * 7) + 3],
+                    thursday: fullmonth[(a * 7) + 4],
+                    friday: fullmonth[(a * 7) + 5],
+                    saturday: fullmonth[(a * 7) + 6]
+                )
+            )
+        }
+        if weeks.count == 6 {
+            if let monthname = MonthName.init(rawValue: month - 1) {
+                var calmonth: CalMonth = CalMonth(
+                    monthname: monthname,
+                    year: year,
+                    week1: weeks[0],
+                    week2: weeks[1],
+                    week3: weeks[2],
+                    week4: weeks[3],
+                    week5: weeks[4],
+                    week6: weeks[5]
+                )
+                return calmonth
+            } else {
+                return nil
+            }
+        } else {
+            return nil
+        }
+    } else {
+        return nil
+    }
+}
+
+@Observable class CalendarModel {
+    var month: CalMonth? = nil
     init() {
-        let monthArr: [CalDaySimple] = fullMonthArr(month: 6, year: 2024)
-        for day in monthArr {
-            print(day.dayNumber)
+        let fullmonthsimple: [CalDaySimple] = fullMonthSimpleArr(month: 6, year: 2024)
+        let calmonth: CalMonth? = fullmonthToCalMonth(fullmonth: simpleToFullMonth(month: fullmonthsimple), month: 6, year: 2024)
+        if let calmonth = calmonth {
+            self.month = calmonth
         }
     }
 }
@@ -154,7 +201,9 @@ struct CalDay {
 }
 
 struct CalDaySimple {
-    var dayNumber: Int // number of day in the month
+    var year: Int
+    var month: Int
+    var day: Int
     var isPartOfMonth: Bool // true if the day is in the inputted month
 }
 

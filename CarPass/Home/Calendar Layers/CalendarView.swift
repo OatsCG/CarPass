@@ -19,34 +19,37 @@ struct CalendarView: View {
 
 
 struct CalendarMonthView: View {
+    @State var calendarModel: CalendarModel = CalendarModel()
     var body: some View {
-        VStack(spacing: 3) {
-            CalendarWeekView()
-            CalendarWeekView()
-            CalendarWeekView()
-            CalendarWeekView()
-            CalendarWeekView()
-            CalendarWeekView()
+        VStack(spacing: 0) {
+            CalendarWeekView(calWeek: calendarModel.month?.week1)
+            CalendarWeekView(calWeek: calendarModel.month?.week2)
+            CalendarWeekView(calWeek: calendarModel.month?.week3)
+            CalendarWeekView(calWeek: calendarModel.month?.week4)
+            CalendarWeekView(calWeek: calendarModel.month?.week5)
+            CalendarWeekView(calWeek: calendarModel.month?.week6)
         }
     }
 }
 
 
 struct CalendarWeekView: View {
+    var calWeek: CalWeek?
     var body: some View {
-        HStack(spacing: 3) {
-            CalendarDayView()
-            CalendarDayView()
-            CalendarDayView()
-            CalendarDayView()
-            CalendarDayView()
-            CalendarDayView()
-            CalendarDayView()
+        HStack(spacing: 0) {
+            CalendarDayView(calDay: calWeek?.sunday)
+            CalendarDayView(calDay: calWeek?.monday)
+            CalendarDayView(calDay: calWeek?.tuesday)
+            CalendarDayView(calDay: calWeek?.wednesday)
+            CalendarDayView(calDay: calWeek?.thursday)
+            CalendarDayView(calDay: calWeek?.friday)
+            CalendarDayView(calDay: calWeek?.saturday)
         }
     }
 }
 
 struct CalendarDayView: View {
+    var calDay: CalDay?
     var body: some View {
         Circle()
             .fill(.ultraThinMaterial)
@@ -55,19 +58,15 @@ struct CalendarDayView: View {
                     Spacer()
                     HStack {
                         Spacer()
-                        Text("4")
+                        Text("\(calDay?.dayNumber ?? 1)")
                             .font(.body .bold())
                             .foregroundStyle(.primary)
                         Spacer()
                     }
-                    //            Rectangle().fill(.red)
-                    //                .frame(height: 20)
                     Spacer()
                 }
-                //.padding(.vertical, 3)
-                //.background(.ultraThinMaterial)
-                //.clipShape(RoundedRectangle(cornerRadius: 3))
             }
+            .padding(2)
     }
 }
 
