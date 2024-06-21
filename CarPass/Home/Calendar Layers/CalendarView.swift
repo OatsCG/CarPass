@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct CalendarView: View {
-    @State var 
     var body: some View {
         VStack(spacing: 3) {
             CalendarHeader()

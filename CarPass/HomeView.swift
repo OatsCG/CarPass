@@ -17,6 +17,9 @@ struct HomeView: View {
                 ScrollView {
                     VStack {
                         CarStatusView()
+                            .onAppear {
+                                CalendarModel()
+                            }
                         Spacer(minLength: 30)
                         Divider()
                         CalendarView()
