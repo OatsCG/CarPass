@@ -56,7 +56,6 @@ import SwiftUI
                         if boola && boolb && boolc && boold {
                             self.lastUpdated = Date()
                         }
-                        print("FINISHED LOOP!")
                         self.isFetchingCar = false
                     }
                 }

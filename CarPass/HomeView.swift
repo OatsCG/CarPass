@@ -19,7 +19,7 @@ struct HomeView: View {
                         CarStatusView()
                         Spacer(minLength: 30)
                         Divider()
-                        CalendarView()
+                        CalendarView(editingEnabled: false)
                         Divider()
                         Spacer(minLength: 30)
                         VStack(spacing: 10) {

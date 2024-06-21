@@ -113,11 +113,9 @@ struct ProfileSheet: View {
                         TextField("Car Name...", text: $carNameEditor)
                             .font(.headline .weight(.medium))
                             .onAppear {
-                                print("name: \(user.carname)")
                                 carNameEditor = user.carname
                             }
                             .onSubmit {
-                                print("UPDATING NAME")
                                 user.update_car_name(to: carNameEditor)
                             }
                             .onChange(of: user.carname) {

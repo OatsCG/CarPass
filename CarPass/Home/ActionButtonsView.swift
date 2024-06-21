@@ -43,10 +43,6 @@ struct ActionButtonsView: View {
                                     Capsule().fill(.red)
                                 }
                             }
-                    } else {
-                        Text("last updated: \(formatTime(user.lastUpdated))")
-                            .font(.caption2)
-                            .foregroundStyle(.quaternary)
                     }
                     Spacer()
                 }

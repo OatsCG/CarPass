@@ -48,7 +48,7 @@ struct CarStatusView: View {
                 )
             }
             .sheet(isPresented: $showingRequestSheet, content: {
-                Text("request away!")
+                RequestCarSheet(showingRequestSheet: $showingRequestSheet)
             })
     }
 }

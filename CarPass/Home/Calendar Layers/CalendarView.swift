@@ -8,10 +8,18 @@
 import SwiftUI
 
 struct CalendarView: View {
+    @Environment(User.self) var user
+    @State var calendarModel: CalendarModel
+    init(editingEnabled: Bool) {
+        self.calendarModel = CalendarModel(editingEnabled: editingEnabled)
+    }
     var body: some View {
         VStack(spacing: 3) {
             CalendarHeader()
-            CalendarMonthView()
+            CalendarMonthView(calendarModel: calendarModel)
+        }
+        .onAppear {
+            self.calendarModel.updateCalendar(user: user)
         }
     }
 }
@@ -19,7 +27,7 @@ struct CalendarView: View {
 
 
 struct CalendarMonthView: View {
-    @State var calendarModel: CalendarModel = CalendarModel()
+    var calendarModel: CalendarModel
     var body: some View {
         VStack(spacing: 0) {
             CalendarWeekView(calWeek: calendarModel.month?.week1)

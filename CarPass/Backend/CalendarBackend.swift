@@ -170,7 +170,24 @@ func fullmonthToCalMonth(fullmonth: [CalDay], month: Int, year: Int) -> CalMonth
 
 @Observable class CalendarModel {
     var month: CalMonth? = nil
-    init() {
+    
+    var editing: Bool
+    init(editingEnabled: Bool) {
+        self.editing = editingEnabled
+        
+        //self.updateCalendar(user: user)
+    }
+    
+    func updateCalendar(user: User) {
+        self.updateOccupiedRanges()
+        self.updateMonth()
+    }
+    
+    private func updateOccupiedRanges() {
+        
+    }
+    
+    private func updateMonth() {
         let fullmonthsimple: [CalDaySimple] = fullMonthSimpleArr(month: 6, year: 2024)
         let calmonth: CalMonth? = fullmonthToCalMonth(fullmonth: simpleToFullMonth(month: fullmonthsimple), month: 6, year: 2024)
         if let calmonth = calmonth {
