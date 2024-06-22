@@ -8,8 +8,7 @@
 import Foundation
 
 
-var GLOBAL_SERVER: String = "http://192.168.2.231:5000/carpassapi/"
-//var GLOBAL_SERVER: String = "http://192.168.2.18:5000/carpassapi/"
+var GLOBAL_SERVER: String = "https://carpasscdn.openmusic.app/carpassapi/"
 
 func serverEndpoint(_ endpoint: String) -> String {
     return(GLOBAL_SERVER + endpoint)
