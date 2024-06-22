@@ -33,6 +33,7 @@
 		E5891EAE2C2491AC004B76C8 /* CalendarBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5891EAD2C2491AC004B76C8 /* CalendarBackend.swift */; };
 		E5891EB12C249463004B76C8 /* CalendarHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5891EB02C249463004B76C8 /* CalendarHeader.swift */; };
 		E5A1E7FD2C2547D600266AF7 /* CalendarCaps.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A1E7FC2C2547D600266AF7 /* CalendarCaps.swift */; };
+		E5B180582C27373300CAE05C /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B180572C27373300CAE05C /* LoadingView.swift */; };
 		E5BAF82E2C24829D00CBF0B7 /* JoinCarSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BAF82D2C24829D00CBF0B7 /* JoinCarSheet.swift */; };
 		E5EEA0852C21F00B008A06BB /* CarPassApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EEA0842C21F00B008A06BB /* CarPassApp.swift */; };
 		E5EEA0872C21F00B008A06BB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EEA0862C21F00B008A06BB /* ContentView.swift */; };
@@ -67,6 +68,7 @@
 		E5891EAD2C2491AC004B76C8 /* CalendarBackend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarBackend.swift; sourceTree = "<group>"; };
 		E5891EB02C249463004B76C8 /* CalendarHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHeader.swift; sourceTree = "<group>"; };
 		E5A1E7FC2C2547D600266AF7 /* CalendarCaps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCaps.swift; sourceTree = "<group>"; };
+		E5B180572C27373300CAE05C /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		E5BAF82D2C24829D00CBF0B7 /* JoinCarSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinCarSheet.swift; sourceTree = "<group>"; };
 		E5EEA0812C21F00B008A06BB /* CarPass.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarPass.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5EEA0842C21F00B008A06BB /* CarPassApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarPassApp.swift; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 				E53E659B2C23EEE900B9B7C8 /* Info.plist */,
 				E5EEA0842C21F00B008A06BB /* CarPassApp.swift */,
 				E5EEA0862C21F00B008A06BB /* ContentView.swift */,
+				E5B180572C27373300CAE05C /* LoadingView.swift */,
 				E57E3FB92C222CB100A567EE /* HomeView.swift */,
 				E57E3FBB2C222DFA00A567EE /* Home */,
 				E57E3FAE2C22017000A567EE /* Views */,
@@ -317,6 +320,7 @@
 				E57E3FC72C2283A000A567EE /* CarRequestAlert.swift in Sources */,
 				E5BAF82E2C24829D00CBF0B7 /* JoinCarSheet.swift in Sources */,
 				E560EBBB2C233A0E007EE00D /* Splotch.swift in Sources */,
+				E5B180582C27373300CAE05C /* LoadingView.swift in Sources */,
 				E5EEA0852C21F00B008A06BB /* CarPassApp.swift in Sources */,
 				E57E3FB52C220B1500A567EE /* NetworkConstants.swift in Sources */,
 			);

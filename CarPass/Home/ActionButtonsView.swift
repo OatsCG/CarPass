@@ -52,7 +52,7 @@ struct ActionButtonsView: View {
         .padding([.horizontal, .bottom], 15)
         .padding(.top, 10)
         .background {
-            UnevenRoundedRectangle(cornerRadii: .init(topLeading: 47, bottomLeading: 10, bottomTrailing: 10, topTrailing: 47), style: .continuous).fill(.shadow(.inner(color: cc(user.myColor, style: .thin), radius: 30)))
+            UnevenRoundedRectangle(cornerRadii: .init(topLeading: 0, bottomLeading: 10, bottomTrailing: 10, topTrailing: 0), style: .continuous).fill(.shadow(.inner(color: cc(user.myColor, style: .thin), radius: 30)))
                 .foregroundStyle(.custombackground)
                 .ignoresSafeArea()
         }

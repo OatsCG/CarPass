@@ -35,7 +35,7 @@ struct ProfileSheet: View {
             }
             .safeAreaPadding()
             .background {
-                UnevenRoundedRectangle(cornerRadii: .init(topLeading: 47, bottomLeading: 10, bottomTrailing: 10, topTrailing: 47), style: .continuous).fill(.shadow(.inner(color: cc(user.myColor, style: .thin), radius: 30)))
+                UnevenRoundedRectangle(cornerRadii: .init(topLeading: 0, bottomLeading: 10, bottomTrailing: 10, topTrailing: 0), style: .continuous).fill(.shadow(.inner(color: cc(user.myColor, style: .thin), radius: 30)))
                     .foregroundStyle(.custombackground)
                     .ignoresSafeArea()
             }
@@ -137,6 +137,7 @@ struct ProfileSheet: View {
                                     .padding()
                                 }
                             }
+                            .padding(.bottom, 12)
                         VStack(spacing: 10) {
                             ForEach(user.carUsers, id: \.id) { caruser in
                                 CarProfileCapsule(text: caruser.name, pending: !caruser.confirmed, color: strtocc(caruser.color), isMe: caruser.id == user.userID)
@@ -154,7 +155,7 @@ struct ProfileSheet: View {
                                 CarInviteAlert(carID: carid)
                             }
                         }
-                        .padding(.vertical, 20)
+                        .padding(.vertical, 12)
                         
                         Button(action: {
                             showingJoinSheet = true

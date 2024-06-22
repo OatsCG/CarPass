@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct CalendarHeader: View {
+    var calendarModel: CalendarModel
     var body: some View {
         HStack {
             Button(action: {
-                // go back one month
+                calendarModel.backwardMonth()
             }) {
                 Image(systemName: "chevron.backward")
                     .font(.title2 .bold())
@@ -22,13 +23,13 @@ struct CalendarHeader: View {
             Button(action: {
                 // open month/year picker
             }) {
-                Text("June 2024")
+                Text("\(monthName(from: calendarModel.currentMonth)) \(Text(verbatim: "\(calendarModel.currentYear)"))")
                     .font(.title3 .bold())
             }
                 .tint(.primary)
             Spacer()
             Button(action: {
-                // go forward one month
+                calendarModel.forwardMonth()
             }) {
                 Image(systemName: "chevron.forward")
                     .font(.title2 .bold())
@@ -41,6 +42,21 @@ struct CalendarHeader: View {
     }
 }
 
+func monthName(from monthNumber: Int) -> String {
+    let formatter = DateFormatter()
+    let months = formatter.monthSymbols
+    
+    guard monthNumber >= 1 && monthNumber <= 12 else {
+        return "---"
+    }
+    
+    if let months = months {
+        return months[monthNumber - 1]
+    } else {
+        return "---"
+    }
+}
+
 #Preview {
-    CalendarHeader()
+    CalendarHeader(calendarModel: CalendarModel(editingEnabled: false))
 }

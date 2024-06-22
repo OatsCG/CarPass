@@ -95,8 +95,10 @@ func fullMonthSimpleArr(month: Int, year: Int) -> [CalDaySimple] {
     let prevYear: Int = previousMonthsYear(m: month, y: year)
     let prevMonthDayCount: Int = daysInMonth(month: prevMonth, year: prevYear)
     var prevMonthArr: [CalDaySimple] = []
-    for i in (prevMonthDayCount-(weekdayNum-1)+1)...prevMonthDayCount {
-        prevMonthArr.append(CalDaySimple(year: prevYear, month: prevMonth, day: i, isPartOfMonth: false))
+    if weekdayNum > 1 {
+        for i in (prevMonthDayCount-(weekdayNum-1)+1)...prevMonthDayCount {
+            prevMonthArr.append(CalDaySimple(year: prevYear, month: prevMonth, day: i, isPartOfMonth: false))
+        }
     }
     
     let nextMonth: Int = nextMonthsMonth(month)
@@ -174,8 +176,14 @@ func dateStatus(rangeStart: Date, rangeEnd: Date, date1: Date) -> CapType {
     var currentlyEditingStart: Bool = true
     var currentlyUpdatingCalendar: Bool = false
     
+    var currentMonth: Int
+    var currentYear: Int
+    
     init(editingEnabled: Bool) {
         self.editing = editingEnabled
+        let today: Date = Date()
+        self.currentMonth = today.month
+        self.currentYear = today.year
     }
     
     func updateCalendar(user: User) {
@@ -217,8 +225,8 @@ func dateStatus(rangeStart: Date, rangeEnd: Date, date1: Date) -> CapType {
     }
     
     private func updateMonth(user: User) {
-        let fullmonthsimple: [CalDaySimple] = fullMonthSimpleArr(month: 6, year: 2024)
-        let calmonth: CalMonth? = fullmonthToCalMonth(fullmonth: self.updateOccupiedRanges(month: fullmonthsimple, user: user), month: 6, year: 2024)
+        let fullmonthsimple: [CalDaySimple] = fullMonthSimpleArr(month: self.currentMonth, year: self.currentYear)
+        let calmonth: CalMonth? = fullmonthToCalMonth(fullmonth: self.updateOccupiedRanges(month: fullmonthsimple, user: user), month: self.currentMonth, year: self.currentYear)
         if let calmonth = calmonth {
             withAnimation {
                 self.month = calmonth
@@ -248,6 +256,20 @@ func dateStatus(rangeStart: Date, rangeEnd: Date, date1: Date) -> CapType {
     
     func switchEdit(to: Bool) {
         self.currentlyEditingStart = to
+    }
+    
+    func forwardMonth() {
+        withAnimation {
+            self.currentMonth = nextMonthsMonth(self.currentMonth)
+            self.currentYear = nextMonthsYear(m: self.currentMonth, y: self.currentYear)
+        }
+    }
+    
+    func backwardMonth() {
+        withAnimation {
+            self.currentMonth = previousMonthsMonth(self.currentMonth)
+            self.currentYear = previousMonthsYear(m: self.currentMonth, y: self.currentYear)
+        }
     }
 }
 

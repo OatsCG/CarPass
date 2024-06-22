@@ -11,7 +11,7 @@ struct ContentView: View {
     @Environment(User.self) var user
     var body: some View {
         if (user.fetchStatus == .waiting || user.isPushUpdatingCar) {
-            ProgressView()
+            LoadingView()
         } else {
             HomeView()
         }

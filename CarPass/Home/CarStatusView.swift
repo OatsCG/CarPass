@@ -11,15 +11,34 @@ struct CarStatusView: View {
     @Environment(User.self) var user
     @State var showingHaveCarAlert: Bool = false
     @State var showingRequestSheet: Bool = false
+    @State var carimageon: Bool = false
     var body: some View {
         VStack {
             if let whohasthecar = user.whohasthecar {
+                HStack {
+                    Spacer()
+                    Image(.carforwardon)
+                        .resizable()
+                        .scaledToFit()
+                        .padding(.horizontal, -50)
+                        .padding(.vertical, -50)
+                        
+                    Spacer()
+                }
                 Text("**\(whohasthecar.name)** has the car")
                     .font(.title2)
                     .contentTransition(.numericText(countsDown: true))
                 Text("Until Friday")
                     .foregroundStyle(.secondary)
             } else {
+                HStack {
+                    Spacer()
+                    Image(.carforwardmid)
+                        .resizable()
+                        .scaledToFit()
+                        .padding(.horizontal, -50)
+                    Spacer()
+                }
                 ProgressView()
                     .padding()
             }

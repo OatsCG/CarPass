@@ -20,7 +20,7 @@ struct CalendarView: View {
     }
     var body: some View {
         VStack(spacing: 3) {
-            CalendarHeader()
+            CalendarHeader(calendarModel: calendarModel)
             CalendarMonthView(calendarModel: calendarModel)
         }
         .onAppear {
