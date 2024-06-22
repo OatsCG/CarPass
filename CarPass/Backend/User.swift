@@ -395,6 +395,23 @@ import SwiftUI
         }
     }
     
+    func accept_car_request(rangeID: RangeID) {
+        self.isPushUpdatingInfo = true
+        if let car = self.car {
+            fetchServerEndpoint(endpoint: "acceptrange?carid=\(car)&userid=\(self.userID)&rangeid=\(rangeID)", fetchHash: UUID(), decodeAs: Bool.self) { (result, returnHash) in
+                switch result {
+                case .success(_):
+                    self.isPushUpdatingInfo = false
+                case .failure(let error):
+                    print(error)
+                    self.isPushUpdatingInfo = false
+                }
+            }
+        } else {
+            self.isPushUpdatingInfo = false
+        }
+    }
+    
 }
 
 enum FetchStatus {

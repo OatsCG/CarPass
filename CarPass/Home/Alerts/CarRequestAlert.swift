@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct CarRequestAlert: View {
+    @Environment(User.self) var user
+    var rangeID: RangeID
     var name: String
     var reason: String
     var range: String
@@ -53,7 +55,7 @@ struct CarRequestAlert: View {
                     HStack(spacing: 8) {
                         Button(action: {
                             //accepted = true
-                            
+                            user.accept_car_request(rangeID: rangeID)
                         }) {
                             CapsuleButton(text: Text("\(Image(systemName: "checkmark")) Accept\(accepted ? "ed" : "")").font(.title3).fontWeight(.medium), lit: true, height: 45, color: color)
                         }
@@ -85,6 +87,6 @@ struct CarRequestAlert: View {
 }
 
 #Preview {
-    CarRequestAlert(name: "Simon", reason: "I just want it", range: "Tomorrow", rangeRelative: "In 1 Day", color: .orange, accepted: false, isMine: true)
+    CarRequestAlert(rangeID: "1234", name: "Simon", reason: "I just want it", range: "Tomorrow", rangeRelative: "In 1 Day", color: .orange, accepted: false, isMine: true)
         .padding(10)
 }
