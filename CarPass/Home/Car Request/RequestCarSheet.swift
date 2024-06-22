@@ -38,6 +38,11 @@ struct RequestCarSheet: View {
                 HStack {
                     Text("End: **\(datestr(calendarModel.endEditDate))**")
                         .font(.title3)
+                        .padding(.horizontal)
+                        .padding(.vertical)
+                        .background {
+                            
+                        }
                 }
             }
             Spacer()
