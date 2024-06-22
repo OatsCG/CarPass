@@ -159,5 +159,5 @@ def newcarforme():
 
 
 if __name__ == '__main__':
-    app.run(host='192.168.2.233', port=5000, debug=True)
+    app.run(host='192.168.2.233', port=5000, debug=False)
     #app.run(host='192.168.2.231', port=5000, debug=True)
