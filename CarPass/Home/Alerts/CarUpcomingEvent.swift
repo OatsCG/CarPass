@@ -28,7 +28,7 @@ struct CarUpcomingEvent: View {
                             .font(.title2)
                             .multilineTextAlignment(.leading)
                         Spacer()
-                        Text("In 1 day")
+                        Text(range)
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                     }
@@ -39,7 +39,7 @@ struct CarUpcomingEvent: View {
                             Spacer()
                         }
                         HStack {
-                            Text(range)
+                            Text(rangeRelative)
                                 .font(.subheadline)
                                 .foregroundStyle(.secondary)
                             Spacer()
@@ -72,6 +72,6 @@ struct CarUpcomingEvent: View {
 }
 
 #Preview {
-    CarUpcomingEvent(name: "Simon", reason: "I just want it", range: "Tomorrow", rangeRelative: "In 1 Day", color: .orange, mustBring: true)
+    CarUpcomingEvent(name: "Simon", reason: "I just want it", range: "Jun 26 - Jun 29", rangeRelative: "In 1 Day", color: .orange, mustBring: true)
         .padding(10)
 }

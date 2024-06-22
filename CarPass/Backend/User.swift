@@ -34,6 +34,7 @@ import SwiftUI
         fetchUser() { boola in
             if boola {
                 self.lastUpdated = Date()
+                self.fetchLoop()
             }
         }
         
@@ -48,17 +49,48 @@ import SwiftUI
             return
         }
         self.isFetchingCar = true
-        
-        self.fetchUser() { boola in
-            self.fetchCar() { boolb in
-                self.fetchUsers() { boolc in
-                    self.fetchPendingCarInvites() { boold in
-                        if boola && boolb && boolc && boold {
-                            self.lastUpdated = Date()
+        self.testServer() { online in
+            if !online {
+                self.isFetchingCar = false
+                self.isPushUpdatingInfo = false
+                self.isPushUpdatingCar = false
+                withAnimation {
+                    self.fetchStatus = .failed
+                }
+                return
+            } else {
+                self.fetchUser() { boola in
+                    self.fetchCar() { boolb in
+                        self.fetchUsers() { boolc in
+                            self.fetchPendingCarInvites() { boold in
+                                if boola && boolb && boolc && boold {
+                                    self.lastUpdated = Date()
+                                    withAnimation {
+                                        self.fetchStatus = .success
+                                    }
+                                } else {
+                                    print("HERE 2")
+                                    print(boolb)
+                                    withAnimation {
+                                        self.fetchStatus = .failed
+                                    }
+                                }
+                                self.isFetchingCar = false
+                            }
                         }
-                        self.isFetchingCar = false
                     }
                 }
+            }
+        }
+    }
+    
+    func testServer(completion: @escaping (Bool) -> Void) {
+        fetchServerEndpoint(endpoint: "testserver", fetchHash: UUID(), decodeAs: Bool.self) { (result, returnHash) in
+            switch result {
+            case .success(_):
+                completion(true)
+            case .failure(_):
+                completion(false)
             }
         }
     }
@@ -81,9 +113,6 @@ import SwiftUI
                             self.myColor = strtocc(data.color)
                             self.car = data.car
                         }
-                        withAnimation {
-                            self.fetchStatus = .success
-                        }
                         completion(true)
                     } else {
                         fetchServerEndpoint(endpoint: "newuser", fetchHash: UUID(), decodeAs: UserID.self) { (result, returnHash) in
@@ -96,22 +125,13 @@ import SwiftUI
                                 self.userID = data
                                 self.username = "Username"
                                 UserDefaults.standard.setValue(data, forKey: "userID")
-                                withAnimation {
-                                    self.fetchStatus = .success
-                                }
                                 completion(true)
                             case .failure(_):
-                                withAnimation {
-                                    self.fetchStatus = .failed
-                                }
                                 completion(false)
                             }
                         }
                     }
                 case .failure(_):
-                    withAnimation {
-                        self.fetchStatus = .failed
-                    }
                     completion(true)
                 }
             }
@@ -127,14 +147,8 @@ import SwiftUI
                     self.userID = data
                     self.username = "Username"
                     UserDefaults.standard.setValue(data, forKey: "userID")
-                    withAnimation {
-                        self.fetchStatus = .success
-                    }
                     completion(true)
                 case .failure(_):
-                    withAnimation {
-                        self.fetchStatus = .failed
-                    }
                     completion(false)
                 }
             }
@@ -156,7 +170,7 @@ import SwiftUI
                         var tempPendingAlerts: [PendingAlert] = []
                         for pendingRange in data.pendingRanges {
                             
-                            let rangeDescription: String = epochToDescription(epoch: pendingRange.start)
+                            let rangeDescription: String = epochToDescription(epochStart: pendingRange.start, epochEnd: pendingRange.end)
                             let rangeRelativeDescription: String = epochToRelativeDescription(epoch: pendingRange.start)
                             tempPendingAlerts.append(PendingAlert(id: pendingRange.id, userID: pendingRange.user, name: pendingRange.username, reason: pendingRange.reason, rangeStart: Date(timeIntervalSince1970: TimeInterval(pendingRange.start)), rangeEnd: Date(timeIntervalSince1970: TimeInterval(pendingRange.end)), rangeDescription: rangeDescription, rangeRelativeDescription: rangeRelativeDescription, color: strtocc(pendingRange.usercolor), accepted: pendingRange.accepted))
                         }
@@ -164,10 +178,10 @@ import SwiftUI
                         // Get Confirmed Ranges
                         var tempConfirmedAlerts: [ConfirmedAlert] = []
                         var tempOutdatedAlerts: [ConfirmedAlert] = []
-                        let sortedRanges: [FetchedConfirmedRange] = data.confirmedRanges.sorted(by: { $0.start > $1.start })
+                        let sortedRanges: [FetchedConfirmedRange] = data.confirmedRanges.sorted(by: { $0.start < $1.start })
                         let currentDate: Date = Date()
                         for confirmedRange in sortedRanges {
-                            let rangeDescription: String = epochToDescription(epoch: confirmedRange.start)
+                            let rangeDescription: String = epochToDescription(epochStart: confirmedRange.start, epochEnd: confirmedRange.end)
                             let rangeRelativeDescription: String = epochToRelativeDescription(epoch: confirmedRange.start)
                             var mustBring: Bool = false
                             if (Int(currentDate.timeIntervalSince1970) > confirmedRange.end) { // if range end date is before now
@@ -400,6 +414,23 @@ import SwiftUI
         self.isPushUpdatingInfo = true
         if let car = self.car {
             fetchServerEndpoint(endpoint: "acceptrange?carid=\(car)&userid=\(self.userID)&rangeid=\(rangeID)", fetchHash: UUID(), decodeAs: Bool.self) { (result, returnHash) in
+                switch result {
+                case .success(_):
+                    self.isPushUpdatingInfo = false
+                case .failure(let error):
+                    print(error)
+                    self.isPushUpdatingInfo = false
+                }
+            }
+        } else {
+            self.isPushUpdatingInfo = false
+        }
+    }
+    
+    func reject_car_request(rangeID: RangeID) {
+        self.isPushUpdatingInfo = true
+        if let car = self.car {
+            fetchServerEndpoint(endpoint: "rejectrange?carid=\(car)&userid=\(self.userID)&rangeid=\(rangeID)", fetchHash: UUID(), decodeAs: Bool.self) { (result, returnHash) in
                 switch result {
                 case .success(_):
                     self.isPushUpdatingInfo = false

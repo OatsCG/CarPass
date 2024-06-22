@@ -1,9 +1,15 @@
 from flask import Flask, jsonify, request
 from carPassAPI import CarPass
+import time
 
 app = Flask(__name__)
 
 carPass = CarPass()
+
+# /carpassapi/testserver
+@app.route('/carpassapi/testserver', methods=['GET'])
+def testserver():
+    return jsonify(True)
 
 # /carpassapi/newuser?name=String
 @app.route('/carpassapi/newuser', methods=['GET'])
@@ -51,6 +57,15 @@ def acceptrange():
     userid = request.args.get('userid', default='', type=str)
     rangeid = request.args.get('rangeid', default='', type=str)
     ret = carPass.accept_timerange(carid, userid, rangeid)
+    return jsonify(ret)
+
+# /carpassapi/rejectrange?carid=UUID&userid=UUID&rangeid=UUID   returns bool
+@app.route('/carpassapi/rejectrange', methods=['GET'])
+def rejectrange():
+    carid = request.args.get('carid', default='', type=str)
+    userid = request.args.get('userid', default='', type=str)
+    rangeid = request.args.get('rangeid', default='', type=str)
+    ret = carPass.reject_timerange(carid, userid, rangeid)
     return jsonify(ret)
 
 # /carpassapi/pendinvite?carid=UUID&userid=UUID   returns bool

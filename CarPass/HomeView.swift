@@ -32,7 +32,7 @@ struct HomeView: View {
                                 }
                                 .padding()
                                 ForEach(user.pendingAlerts, id: \.id) { alert in
-                                    CarRequestAlert(rangeID: alert.id, name: alert.name, reason: alert.reason, range: alert.rangeDescription, rangeRelative: alert.rangeRelativeDescription, color: alert.color, accepted: alert.accepted.contains(user.userID), isMine: alert.userID == user.userID)
+                                    CarRequestAlert(rangeID: alert.id, name: alert.name, reason: alert.reason, range: alert.rangeDescription, rangeRelative: alert.rangeRelativeDescription, color: alert.color, accepted: alert.accepted.contains(user.userID), isMine: alert.userID == user.userID, acceptedCount: alert.accepted.count)
                                 }
                             }
                             Spacer(minLength: 30)

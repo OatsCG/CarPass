@@ -81,7 +81,8 @@ class CarPass:
             "users": [user["id"]],
             "pendingInvites": [],
             "pendingRanges": [],
-            "confirmedRanges": []
+            "confirmedRanges": [],
+            "rejectedRanges": []
         }
         self.cars.append(car)
         user["car"] = car["id"]
@@ -291,6 +292,21 @@ class CarPass:
                     range["accepted"].append(userID)
                     if len(range["accepted"]) == len(car["users"]) - 1:
                         return self.confirm_timerange(carID, rangeID)
+                    self.update_storage()
+                    return True
+            return False
+        
+    def reject_timerange(self, carID: UUID, userID: UUID, rangeID: UUID) -> bool:
+        car = self.get_car(carID)
+        if car == None:
+            return False
+        else:
+            for range in car["pendingRanges"]:
+                if range["id"] == rangeID:
+                    range["rejected"] = userID
+                    if range["user"] != userID:
+                        car["rejectedRanges"].append(range)
+                    car["pendingRanges"].remove(range)
                     self.update_storage()
                     return True
             return False

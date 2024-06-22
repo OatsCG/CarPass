@@ -36,6 +36,7 @@ class FetchedCar: Codable {
     var pendingInvites: [UserID]
     var pendingRanges: [FetchedPendingRange]
     var confirmedRanges: [FetchedConfirmedRange]
+    var rejectedRanges: [FetchedPendingRange]
 }
 
 class FetchedCarUsers: Codable {
@@ -56,6 +57,7 @@ class FetchedPendingRange: Codable {
     var usercolor: String
     var reason: String
     var accepted: [UserID]
+    var rejected: UserID?
     var start: Int
     var end: Int
 }

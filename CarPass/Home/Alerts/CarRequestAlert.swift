@@ -17,6 +17,7 @@ struct CarRequestAlert: View {
     var color: CustomColor
     var accepted: Bool = false
     var isMine: Bool
+    var acceptedCount: Int
     var body: some View {
         HStack(alignment: .bottom) {
             VStack(spacing: 18) {
@@ -31,7 +32,7 @@ struct CarRequestAlert: View {
                             .font(.title2)
                             .multilineTextAlignment(.leading)
                         Spacer()
-                        Text(rangeRelative)
+                        Text(range)
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                     }
@@ -42,10 +43,13 @@ struct CarRequestAlert: View {
                             Spacer()
                         }
                         HStack {
-                            Text(range)
+                            Text(rangeRelative)
                                 .font(.subheadline)
                                 .foregroundStyle(.secondary)
                             Spacer()
+                            Text("\(acceptedCount) Accepted")
+                                .font(.subheadline)
+                                .foregroundStyle(.tertiary)
                         }
                     }
                 }
@@ -62,7 +66,7 @@ struct CarRequestAlert: View {
                         .disabled(accepted)
                         if !accepted {
                             Button(action: {
-                                
+                                user.reject_car_request(rangeID: rangeID)
                             }) {
                                 CapsuleButton(text: Text("\(Image(systemName: "xmark"))").font(.title3).fontWeight(.medium), lit: true, height: 45, color: color)
                                     .frame(width: 45)
@@ -70,6 +74,13 @@ struct CarRequestAlert: View {
                             .buttonStyle(.plain)
                         }
                     }
+                } else {
+                    Button(action: {
+                        user.reject_car_request(rangeID: rangeID)
+                    }) {
+                        CapsuleButton(text: Text("\(Image(systemName: "xmark")) Revoke Request").font(.title3).fontWeight(.medium), lit: true, height: 45, color: color)
+                    }
+                    .buttonStyle(.plain)
                 }
             }
             .padding(.all, 10)
@@ -86,6 +97,7 @@ struct CarRequestAlert: View {
 }
 
 #Preview {
-    CarRequestAlert(rangeID: "1234", name: "Simon", reason: "I just want it", range: "Tomorrow", rangeRelative: "In 1 Day", color: .orange, accepted: false, isMine: true)
+    CarRequestAlert(rangeID: "1234", name: "Simon", reason: "I just want it", range: "Jun 26 - Jun 28", rangeRelative: "Tomorrow", color: .orange, accepted: false, isMine: true, acceptedCount: 2)
         .padding(10)
+        .environment(User())
 }
