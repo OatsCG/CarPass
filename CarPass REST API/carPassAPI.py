@@ -124,6 +124,7 @@ class CarPass:
                 car["users"].remove(userID)
                 user["car"] = None
             self.update_storage()
+            return True
     
     def invite_to_car(self, carID: UUID, userID: UUID) -> bool:
         car = self.get_car(carID)
@@ -169,6 +170,7 @@ class CarPass:
             self.update_timerange_profiles(user["car"], userID)
             self.update_whohascar_profiles(user["car"], userID)
             self.update_storage()
+            return True
     
     def update_name(self, userID: UUID, name: str) -> bool:
         user = self.get_user(userID)
@@ -179,6 +181,7 @@ class CarPass:
             self.update_timerange_profiles(user["car"], userID)
             self.update_whohascar_profiles(user["car"], userID)
             self.update_storage()
+            return True
 
     def update_car_name(self, carID: UUID, name: str) -> bool:
         car = self.get_car(carID)
@@ -187,6 +190,7 @@ class CarPass:
         else:
             car["name"] = name
             self.update_storage()
+            return True
     
     def i_have_car(self, carID: UUID, userID: UUID) -> bool:
         car = self.get_car(carID)
@@ -198,6 +202,7 @@ class CarPass:
             car["whohasusername"] = user["name"]
             car["whohasusercolor"] = user["color"]
             self.update_storage()
+            return True
 
 
     def check_invites(self, userID: UUID) -> dict | None:
@@ -304,6 +309,7 @@ class CarPass:
                 if range["user"] == userID:
                     range["username"] = user["name"]
                     range["usercolor"] = user["color"]
+            return True
     
     def update_whohascar_profiles(self, carID: UUID, userID: UUID) -> bool:
         car = self.get_car(carID)
@@ -314,6 +320,9 @@ class CarPass:
             if (car["whohas"] == userID):
                 car["whohasusername"] = user["name"]
                 car["whohasusercolor"] = user["color"]
+                return True
+            else:
+                return False
 
 
 if __name__ == "__main__":

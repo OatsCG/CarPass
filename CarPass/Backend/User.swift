@@ -245,6 +245,7 @@ import SwiftUI
             case .success(_):
                 self.isPushUpdatingInfo = false
             case .failure(let error):
+                print("error")
                 print(error)
                 self.isPushUpdatingInfo = false
             }

@@ -79,7 +79,7 @@ def forceacceptinvite():
         inv = carPass.accept_invite(carid, userid)
         return jsonify(inv)
     else:
-        return False
+        return jsonify(False)
 
 # /carpassapi/dismissinvite?carid=UUID&userid=UUID   returns bool
 @app.route('/carpassapi/dismissinvite', methods=['GET'])
@@ -94,7 +94,7 @@ def dismissinvite():
 def checkinvites():
     userid = request.args.get('userid', default='', type=str)
     invites = carPass.check_invites(userid)
-    return invites
+    return jsonify(invites)
 
 # /carpassapi/ihavecar?carid=UUID&userid=UUID   returns bool
 @app.route('/carpassapi/ihavecar', methods=['GET'])
