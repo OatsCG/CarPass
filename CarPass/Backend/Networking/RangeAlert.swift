@@ -17,6 +17,7 @@ struct PendingAlert {
     var rangeDescription: String // June 5
     var rangeRelativeDescription: String // Tomorrow, In 2 days, etc
     var color: CustomColor // .red
+    var accepted: [UserID]
 }
 
 struct ConfirmedAlert {

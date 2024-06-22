@@ -155,9 +155,10 @@ import SwiftUI
                         // Get Pending Ranges
                         var tempPendingAlerts: [PendingAlert] = []
                         for pendingRange in data.pendingRanges {
+                            
                             let rangeDescription: String = epochToDescription(epoch: pendingRange.start)
                             let rangeRelativeDescription: String = epochToRelativeDescription(epoch: pendingRange.start)
-                            tempPendingAlerts.append(PendingAlert(id: pendingRange.id, userID: pendingRange.user, name: pendingRange.username, reason: pendingRange.reason, rangeStart: Date(timeIntervalSince1970: TimeInterval(pendingRange.start)), rangeEnd: Date(timeIntervalSince1970: TimeInterval(pendingRange.end)), rangeDescription: rangeDescription, rangeRelativeDescription: rangeRelativeDescription, color: strtocc(pendingRange.usercolor)))
+                            tempPendingAlerts.append(PendingAlert(id: pendingRange.id, userID: pendingRange.user, name: pendingRange.username, reason: pendingRange.reason, rangeStart: Date(timeIntervalSince1970: TimeInterval(pendingRange.start)), rangeEnd: Date(timeIntervalSince1970: TimeInterval(pendingRange.end)), rangeDescription: rangeDescription, rangeRelativeDescription: rangeRelativeDescription, color: strtocc(pendingRange.usercolor), accepted: pendingRange.accepted))
                         }
                         
                         // Get Confirmed Ranges

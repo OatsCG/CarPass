@@ -13,6 +13,8 @@ struct CarRequestAlert: View {
     var range: String
     var rangeRelative: String
     var color: CustomColor
+    var accepted: Bool = false
+    var isMine: Bool
     var body: some View {
         HStack(alignment: .bottom) {
             VStack(spacing: 18) {
@@ -47,20 +49,26 @@ struct CarRequestAlert: View {
                 }
                 .padding(.top, 5)
                 .padding(.horizontal, 10)
-                HStack(spacing: 8) {
-                    Button(action: {
-                        
-                    }) {
-                        CapsuleButton(text: Text("\(Image(systemName: "checkmark")) Accept").font(.title3).fontWeight(.medium), lit: true, height: 45, color: color)
+                if !isMine {
+                    HStack(spacing: 8) {
+                        Button(action: {
+                            //accepted = true
+                            
+                        }) {
+                            CapsuleButton(text: Text("\(Image(systemName: "checkmark")) Accept\(accepted ? "ed" : "")").font(.title3).fontWeight(.medium), lit: true, height: 45, color: color)
+                        }
+                        .buttonStyle(.plain)
+                        .disabled(accepted)
+                        if !accepted {
+                            Button(action: {
+                                
+                            }) {
+                                CapsuleButton(text: Text("\(Image(systemName: "xmark"))").font(.title3).fontWeight(.medium), lit: true, height: 45, color: color)
+                                    .frame(width: 45)
+                            }
+                            .buttonStyle(.plain)
+                        }
                     }
-                    .buttonStyle(.plain)
-                    Button(action: {
-                        
-                    }) {
-                        CapsuleButton(text: Text("\(Image(systemName: "xmark"))").font(.title3).fontWeight(.medium), lit: true, height: 45, color: color)
-                            .frame(width: 45)
-                    }
-                    .buttonStyle(.plain)
                 }
             }
             .padding(.all, 10)
@@ -77,6 +85,6 @@ struct CarRequestAlert: View {
 }
 
 #Preview {
-    CarRequestAlert(name: "Simon", reason: "I just want it", range: "Tomorrow", rangeRelative: "In 1 Day", color: .orange)
+    CarRequestAlert(name: "Simon", reason: "I just want it", range: "Tomorrow", rangeRelative: "In 1 Day", color: .orange, accepted: false, isMine: true)
         .padding(10)
 }
