@@ -444,6 +444,19 @@ import SwiftUI
         }
     }
     
+    func new_car_for_me() {
+        self.isPushUpdatingInfo = true
+        fetchServerEndpoint(endpoint: "newcarforme?userid=\(self.userID)", fetchHash: UUID(), decodeAs: CarID.self) { (result, returnHash) in
+            switch result {
+            case .success(_):
+                self.isPushUpdatingInfo = false
+            case .failure(let error):
+                print(error)
+                self.isPushUpdatingInfo = false
+            }
+        }
+    }
+    
 }
 
 enum FetchStatus {

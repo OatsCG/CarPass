@@ -150,7 +150,14 @@ def updatecarname():
     ret = carPass.update_car_name(carid, name)
     return jsonify(ret)
 
+# /carpassapi/newcarforme?userid=UUID   returns UUID
+@app.route('/carpassapi/newcarforme', methods=['GET'])
+def newcarforme():
+    userid = request.args.get('userid', default='', type=str)
+    car = carPass.new_car(userid, "Car 1")
+    return jsonify(car)
 
 
 if __name__ == '__main__':
     app.run(host='192.168.2.233', port=5000, debug=True)
+    #app.run(host='192.168.2.231', port=5000, debug=True)

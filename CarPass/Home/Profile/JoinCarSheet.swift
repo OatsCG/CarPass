@@ -12,6 +12,7 @@ struct JoinCarSheet: View {
     @Binding var showingJoinSheet: Bool
     @State var carid: String = ""
     @State var fetchInviteUser: FetchInviteCarModel = FetchInviteCarModel()
+    @State var showingNewCarAlert: Bool = false
     var body: some View {
         VStack(spacing: 35) {
             Spacer()
@@ -55,7 +56,23 @@ struct JoinCarSheet: View {
             .buttonStyle(.plain)
             .disabled(fetchInviteUser.isFetching || !fetchInviteUser.wasfound)
             .foregroundStyle((fetchInviteUser.isFetching || !fetchInviteUser.wasfound) ? .secondary : .primary)
-            
+            Button(action: {
+                showingNewCarAlert = true
+            }) {
+                CapsuleButton(text: Text("New Car..."), lit: false, color: .red)
+            }
+            .buttonStyle(.plain)
+            .alert(isPresented: $showingNewCarAlert) {
+                Alert(
+                    title: Text("Do you want to leave your current car and start a new car?"),
+                    primaryButton: .default(Text("Yes")) {
+                        //user.update_ihavecar()
+                        user.new_car_for_me()
+                        showingJoinSheet = false
+                    },
+                    secondaryButton: .cancel()
+                )
+            }
             Spacer()
         }
         .safeAreaPadding()
