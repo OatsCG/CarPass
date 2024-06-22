@@ -24,7 +24,7 @@ struct JoinCarSheet: View {
                 }
                 .submitLabel(.done)
                 .multilineTextAlignment(.center)
-                .textInputAutocapitalization(.characters)
+                .textCase(.uppercase)
                 .autocorrectionDisabled()
                 .textFieldStyle(.plain)
                 .padding(.horizontal, 16)
