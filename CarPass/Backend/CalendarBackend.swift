@@ -172,15 +172,19 @@ func dateStatus(rangeStart: Date, rangeEnd: Date, date1: Date) -> CapType {
     var startEditDate: Date = Date()
     var endEditDate: Date = Date()
     var currentlyEditingStart: Bool = true
+    var currentlyUpdatingCalendar: Bool = false
     
     init(editingEnabled: Bool) {
         self.editing = editingEnabled
-        
-        //self.updateCalendar(user: user)
     }
     
     func updateCalendar(user: User) {
+        if self.currentlyUpdatingCalendar {
+            return
+        }
+        self.currentlyUpdatingCalendar = true
         self.updateMonth(user: user)
+        self.currentlyUpdatingCalendar = false
     }
     
     private func updateOccupiedRanges(month: [CalDaySimple], user: User) -> [CalDay] {
@@ -199,15 +203,16 @@ func dateStatus(rangeStart: Date, rangeEnd: Date, date1: Date) -> CapType {
                 }
             }
             // also include start/end editors
+            var isCapEditing: Bool = false
             if self.editing {
                 let editrangeCapType: CapType = dateStatus(rangeStart: self.startEditDate, rangeEnd: self.endEditDate, date1: thisrealdate)
                 if editrangeCapType != .none {
                     occupant = Occupant(name: "$editorname$", color: user.myColor, start: Int(self.startEditDate.timeIntervalSince1970), end: Int(self.startEditDate.timeIntervalSince1970), reason: "")
                     captype = .startandend
+                    isCapEditing = true
                 }
             }
-            
-            return CalDay(dayNumber: calday.day, isPartOfMonth: calday.isPartOfMonth, isToday: thisdate.isToday, isBeforeToday: (thisdate.isInPast && !thisdate.isToday), actualDate: thisrealdate, occupiedBy: occupant, capType: captype)
+            return CalDay(dayNumber: calday.day, isPartOfMonth: calday.isPartOfMonth, isToday: thisdate.isToday, isBeforeToday: (thisdate.isInPast && !thisdate.isToday), actualDate: thisrealdate, isEditing: isCapEditing, occupiedBy: occupant, capType: captype)
         }
     }
     
@@ -278,6 +283,7 @@ struct CalDay {
     var isToday: Bool
     var isBeforeToday: Bool
     var actualDate: Date
+    var isEditing: Bool = false
     var occupiedBy: Occupant?
     var capType: CapType
 }

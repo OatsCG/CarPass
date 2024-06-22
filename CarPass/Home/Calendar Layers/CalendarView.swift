@@ -10,6 +10,7 @@ import SwiftUI
 struct CalendarView: View {
     @Environment(User.self) var user
     @State var calendarModel: CalendarModel
+    @State private var calTimer: Timer?
     init(editingEnabled: Bool, calendarModel: CalendarModel? = nil) {
         if let calendarModel = calendarModel {
             self.calendarModel = calendarModel
@@ -23,6 +24,15 @@ struct CalendarView: View {
             CalendarMonthView(calendarModel: calendarModel)
         }
         .onAppear {
+            startTimer()
+        }
+        
+    }
+    
+    func startTimer() {
+        calTimer?.invalidate()
+        calTimer = nil
+        calTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
             self.calendarModel.updateCalendar(user: user)
         }
     }
@@ -76,10 +86,10 @@ struct CalendarDayView: View {
                         calendarModel.updateEndDate(to: calDay?.actualDate, user: user)
                     }
                 }) {
-                    CalendarDayCap(color: calDay?.occupiedBy?.color, inMonth: calDay?.isPartOfMonth ?? false, paddingAmount: paddingAmount, cap: calDay?.capType ?? .none, isEditing: calendarModel.editing)
+                    CalendarDayCap(color: calDay?.occupiedBy?.color, inMonth: calDay?.isPartOfMonth ?? false, paddingAmount: paddingAmount, cap: calDay?.capType ?? .none, isEditing: calDay?.isEditing ?? false)
                 }
             } else {
-                CalendarDayCap(color: calDay?.occupiedBy?.color, inMonth: calDay?.isPartOfMonth ?? false, paddingAmount: paddingAmount, cap: calDay?.capType ?? .none, isEditing: calendarModel.editing)
+                CalendarDayCap(color: calDay?.occupiedBy?.color, inMonth: calDay?.isPartOfMonth ?? false, paddingAmount: paddingAmount, cap: calDay?.capType ?? .none, isEditing: calDay?.isEditing ?? false)
             }
         }
             .overlay {

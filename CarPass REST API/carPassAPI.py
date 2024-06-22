@@ -166,6 +166,8 @@ class CarPass:
             return False
         else:
             user["color"] = color
+            self.update_timerange_profiles(user["car"], userID)
+            self.update_whohascar_profiles(user["car"], userID)
             self.update_storage()
     
     def update_name(self, userID: UUID, name: str) -> bool:
@@ -174,6 +176,8 @@ class CarPass:
             return False
         else:
             user["name"] = name
+            self.update_timerange_profiles(user["car"], userID)
+            self.update_whohascar_profiles(user["car"], userID)
             self.update_storage()
 
     def update_car_name(self, carID: UUID, name: str) -> bool:
@@ -286,6 +290,30 @@ class CarPass:
                     return True
             return False
 
+    def update_timerange_profiles(self, carID: UUID, userID: UUID) -> bool:
+        car = self.get_car(carID)
+        user = self.get_user(userID)
+        if car == None or user == None:
+            return False
+        else:
+            for range in car["pendingRanges"]:
+                if range["user"] == userID:
+                    range["username"] = user["name"]
+                    range["usercolor"] = user["color"]
+            for range in car["confirmedRanges"]:
+                if range["user"] == userID:
+                    range["username"] = user["name"]
+                    range["usercolor"] = user["color"]
+    
+    def update_whohascar_profiles(self, carID: UUID, userID: UUID) -> bool:
+        car = self.get_car(carID)
+        user = self.get_user(userID)
+        if car == None or user == None:
+            return False
+        else:
+            if (car["whohas"] == userID):
+                car["whohasusername"] = user["name"]
+                car["whohasusercolor"] = user["color"]
 
 
 if __name__ == "__main__":

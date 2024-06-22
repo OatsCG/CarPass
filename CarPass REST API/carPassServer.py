@@ -41,7 +41,7 @@ def sendrangerequest():
     start = request.args.get('start', default=0, type=int)
     end = request.args.get('end', default=1, type=int)
     reason = request.args.get('reason', default='', type=str)
-    ret = carPass.new_timerange(carid, userid, start, end)
+    ret = carPass.new_timerange(carid, userid, start, end, reason)
     return jsonify(ret != None)
 
 # /carpassapi/acceptrange?carid=UUID&userid=UUID&rangeid=UUID   returns bool

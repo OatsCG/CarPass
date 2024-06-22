@@ -97,8 +97,16 @@ struct CalendarDayStartandendCap: View {
     var isEditing: Bool
     @State var rotation: CGFloat = 0
     var body: some View {
-        Circle()
-            .stroke(cc(color, style: .primary), style: .init(lineWidth: 2, lineCap: .round, dash: [5, 8], dashPhase: 0))
+        Group {
+            if isEditing {
+                Circle()
+                    .stroke(cc(color, style: .primary), style: .init(lineWidth: 2, lineCap: .round, dash: [5, 8], dashPhase: 0))
+            } else {
+                Circle()
+                    .fill(cc(color, style: inMonth ? .thick : .thin))
+            }
+            //.stroke(cc(color, style: .primary), style: .init(lineWidth: 2, lineCap: .round, dash: [5, 8], dashPhase: 0))
+        }
             .padding(.vertical, paddingAmount / 2)
             .padding(.horizontal, paddingAmount / 2)
             .rotationEffect(.degrees(rotation))

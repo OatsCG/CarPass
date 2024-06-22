@@ -64,7 +64,8 @@ struct RequestCarSheet: View {
                     }
                 }
                 Button(action: {
-                    
+                    user.send_car_request(start: Int(calendarModel.startEditDate.timeIntervalSince1970), end: Int(calendarModel.endEditDate.timeIntervalSince1970), reason: "I just want it pls")
+                    showingRequestSheet = false
                 }) {
                     CapsuleButton(text: Text("**Send Request**"), lit: false, color: .red)
                 }
