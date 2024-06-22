@@ -14,7 +14,7 @@ struct CalendarHeader: View {
                 // go back one month
             }) {
                 Image(systemName: "chevron.backward")
-                    .font(.largeTitle)
+                    .font(.title2 .bold())
                     .symbolRenderingMode(.hierarchical)
             }
                 .tint(.primary)
@@ -31,7 +31,7 @@ struct CalendarHeader: View {
                 // go forward one month
             }) {
                 Image(systemName: "chevron.forward")
-                    .font(.largeTitle)
+                    .font(.title2 .bold())
                     .symbolRenderingMode(.hierarchical)
             }
                 .tint(.primary)

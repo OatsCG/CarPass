@@ -197,6 +197,15 @@ func dateStatus(rangeStart: Date, rangeEnd: Date, date1: Date) -> CapType {
                     break
                 }
             }
+            // also include start/end editors
+            if self.editing {
+                let editrangeCapType: CapType = dateStatus(rangeStart: self.startEditDate, rangeEnd: self.endEditDate, date1: thisrealdate)
+                if editrangeCapType != .none {
+                    occupant = Occupant(name: "$editorname$", color: user.myColor, start: Int(self.startEditDate.timeIntervalSince1970), end: Int(self.startEditDate.timeIntervalSince1970), reason: "")
+                    captype = editrangeCapType
+                }
+            }
+            
             return CalDay(dayNumber: calday.day, isPartOfMonth: calday.isPartOfMonth, isToday: thisdate.isToday, isBeforeToday: (thisdate.isInPast && !thisdate.isToday), occupiedBy: occupant, capType: captype)
         }
     }

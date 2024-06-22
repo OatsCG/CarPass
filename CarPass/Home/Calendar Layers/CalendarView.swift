@@ -10,8 +10,12 @@ import SwiftUI
 struct CalendarView: View {
     @Environment(User.self) var user
     @State var calendarModel: CalendarModel
-    init(editingEnabled: Bool) {
-        self.calendarModel = CalendarModel(editingEnabled: editingEnabled)
+    init(editingEnabled: Bool, calendarModel: CalendarModel? = nil) {
+        if let calendarModel = calendarModel {
+            self.calendarModel = calendarModel
+        } else {
+            self.calendarModel = CalendarModel(editingEnabled: editingEnabled)
+        }
     }
     var body: some View {
         VStack(spacing: 3) {
@@ -30,45 +34,52 @@ struct CalendarMonthView: View {
     var calendarModel: CalendarModel
     var body: some View {
         VStack(spacing: 0) {
-            CalendarWeekView(calWeek: calendarModel.month?.week1)
-            CalendarWeekView(calWeek: calendarModel.month?.week2)
-            CalendarWeekView(calWeek: calendarModel.month?.week3)
-            CalendarWeekView(calWeek: calendarModel.month?.week4)
-            CalendarWeekView(calWeek: calendarModel.month?.week5)
-            CalendarWeekView(calWeek: calendarModel.month?.week6)
+            CalendarWeekView(calendarModel: calendarModel, calWeek: calendarModel.month?.week1)
+            CalendarWeekView(calendarModel: calendarModel, calWeek: calendarModel.month?.week2)
+            CalendarWeekView(calendarModel: calendarModel, calWeek: calendarModel.month?.week3)
+            CalendarWeekView(calendarModel: calendarModel, calWeek: calendarModel.month?.week4)
+            CalendarWeekView(calendarModel: calendarModel, calWeek: calendarModel.month?.week5)
+            CalendarWeekView(calendarModel: calendarModel, calWeek: calendarModel.month?.week6)
         }
     }
 }
 
 
 struct CalendarWeekView: View {
+    var calendarModel: CalendarModel
     var calWeek: CalWeek?
     var body: some View {
         HStack(spacing: 0) {
-            CalendarDayView(calDay: calWeek?.sunday)
-            CalendarDayView(calDay: calWeek?.monday)
-            CalendarDayView(calDay: calWeek?.tuesday)
-            CalendarDayView(calDay: calWeek?.wednesday)
-            CalendarDayView(calDay: calWeek?.thursday)
-            CalendarDayView(calDay: calWeek?.friday)
-            CalendarDayView(calDay: calWeek?.saturday)
+            CalendarDayView(calendarModel: calendarModel, calDay: calWeek?.sunday)
+            CalendarDayView(calendarModel: calendarModel, calDay: calWeek?.monday)
+            CalendarDayView(calendarModel: calendarModel, calDay: calWeek?.tuesday)
+            CalendarDayView(calendarModel: calendarModel, calDay: calWeek?.wednesday)
+            CalendarDayView(calendarModel: calendarModel, calDay: calWeek?.thursday)
+            CalendarDayView(calendarModel: calendarModel, calDay: calWeek?.friday)
+            CalendarDayView(calendarModel: calendarModel, calDay: calWeek?.saturday)
         }
     }
 }
 
 struct CalendarDayView: View {
+    var calendarModel: CalendarModel
     var calDay: CalDay?
     var paddingAmount: CGFloat = 5
     var body: some View {
-        CalendarDayCap(color: calDay?.occupiedBy?.color, inMonth: calDay?.isPartOfMonth ?? false, paddingAmount: paddingAmount, cap: calDay?.capType ?? .none)
+        CalendarDayCap(color: calDay?.occupiedBy?.color, inMonth: calDay?.isPartOfMonth ?? false, paddingAmount: paddingAmount, cap: calDay?.capType ?? .none, isEditing: calendarModel.editing)
             .overlay {
                 VStack {
                     Spacer()
                     HStack {
                         Spacer()
-                        Text("\(calDay?.dayNumber ?? 1)")
-                            .font(.subheadline .bold())
-                            //.foregroundStyle(.blueprimary)
+                        if let daynum = calDay?.dayNumber {
+                            Text("\(daynum)")
+                                .font(.subheadline .bold())
+                        } else {
+                            Text("•")
+                                .font(.subheadline .bold())
+                                .foregroundStyle(.secondary)
+                        }
                         Spacer()
                     }
                     Spacer()

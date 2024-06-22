@@ -10,6 +10,8 @@ import SwiftUI
 struct RequestCarSheet: View {
     @Environment(User.self) var user
     @Binding var showingRequestSheet: Bool
+    @State var calendarModel: CalendarModel = CalendarModel(editingEnabled: true)
+    @State var isstartselected: Bool = false
     var body: some View {
         VStack {
             Spacer()
@@ -20,13 +22,35 @@ struct RequestCarSheet: View {
                 Spacer()
             }
             .padding(10)
-            CalendarView(editingEnabled: true)
+            CalendarView(editingEnabled: true, calendarModel: calendarModel)
                 .frame(height: 350)
-            
+                .padding(.bottom)
+            VStack(alignment: .leading) {
+                HStack {
+                    Text("Start: **\(datestr(calendarModel.startEditDate))**")
+                        .font(.title3)
+                        .padding(.horizontal)
+                        .padding(.vertical)
+                        .background {
+                            
+                        }
+                }
+                HStack {
+                    Text("End: **\(datestr(calendarModel.endEditDate))**")
+                        .font(.title3)
+                }
+            }
             Spacer()
         }
+        .safeAreaPadding()
         .background(.custombackground)
     }
+}
+
+func datestr(_ date: Date) -> String {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "EEEE MMMM d"
+    return dateFormatter.string(from: date)
 }
 
 #Preview {
