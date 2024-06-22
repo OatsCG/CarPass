@@ -11,7 +11,8 @@ struct RequestCarSheet: View {
     @Environment(User.self) var user
     @Binding var showingRequestSheet: Bool
     @State var calendarModel: CalendarModel = CalendarModel(editingEnabled: true)
-    @State var isstartselected: Bool = false
+    @State var isstartselected: Bool = true
+    @State var rotation: CGFloat = 0
     var body: some View {
         VStack {
             Spacer()
@@ -25,30 +26,51 @@ struct RequestCarSheet: View {
             CalendarView(editingEnabled: true, calendarModel: calendarModel)
                 .frame(height: 350)
                 .padding(.bottom)
-            VStack(alignment: .leading) {
-                HStack {
-                    Text("Start: **\(datestr(calendarModel.startEditDate))**")
-                        .font(.title3)
-                        .padding(.horizontal)
-                        .padding(.vertical)
-                        .background {
-                            
+            VStack(alignment: .center) {
+                VStack(alignment: .leading) {
+                    Button(action: {
+                        withAnimation {
+                            isstartselected = true
                         }
-                }
-                HStack {
-                    Text("End: **\(datestr(calendarModel.endEditDate))**")
-                        .font(.title3)
-                        .padding(.horizontal)
-                        .padding(.vertical)
-                        .background {
-                            
+                        calendarModel.switchEdit(to: true)
+                    }) {
+                        Text("Start: **\(datestr(calendarModel.startEditDate))**")
+                            .font(.title3)
+                            .foregroundStyle(isstartselected ? Color.primary : .bluesecondary)
+                            .padding(.horizontal)
+                            .padding(.vertical)
+                            .background {
+                                Capsule()
+                                    .fill(isstartselected ? .bluebgthick : .bluebgthin)
+                                    .stroke(isstartselected ? .blueprimary : .bluebgthick, lineWidth: 2)
+                            }
+                    }
+                    Button(action: {
+                        withAnimation {
+                            isstartselected = false
                         }
+                        calendarModel.switchEdit(to: false)
+                    }) {
+                        Text("End: **\(datestr(calendarModel.endEditDate))**")
+                            .font(.title3)
+                            .foregroundStyle(!isstartselected ? Color.primary : .bluesecondary)
+                            .padding(.horizontal)
+                            .padding(.vertical)
+                            .background {
+                                Capsule()
+                                    .fill(!isstartselected ? .bluebgthick : .bluebgthin)
+                                    .stroke(!isstartselected ? .blueprimary : .bluebgthick, lineWidth: 2)
+                            }
+                    }
                 }
+                
+                CapsuleButton(text: Text("**Send Request**"), lit: false, color: .red)
             }
             Spacer()
         }
         .safeAreaPadding()
         .background(.custombackground)
+        .onAppear()
     }
 }
 

@@ -171,6 +171,7 @@ func dateStatus(rangeStart: Date, rangeEnd: Date, date1: Date) -> CapType {
     var editing: Bool
     var startEditDate: Date = Date()
     var endEditDate: Date = Date()
+    var currentlyEditingStart: Bool = true
     
     init(editingEnabled: Bool) {
         self.editing = editingEnabled
@@ -184,7 +185,7 @@ func dateStatus(rangeStart: Date, rangeEnd: Date, date1: Date) -> CapType {
     
     private func updateOccupiedRanges(month: [CalDaySimple], user: User) -> [CalDay] {
         return month.map { calday in
-            let thisdate: DateInRegion = DateInRegion(year: calday.year, month: calday.month, day: calday.day)
+            let thisdate: DateInRegion = DateInRegion(year: calday.year, month: calday.month, day: calday.day, region: .current)
             let thisrealdate: Date = thisdate.date
             
             var captype: CapType = .none
@@ -225,6 +226,10 @@ func dateStatus(rangeStart: Date, rangeEnd: Date, date1: Date) -> CapType {
         
         
         self.updateCalendar(user: user)
+    }
+    
+    func switchEdit(to: Bool) {
+        self.currentlyEditingStart = to
     }
 }
 
