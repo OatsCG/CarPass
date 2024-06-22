@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-enum CustomColor {
+enum CustomColor: Codable {
     case red, orange, yellow, green, blue, purple, pink
 }
 

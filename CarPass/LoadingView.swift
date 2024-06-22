@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LoadingView: View {
     var body: some View {
-        ScrollView {
+        VStack {
             HStack {
                 Spacer()
                 Image(.carforwardoff)
@@ -19,6 +19,10 @@ struct LoadingView: View {
                     .padding(.top, 50)
                 Spacer()
             }
+            Spacer()
+            ProgressView()
+                .scaleEffect(1.5)
+            Spacer()
         }
         .background(.custombackground)
     }

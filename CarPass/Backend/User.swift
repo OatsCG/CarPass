@@ -44,16 +44,54 @@ import SwiftUI
         }
     }
     
+    func updateLocalUserDefaults() {
+        let pendingAlertsString: String? = pendingAlertsToString(alerts: self.pendingAlerts)
+        let confirmedAlertsString: String? = confirmedAlertsToString(alerts: self.confirmedAlerts)
+        let outdatedAlertsString: String? = confirmedAlertsToString(alerts: self.outdatedAlerts)
+        if let pendingAlertsString = pendingAlertsString {
+            if let confirmedAlertsString = confirmedAlertsString {
+                if let outdatedAlertsString = outdatedAlertsString {
+                    UserDefaults.standard.setValue(pendingAlertsString, forKey: "storedPendingAlerts")
+                    UserDefaults.standard.setValue(confirmedAlertsString, forKey: "storedConfirmedAlerts")
+                    UserDefaults.standard.setValue(outdatedAlertsString, forKey: "storedOutdatedAlerts")
+                }
+            }
+        }
+    }
+    
+    func updateClassFromUserDefaults() {
+        if let pendingAlertsString = UserDefaults.standard.string(forKey: "storedPendingAlerts") {
+            if let confirmedAlertsString = UserDefaults.standard.string(forKey: "storedConfirmedAlerts") {
+                if let outdatedAlertsString = UserDefaults.standard.string(forKey: "storedOutdatedAlerts") {
+                    let tempPendingAlerts: [PendingAlert]? = stringToPendingAlerts(jsonString: pendingAlertsString)
+                    let tempConfirmedAlerts: [ConfirmedAlert]? = stringToConfirmedAlerts(jsonString: confirmedAlertsString)
+                    let tempOutdatedAlerts: [ConfirmedAlert]? = stringToConfirmedAlerts(jsonString: outdatedAlertsString)
+                    if let tempPendingAlerts = tempPendingAlerts {
+                        if let tempConfirmedAlerts = tempConfirmedAlerts {
+                            if let tempOutdatedAlerts = tempOutdatedAlerts {
+                                self.pendingAlerts = tempPendingAlerts
+                                self.confirmedAlerts = tempConfirmedAlerts
+                                self.outdatedAlerts = tempOutdatedAlerts
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     func fetchLoop() {
         if self.isFetchingCar {
             return
         }
         self.isFetchingCar = true
+        
         self.testServer() { online in
             if !online {
                 self.isFetchingCar = false
                 self.isPushUpdatingInfo = false
                 self.isPushUpdatingCar = false
+                self.updateClassFromUserDefaults()
                 withAnimation {
                     self.fetchStatus = .failed
                 }
@@ -68,6 +106,7 @@ import SwiftUI
                                     withAnimation {
                                         self.fetchStatus = .success
                                     }
+                                    self.updateLocalUserDefaults()
                                 } else {
                                     print("HERE 2")
                                     print(boolb)
