@@ -14,8 +14,9 @@ struct RequestCarSheet: View {
     @State var isstartselected: Bool = true
     @State var rotation: CGFloat = 0
     @State var reason: String = ""
+    @State var isEditingReason: Bool = false
     var body: some View {
-        VStack {
+        ScrollView {
             Spacer()
             HStack {
                 Text("Request Car")
@@ -33,11 +34,13 @@ struct RequestCarSheet: View {
             }
             .padding(10)
             .padding(.bottom, 10)
-            Divider()
-            CalendarView(editingEnabled: true, calendarModel: calendarModel)
-                .frame(height: 350)
-            Divider()
-                .padding(.bottom)
+            if !isEditingReason {
+                Divider()
+                CalendarView(editingEnabled: true, calendarModel: calendarModel)
+                    .transition(.blurReplace)
+                Divider()
+                    .padding(.bottom)
+            }
             VStack(alignment: .center) {
                 VStack(alignment: .leading) {
                     Button(action: {
@@ -75,9 +78,20 @@ struct RequestCarSheet: View {
                             }
                     }
                 }
-                TextField("Reason (Optional)", text: $reason)
+                TextField("Reason (Optional)", text: $reason, onEditingChanged: { (editingChanged) in
+                    if editingChanged {
+                        withAnimation {
+                            isEditingReason = true
+                        }
+                    } else {
+                        withAnimation(.default.speed(1.5)) {
+                            isEditingReason = false
+                        }
+                    }
+                })
                     .font(.headline .weight(.medium))
                     .submitLabel(.done)
+                    .scrollDismissesKeyboard(.immediately)
                     .textFieldStyle(.plain)
                     .padding(.horizontal, 16)
                     .padding(.vertical, 12)
@@ -93,7 +107,7 @@ struct RequestCarSheet: View {
                             .padding()
                         }
                     }
-                    .padding(.bottom)
+                    .padding(.bottom, 8)
                 Button(action: {
                     user.send_car_request(start: Int(calendarModel.startEditDate.timeIntervalSince1970), end: Int(calendarModel.endEditDate.timeIntervalSince1970), reason: reason)
                     showingRequestSheet = false
