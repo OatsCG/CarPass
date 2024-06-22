@@ -54,7 +54,6 @@ struct CarRequestAlert: View {
                 if !isMine {
                     HStack(spacing: 8) {
                         Button(action: {
-                            //accepted = true
                             user.accept_car_request(rangeID: rangeID)
                         }) {
                             CapsuleButton(text: Text("\(Image(systemName: "checkmark")) Accept\(accepted ? "ed" : "")").font(.title3).fontWeight(.medium), lit: true, height: 45, color: color)

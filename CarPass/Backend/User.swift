@@ -100,7 +100,7 @@ import SwiftUI
                                     self.fetchStatus = .success
                                 }
                                 completion(true)
-                            case .failure(let error):
+                            case .failure(_):
                                 withAnimation {
                                     self.fetchStatus = .failed
                                 }
@@ -108,7 +108,7 @@ import SwiftUI
                             }
                         }
                     }
-                case .failure(let error):
+                case .failure(_):
                     withAnimation {
                         self.fetchStatus = .failed
                     }
@@ -131,7 +131,7 @@ import SwiftUI
                         self.fetchStatus = .success
                     }
                     completion(true)
-                case .failure(let error):
+                case .failure(_):
                     withAnimation {
                         self.fetchStatus = .failed
                     }
@@ -210,7 +210,7 @@ import SwiftUI
                         self.carUsers = data.users
                     }
                     completion(true)
-                case .failure(let error):
+                case .failure(_):
                     completion(false)
                 }
             }
@@ -229,7 +229,7 @@ import SwiftUI
                     self.carInvites = data.invites
                 }
                 completion(true)
-            case .failure(let error):
+            case .failure(_):
                 completion(false)
             }
         }
