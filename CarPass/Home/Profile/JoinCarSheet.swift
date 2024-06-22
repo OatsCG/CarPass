@@ -18,13 +18,11 @@ struct JoinCarSheet: View {
             TextField("Car ID to Join...", text: $carid)
                 .font(.headline .weight(.medium))
                 .onChange(of: carid) { oldValue, newValue in
-                    print(newValue)
+                    carid = carid.uppercased()
                     fetchInviteUser.fetchData(carID: newValue)
-                    //user.update_name(to: nameEditor)
                 }
                 .submitLabel(.done)
                 .multilineTextAlignment(.center)
-                .textCase(.uppercase)
                 .autocorrectionDisabled()
                 .textFieldStyle(.plain)
                 .padding(.horizontal, 16)

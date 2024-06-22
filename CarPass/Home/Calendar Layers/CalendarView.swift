@@ -51,6 +51,15 @@ struct CalendarMonthView: View {
             CalendarWeekView(calendarModel: calendarModel, calWeek: calendarModel.month?.week5)
             CalendarWeekView(calendarModel: calendarModel, calWeek: calendarModel.month?.week6)
         }
+        .mask {
+            HStack(spacing: 0) {
+                Rectangle().fill(LinearGradient(gradient: Gradient(colors: [.clear, .black]), startPoint: .leading, endPoint: .trailing))
+                    .frame(width: 6)
+                Rectangle().fill(.black)
+                Rectangle().fill(LinearGradient(gradient: Gradient(colors: [.black, .clear]), startPoint: .leading, endPoint: .trailing))
+                    .frame(width: 6)
+            }
+        }
     }
 }
 

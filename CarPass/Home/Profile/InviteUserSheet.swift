@@ -18,13 +18,11 @@ struct InviteUserSheet: View {
             TextField("User ID to Invite...", text: $userid)
                 .font(.headline .weight(.medium))
                 .onChange(of: userid) { oldValue, newValue in
-                    print(newValue)
+                    userid = userid.uppercased()
                     fetchInviteUser.fetchData(userID: newValue)
-                    //user.update_name(to: nameEditor)
                 }
                 .submitLabel(.done)
                 .multilineTextAlignment(.center)
-                .textCase(.uppercase)
                 .autocorrectionDisabled()
                 .textFieldStyle(.plain)
                 .padding(.horizontal, 16)

@@ -23,7 +23,7 @@ struct RequestCarSheet: View {
                     .font(.title2 .bold())
                 Spacer()
                 Button(action: {
-                    
+                    showingRequestSheet = false
                 }) {
                     Image(systemName: "xmark")
                         .font(.title2)
@@ -115,6 +115,18 @@ struct RequestCarSheet: View {
                     CapsuleButton(text: Text("**Send Request**"), lit: false, color: .red)
                 }
                 .buttonStyle(.plain)
+                .disabled(calendarModel.isEditorOverlappingExistingRange || calendarModel.isEditorStartingInPast)
+                .opacity((calendarModel.isEditorOverlappingExistingRange || calendarModel.isEditorStartingInPast) ? 0.4 : 1)
+                if calendarModel.isEditorStartingInPast {
+                    Text("**Start Date** cannot be in the past.")
+                        .font(.caption)
+                        .foregroundStyle(.tertiary)
+                } else if calendarModel.isEditorOverlappingExistingRange {
+                    Text("**Date Range** is overlapping existing events.")
+                        .font(.caption)
+                        .foregroundStyle(.tertiary)
+                }
+                
             }
             Spacer()
         }

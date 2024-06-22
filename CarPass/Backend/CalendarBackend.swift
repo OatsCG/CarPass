@@ -179,6 +179,9 @@ func dateStatus(rangeStart: Date, rangeEnd: Date, date1: Date) -> CapType {
     var currentMonth: Int
     var currentYear: Int
     
+    var isEditorOverlappingExistingRange: Bool = false
+    var isEditorStartingInPast: Bool = false
+    
     init(editingEnabled: Bool) {
         self.editing = editingEnabled
         let today: Date = Date()
@@ -196,6 +199,10 @@ func dateStatus(rangeStart: Date, rangeEnd: Date, date1: Date) -> CapType {
     }
     
     private func updateOccupiedRanges(month: [CalDaySimple], user: User) -> [CalDay] {
+        withAnimation {
+            self.isEditorOverlappingExistingRange = false
+            self.isEditorStartingInPast = false
+        }
         return month.map { calday in
             let thisdate: DateInRegion = DateInRegion(year: calday.year, month: calday.month, day: calday.day, region: .current)
             let thisrealdate: Date = thisdate.date
@@ -215,6 +222,16 @@ func dateStatus(rangeStart: Date, rangeEnd: Date, date1: Date) -> CapType {
             if self.editing {
                 let editrangeCapType: CapType = dateStatus(rangeStart: self.startEditDate, rangeEnd: self.endEditDate, date1: thisrealdate)
                 if editrangeCapType != .none {
+                    if occupant != nil {
+                        withAnimation {
+                            self.isEditorOverlappingExistingRange = true
+                        }
+                    }
+                    if (self.startEditDate.isBeforeDate(Date(), orEqual: false, granularity: .day)) {
+                        withAnimation {
+                            self.isEditorStartingInPast = true
+                        }
+                    }
                     occupant = Occupant(name: "$editorname$", color: user.myColor, start: Int(self.startEditDate.timeIntervalSince1970), end: Int(self.startEditDate.timeIntervalSince1970), reason: "")
                     captype = .startandend
                     isCapEditing = true

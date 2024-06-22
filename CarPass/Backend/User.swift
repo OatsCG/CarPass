@@ -184,7 +184,7 @@ import SwiftUI
                             let rangeDescription: String = epochToDescription(epochStart: confirmedRange.start, epochEnd: confirmedRange.end)
                             let rangeRelativeDescription: String = epochToRelativeDescription(epoch: confirmedRange.start)
                             var mustBring: Bool = false
-                            if (Int(currentDate.timeIntervalSince1970) > confirmedRange.end) { // if range end date is before now
+                            if (Date(timeIntervalSince1970: TimeInterval(confirmedRange.end)).isBeforeDate(currentDate, orEqual: false, granularity: .day)) { // if range end date is before now
                                 tempOutdatedAlerts.append(ConfirmedAlert(id: confirmedRange.id, userID: confirmedRange.user, name: confirmedRange.username, reason: confirmedRange.reason, rangeStart: Date(timeIntervalSince1970: TimeInterval(confirmedRange.start)), rangeEnd: Date(timeIntervalSince1970: TimeInterval(confirmedRange.end)), rangeDescription: rangeDescription, rangeRelativeDescription: rangeRelativeDescription, color: strtocc(confirmedRange.usercolor), mustBring: mustBring))
                             } else { // if after now
                                 if (data.whohas == self?.userID && tempConfirmedAlerts.isEmpty) { // if I have the car and this range is next
