@@ -47,7 +47,7 @@ struct CarUpcomingEvent: View {
                     }
                     if mustBring {
                         HStack {
-                            Text("\(Image(systemName: "steeringwheel")) You must bring the car to \(Text("Simon").fontWeight(.medium))")
+                            Text("\(Image(systemName: "steeringwheel")) You must bring the car to \(Text(name).fontWeight(.medium))")
                                 .foregroundStyle(cc(color, style: .primary))
                                 .multilineTextAlignment(.leading)
                             Spacer()

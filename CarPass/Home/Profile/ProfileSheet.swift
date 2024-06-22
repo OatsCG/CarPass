@@ -64,6 +64,7 @@ struct ProfileSheet: View {
                                 nameEditor = user.username
                             }
                             .submitLabel(.done)
+                            .autocorrectionDisabled()
                             .textFieldStyle(.plain)
                             .padding(.horizontal, 16)
                             .padding(.vertical, 12)
@@ -123,6 +124,7 @@ struct ProfileSheet: View {
                             }
                             .submitLabel(.done)
                             .textFieldStyle(.plain)
+                            .autocorrectionDisabled()
                             .padding(.horizontal, 16)
                             .padding(.vertical, 12)
                             .background {
