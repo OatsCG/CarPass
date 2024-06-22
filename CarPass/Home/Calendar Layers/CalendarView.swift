@@ -62,11 +62,26 @@ struct CalendarWeekView: View {
 }
 
 struct CalendarDayView: View {
+    @Environment(User.self) var user
     var calendarModel: CalendarModel
     var calDay: CalDay?
     var paddingAmount: CGFloat = 5
     var body: some View {
-        CalendarDayCap(color: calDay?.occupiedBy?.color, inMonth: calDay?.isPartOfMonth ?? false, paddingAmount: paddingAmount, cap: calDay?.capType ?? .none, isEditing: calendarModel.editing)
+        Group {
+            if calendarModel.editing {
+                Button(action: {
+                    if calendarModel.currentlyEditingStart {
+                        calendarModel.updateStartDate(to: calDay?.actualDate, user: user)
+                    } else {
+                        calendarModel.updateEndDate(to: calDay?.actualDate, user: user)
+                    }
+                }) {
+                    CalendarDayCap(color: calDay?.occupiedBy?.color, inMonth: calDay?.isPartOfMonth ?? false, paddingAmount: paddingAmount, cap: calDay?.capType ?? .none, isEditing: calendarModel.editing)
+                }
+            } else {
+                CalendarDayCap(color: calDay?.occupiedBy?.color, inMonth: calDay?.isPartOfMonth ?? false, paddingAmount: paddingAmount, cap: calDay?.capType ?? .none, isEditing: calendarModel.editing)
+            }
+        }
             .overlay {
                 VStack {
                     Spacer()

@@ -63,8 +63,11 @@ struct RequestCarSheet: View {
                             }
                     }
                 }
-                
-                CapsuleButton(text: Text("**Send Request**"), lit: false, color: .red)
+                Button(action: {
+                    
+                }) {
+                    CapsuleButton(text: Text("**Send Request**"), lit: false, color: .red)
+                }
             }
             Spacer()
         }

@@ -203,11 +203,11 @@ func dateStatus(rangeStart: Date, rangeEnd: Date, date1: Date) -> CapType {
                 let editrangeCapType: CapType = dateStatus(rangeStart: self.startEditDate, rangeEnd: self.endEditDate, date1: thisrealdate)
                 if editrangeCapType != .none {
                     occupant = Occupant(name: "$editorname$", color: user.myColor, start: Int(self.startEditDate.timeIntervalSince1970), end: Int(self.startEditDate.timeIntervalSince1970), reason: "")
-                    captype = editrangeCapType
+                    captype = .startandend
                 }
             }
             
-            return CalDay(dayNumber: calday.day, isPartOfMonth: calday.isPartOfMonth, isToday: thisdate.isToday, isBeforeToday: (thisdate.isInPast && !thisdate.isToday), occupiedBy: occupant, capType: captype)
+            return CalDay(dayNumber: calday.day, isPartOfMonth: calday.isPartOfMonth, isToday: thisdate.isToday, isBeforeToday: (thisdate.isInPast && !thisdate.isToday), actualDate: thisrealdate, occupiedBy: occupant, capType: captype)
         }
     }
     
@@ -221,11 +221,24 @@ func dateStatus(rangeStart: Date, rangeEnd: Date, date1: Date) -> CapType {
         }
     }
     
-    func updateStartDate(to date: Date, user: User) {
-        self.startEditDate = date
-        
-        
-        self.updateCalendar(user: user)
+    func updateStartDate(to date: Date?, user: User) {
+        if let date = date {
+            self.startEditDate = date
+            if (self.startEditDate > self.endEditDate) {
+                self.endEditDate = self.startEditDate
+            }
+            self.updateCalendar(user: user)
+        }
+    }
+    
+    func updateEndDate(to date: Date?, user: User) {
+        if let date = date {
+            self.endEditDate = date
+            if (self.endEditDate < self.startEditDate) {
+                self.startEditDate = self.endEditDate
+            }
+            self.updateCalendar(user: user)
+        }
     }
     
     func switchEdit(to: Bool) {
@@ -264,6 +277,7 @@ struct CalDay {
     var isPartOfMonth: Bool // true if the day is in the inputted month
     var isToday: Bool
     var isBeforeToday: Bool
+    var actualDate: Date
     var occupiedBy: Occupant?
     var capType: CapType
 }
