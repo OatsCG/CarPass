@@ -1,6 +1,6 @@
 ## This app was made in 5 days from June 18 2024 to June 22 2024.
 
-<img src="caricon.png" width="400" height="400" />
+<img src="caricon.png" width="300" height="300" />
 
 # CarPass: Effortless Car Scheduling
 ## https://apps.apple.com/ca/app/carpass/id6504717229
