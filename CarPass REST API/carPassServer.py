@@ -1,6 +1,9 @@
 from flask import Flask, jsonify, request
 from carPassAPI import CarPass
 import time
+from apscheduler.schedulers.background import BackgroundScheduler
+import atexit
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -157,7 +160,51 @@ def newcarforme():
     car = carPass.new_car(userid, "Car 1")
     return jsonify(car)
 
+# /carpassapi/revokerange?carid=UUID&rangeid=UUID   returns bool
+@app.route('/carpassapi/revokerange', methods=['GET'])
+def revokerange():
+    carid = request.args.get('carid', default='', type=str)
+    rangeid = request.args.get('rangeid', default='', type=str)
+    ret = carPass.remove_accepted_timerange(carid, rangeid)
+    return jsonify(ret)
+
+# /carpassapi/registerapn?userid=UUID&apn=str   returns bool
+@app.route('/carpassapi/registerapn', methods=['GET'])
+def registerapn():
+    userid = request.args.get('userid', default='', type=str)
+    apn = request.args.get('apn', default='', type=str)
+    ret = carPass.registerAPN(userid, apn)
+    return jsonify(ret)
+
+# /carpassapi/testnotif   returns bool
+@app.route('/carpassapi/testnotif', methods=['GET'])
+def testnotif():
+    userid = "D7TE"
+    carPass.sendPushPotification(userid, "testing testing 123!")
+    return jsonify(True)
+
+
+def scheduled_morning_task():
+    print("This task runs every day at 11 AM. Current time:", datetime.now())
+    carPass.tryPassCarMorningNotification()
+    return
+
+def scheduled_afternoon_task():
+    print("This task runs every day at 1 PM. Current time:", datetime.now())
+    carPass.tryPassCarAfternoonNotification()
+    print("done notifications!")
+
+scheduler = BackgroundScheduler()
+scheduler.add_job(func=scheduled_morning_task, trigger="cron", hour=13, minute=44)
+scheduler.add_job(func=scheduled_afternoon_task, trigger="cron", hour=13, minute=45)
+scheduler.start()
+
+# Shut down the scheduler when exiting the app
+atexit.register(lambda: scheduler.shutdown())
+
+
+
 
 if __name__ == '__main__':
-    app.run(host='192.168.2.233', port=5000, debug=False)
-    #app.run(host='192.168.2.231', port=5000, debug=True)
+    #app.run(host='192.168.2.233', port=5000, debug=False)
+    app.run(host='192.168.2.18', port=5000, debug=False)

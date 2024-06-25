@@ -9,6 +9,7 @@ import SwiftUI
 
 @main
 struct CarPassApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @State var user: User = User()
     var body: some Scene {
         WindowGroup {

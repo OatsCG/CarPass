@@ -2,6 +2,10 @@ import os
 import json
 import random
 from uuid import UUID
+import time
+from datetime import datetime, timedelta
+import json
+import subprocess
 
 # generate cars if doesnt exist
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -13,7 +17,8 @@ else:
     print("File does not exist, creating...")
     towrite = {
         "cars": [],
-        "users": []
+        "users": [],
+        "APNs": {}
     }
     with open(storage_path, 'w') as file:
         file.write(json.dumps(towrite))
@@ -42,6 +47,7 @@ def uuid4() -> str:
 class CarPass:
     cars: list[dict]
     users: list[dict]
+    APNs: dict
     
     def __init__(self):
         d = get_data()
@@ -51,6 +57,11 @@ class CarPass:
         else:
             self.cars = d["cars"]
             self.users = d["users"]
+            if "APNs" in d:
+                self.APNs = d["APNs"]
+            else:
+                self.APNs = {}
+                self.update_storage()
             for car in self.cars:
                 hashbucket.append(car["id"])
             for user in self.users:
@@ -61,7 +72,8 @@ class CarPass:
         try:
             towrite = {
                 "cars": self.cars,
-                "users": self.users
+                "users": self.users,
+                "APNs": self.APNs
             }
             with open(storage_path, 'w') as file:
                 file.write(json.dumps(towrite))
@@ -72,6 +84,14 @@ class CarPass:
 
     def new_car(self, userID: UUID, name: str) -> UUID:
         user = self.get_user(userID)
+        # remove user from their current car
+        currentcar = self.get_car(user["car"])
+        if currentcar != None:
+            try:
+                currentcar["users"].remove(userID)
+            except:
+                print("user wasnt in car?")
+
         car = {
             "name": name,
             "id": str(uuid4()),
@@ -252,6 +272,7 @@ class CarPass:
                 if len(range["accepted"]) == len(car["users"]) - 1:
                     self.confirm_timerange(carID, range["id"])
                 self.update_storage()
+                self.sendCarRequestNotification(range)
                 return range["id"]
             except:
                 return None
@@ -276,6 +297,8 @@ class CarPass:
                         }
                         car["confirmedRanges"].append(confirmedRange)
                         car["pendingRanges"].remove(range)
+                        if len(car["users"]) > 1:
+                            self.sendCarAcceptedNotification(range)
                         self.update_storage()
                         return True
                     except:
@@ -310,6 +333,21 @@ class CarPass:
                     self.update_storage()
                     return True
             return False
+        
+    def remove_accepted_timerange(self, carID: UUID, rangeID: UUID) -> bool:
+        car = self.get_car(carID)
+        if car == None:
+            return False
+        else:
+            for range in car["confirmedRanges"]:
+                if range["id"] == rangeID:
+                    range["rejected"] = range["user"]
+                    range["accepted"] = []
+                    car["rejectedRanges"].append(range)
+                    car["confirmedRanges"].remove(range)
+                    self.update_storage()
+                    return True
+            return False
 
     def update_timerange_profiles(self, carID: UUID, userID: UUID) -> bool:
         car = self.get_car(carID)
@@ -339,6 +377,119 @@ class CarPass:
                 return True
             else:
                 return False
+    
+    def registerAPN(self, userID: UUID, APN: str) -> bool:
+        if userID not in self.APNs:
+            self.APNs[userID] = APN
+            self.update_storage()
+            return True
+        else:
+            return False
+    
+    def getAPN(self, userID: UUID) -> str | None:
+        if userID in self.APNs:
+            return self.APNs[userID]
+        else:
+            return None
+    
+    
+    # NOTIFICATIONS
+
+    def sendCarRequestNotification(self, range: dict) -> bool:
+        rangeuser = self.get_user(range["user"])
+        users = self.get_car_users(rangeuser["car"])
+        rangetext = epoch_to_string(range["start"])
+        message = "wants the car"
+        if rangetext != "":
+            message += " " + rangetext
+        if rangeuser["name"] == "":
+            message = "Someone " + message
+        else:
+            message = rangeuser["name"] + " " + message
+        for user in users["users"]:
+            if user["id"] != range["user"]:
+                self.sendPushPotification(user["id"], message)
+        return True
+    
+    def sendCarAcceptedNotification(self, range: dict) -> bool:
+        rangeuser = self.get_user(range["user"])
+        self.sendPushPotification(rangeuser["id"], "Your car request was accepted!")
+        return True
+    
+    def tryPassCarMorningNotification(self) -> bool: # 11AM
+        # for all cars:
+        cars: list[dict] = self.cars
+        for car in cars:
+            # for all confirmed ranges:
+            confirmedRanges: list[dict] = car["confirmedRanges"]
+            for range in confirmedRanges:
+                # if range starts today:
+                startepoch = range["start"]
+                if is_epoch_today(startepoch):
+                    # if rangeUser != carWhoHas:
+                    if range["user"] != car["whohas"]:
+                        # send message to carWhoHas "Pass the car to rangeUser today."
+                        message = "Pass the car to " + range["username"] + " today."
+                        self.sendPushPotification(car["whohas"], message)
+        return True
+    
+    def tryPassCarAfternoonNotification(self) -> bool: # 1PM
+        # for all cars:
+        cars: list[dict] = self.cars
+        print("got cars")
+        for car in cars:
+            print("in a car")
+            # for all confirmed ranges:
+            confirmedRanges: list[dict] = car["confirmedRanges"]
+            for range in confirmedRanges:
+                print("in a range")
+                # if range starts today:
+                startepoch = range["start"]
+                if is_epoch_today(startepoch):
+                    print("epoch is today")
+                    # if rangeUser != carWhoHas:
+                    if range["user"] != car["whohas"]:
+                        print("ranger doesnt have car")
+                        # send message to rangeUser "Have the car? Don’t forget to mark it in the CarPass app!"
+                        self.sendPushPotification(range["user"], "Have the car? Don’t forget to mark it in the CarPass app!")
+        print("out of thing")
+        return True
+
+    
+    def sendPushPotification(self, userID, message) -> bool:
+        token = self.getAPN(userID)
+        badgeset = "1"
+        command = ["node", "carPassAPN.js", "-t", token, "-m", message, "-b", badgeset]
+        print(" ".join(command))
+        print("NOTIF SENDING...")
+        print(command)
+        result = subprocess.run(command, capture_output=True, text=True)
+        return True
+
+
+
+# helper functions
+
+def is_epoch_today(epoch: int) -> bool:
+    return True
+
+def epoch_to_string(epoch_time):
+    current_time = time.time()
+    target_time = datetime.fromtimestamp(epoch_time)
+    current_date = datetime.fromtimestamp(current_time).date()
+    target_date = target_time.date()
+    
+    delta = (target_date - current_date).days
+    
+    if delta < 0:
+        return ""
+    elif delta == 0:
+        return "today"
+    elif delta == 1:
+        return "tomorrow"
+    else:
+        return f"in {delta} days"
+
 
 
 if __name__ == "__main__":

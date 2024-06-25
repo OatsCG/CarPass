@@ -81,6 +81,9 @@ import SwiftUI
     }
     
     func fetchLoop() {
+        print("isFetchingCar: \(isFetchingCar)")
+        print("isPushUpdatingInfo: \(isPushUpdatingInfo)")
+        print("isPushUpdatingCar: \(isPushUpdatingCar)")
         if self.isFetchingCar {
             return
         }
@@ -101,15 +104,20 @@ import SwiftUI
                     self.fetchCar() { boolb in
                         self.fetchUsers() { boolc in
                             self.fetchPendingCarInvites() { boold in
+//                                print(boola)
+//                                print(boolb)
+//                                print(boolc)
+//                                print(boold)
                                 if boola && boolb && boolc && boold {
                                     self.lastUpdated = Date()
+                                    UNUserNotificationCenter.current().setBadgeCount(0)
+                                    UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+                                    UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
                                     withAnimation {
                                         self.fetchStatus = .success
                                     }
                                     self.updateLocalUserDefaults()
                                 } else {
-                                    print("HERE 2")
-                                    print(boolb)
                                     withAnimation {
                                         self.fetchStatus = .failed
                                     }
@@ -141,6 +149,7 @@ import SwiftUI
             // fetch user data from server with userID
             fetchServerEndpoint(endpoint: "getuser?id=\(userID)", fetchHash: UUID(), decodeAs: FetchedUser?.self) { (result, returnHash) in
                 if (self.isPushUpdatingInfo) {
+                    completion(true)
                     return
                 }
                 switch result {
@@ -470,6 +479,23 @@ import SwiftUI
         self.isPushUpdatingInfo = true
         if let car = self.car {
             fetchServerEndpoint(endpoint: "rejectrange?carid=\(car)&userid=\(self.userID)&rangeid=\(rangeID)", fetchHash: UUID(), decodeAs: Bool.self) { (result, returnHash) in
+                switch result {
+                case .success(_):
+                    self.isPushUpdatingInfo = false
+                case .failure(let error):
+                    print(error)
+                    self.isPushUpdatingInfo = false
+                }
+            }
+        } else {
+            self.isPushUpdatingInfo = false
+        }
+    }
+    
+    func revoke_car_request(rangeID: RangeID) {
+        self.isPushUpdatingInfo = true
+        if let car = self.car {
+            fetchServerEndpoint(endpoint: "revokerange?carid=\(car)&rangeid=\(rangeID)", fetchHash: UUID(), decodeAs: Bool.self) { (result, returnHash) in
                 switch result {
                 case .success(_):
                     self.isPushUpdatingInfo = false

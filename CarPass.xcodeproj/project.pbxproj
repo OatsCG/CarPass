@@ -32,6 +32,7 @@
 		E57E3FCB2C22910800A567EE /* ColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57E3FCA2C22910800A567EE /* ColorManager.swift */; };
 		E5891EAE2C2491AC004B76C8 /* CalendarBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5891EAD2C2491AC004B76C8 /* CalendarBackend.swift */; };
 		E5891EB12C249463004B76C8 /* CalendarHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5891EB02C249463004B76C8 /* CalendarHeader.swift */; };
+		E58E72CC2C287D6C00D3C383 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58E72CB2C287D6C00D3C383 /* NotificationManager.swift */; };
 		E5A1E7FD2C2547D600266AF7 /* CalendarCaps.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A1E7FC2C2547D600266AF7 /* CalendarCaps.swift */; };
 		E5B180582C27373300CAE05C /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B180572C27373300CAE05C /* LoadingView.swift */; };
 		E5BAF82E2C24829D00CBF0B7 /* JoinCarSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BAF82D2C24829D00CBF0B7 /* JoinCarSheet.swift */; };
@@ -67,6 +68,7 @@
 		E57E3FCA2C22910800A567EE /* ColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorManager.swift; sourceTree = "<group>"; };
 		E5891EAD2C2491AC004B76C8 /* CalendarBackend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarBackend.swift; sourceTree = "<group>"; };
 		E5891EB02C249463004B76C8 /* CalendarHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHeader.swift; sourceTree = "<group>"; };
+		E58E72CB2C287D6C00D3C383 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		E5A1E7FC2C2547D600266AF7 /* CalendarCaps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCaps.swift; sourceTree = "<group>"; };
 		E5B180572C27373300CAE05C /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		E5BAF82D2C24829D00CBF0B7 /* JoinCarSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinCarSheet.swift; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 				E57E3FB42C220B1500A567EE /* NetworkConstants.swift */,
 				E57E3FB72C22178800A567EE /* NetworkModels.swift */,
 				E55A58E92C2310E6000E6EA8 /* RangeAlert.swift */,
+				E58E72CB2C287D6C00D3C383 /* NotificationManager.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -306,6 +309,7 @@
 				E57E3FC52C226BBB00A567EE /* CircleButton.swift in Sources */,
 				E57E3FBD2C222E1800A567EE /* CalendarView.swift in Sources */,
 				E5A1E7FD2C2547D600266AF7 /* CalendarCaps.swift in Sources */,
+				E58E72CC2C287D6C00D3C383 /* NotificationManager.swift in Sources */,
 				E57E3FCB2C22910800A567EE /* ColorManager.swift in Sources */,
 				E55A58EC2C2317B3000E6EA8 /* EpochDescriptions.swift in Sources */,
 				E5EEA0872C21F00B008A06BB /* ContentView.swift in Sources */,

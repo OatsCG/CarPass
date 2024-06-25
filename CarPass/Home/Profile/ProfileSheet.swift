@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct ProfileSheet: View {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @Environment(User.self) var user
     @State var nameEditor: String = "Username"
     @State var carNameEditor: String = "Car 1"
     @State var showingInviteSheet: Bool = false
     @State var showingJoinSheet: Bool = false
+    @State var notificationsEnabled: Bool = false
     @Binding var showingProfileSheet: Bool
     var body: some View {
         VStack(spacing: 0) {
@@ -165,6 +167,31 @@ struct ProfileSheet: View {
                             CapsuleButton(text: Text("**Join Another Car...**"), lit: false, color: .red)
                         }
                         .buttonStyle(.plain)
+                    }
+                    VStack {
+                        HStack {
+                            Text("More Settings")
+                            Spacer()
+                        }
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                        .padding(.horizontal, 8)
+                        .padding(.top, 30)
+                        VStack {
+                            HStack {
+                                Toggle(isOn: $notificationsEnabled) {
+                                    Text("Push Notifiations")
+                                }
+                                .onChange(of: notificationsEnabled) { oldValue, newValue in
+                                    UserDefaults.standard.setValue(newValue, forKey: "notificationsEnabled")
+                                    NotificationManager.shared.registerToken()
+                                }
+                                .onAppear {
+                                    notificationsEnabled = UserDefaults.standard.bool(forKey: "notificationsEnabled")
+                                }
+                            }
+                        }
+                        .padding(.horizontal, 8)
                     }
                 }
                 .safeAreaPadding()

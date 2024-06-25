@@ -52,7 +52,7 @@ struct HomeView: View {
                                     .padding()
                             } else {
                                 ForEach(user.confirmedAlerts, id: \.id) { alert in
-                                    CarUpcomingEvent(name: alert.name, reason: alert.reason, range: alert.rangeDescription, rangeRelative: alert.rangeRelativeDescription, color: alert.color, mustBring: alert.mustBring)
+                                    CarUpcomingEvent(userid: alert.userID, name: alert.name, rangeID: alert.id, reason: alert.reason, range: alert.rangeDescription, rangeRelative: alert.rangeRelativeDescription, color: alert.color, mustBring: alert.mustBring && alert.userID != user.userID)
                                 }
                             }
                         }
