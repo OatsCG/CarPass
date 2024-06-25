@@ -6,6 +6,7 @@ import time
 from datetime import datetime, timedelta
 import json
 import subprocess
+from datetime import datetime, timezone
 
 # generate cars if doesnt exist
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -470,8 +471,14 @@ class CarPass:
 
 # helper functions
 
-def is_epoch_today(epoch: int) -> bool:
-    return True
+def is_epoch_today(epoch_timestamp: int) -> bool:
+    # Get today's date in UTC
+    today = datetime.now(timezone.utc).date()
+    
+    # Get the date of the provided timestamp
+    timestamp_date = datetime.fromtimestamp(epoch_timestamp, tz=timezone.utc).date()
+    
+    return today == timestamp_date
 
 def epoch_to_string(epoch_time):
     current_time = time.time()
