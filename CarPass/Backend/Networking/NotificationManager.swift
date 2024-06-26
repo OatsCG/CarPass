@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import UIKit
+import UserNotifications
 
 
 class NotificationManager {
@@ -29,11 +31,18 @@ class NotificationManager {
             }
         }
     }
+    
+    func registerForPushNotifications() {
+        // Implement registration logic
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.registerForPushNotifications()
+    }
+
+    func unregisterForPushNotifications() {
+        // Implement unregistration logic
+        UIApplication.shared.unregisterForRemoteNotifications()
+    }
 }
-
-
-import UIKit
-import UserNotifications
 
 
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -43,10 +52,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
             guard granted else { return }
             DispatchQueue.main.async {
-                application.registerForRemoteNotifications()
+                self.registerForPushNotifications()
             }
         }
         return true
+    }
+    
+    func registerForPushNotifications() {
+        let center = UNUserNotificationCenter.current()
+        center.getNotificationSettings { settings in
+            guard settings.authorizationStatus == .authorized else { return }
+
+            DispatchQueue.main.async {
+                UIApplication.shared.registerForRemoteNotifications()
+            }
+        }
     }
 
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {

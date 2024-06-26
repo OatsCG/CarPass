@@ -185,6 +185,11 @@ struct ProfileSheet: View {
                                 .onChange(of: notificationsEnabled) { oldValue, newValue in
                                     UserDefaults.standard.setValue(newValue, forKey: "notificationsEnabled")
                                     NotificationManager.shared.registerToken()
+                                    if (newValue) {
+                                        NotificationManager.shared.registerForPushNotifications()
+                                    } else {
+                                        NotificationManager.shared.unregisterForPushNotifications()
+                                    }
                                 }
                                 .onAppear {
                                     notificationsEnabled = UserDefaults.standard.bool(forKey: "notificationsEnabled")
