@@ -34,7 +34,9 @@ class NotificationManager {
     
     func registerForPushNotifications() {
         // Implement registration logic
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        //let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        print("trying register")
+        let appDelegate = UNUserNotificationCenter.current().delegate as! AppDelegate
         appDelegate.registerForPushNotifications()
     }
 
@@ -49,22 +51,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         UNUserNotificationCenter.current().delegate = self
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
-            guard granted else { return }
-            DispatchQueue.main.async {
-                self.registerForPushNotifications()
-            }
-        }
+        self.registerForPushNotifications()
         return true
     }
     
     func registerForPushNotifications() {
+        print("IN REGISTER")
         let center = UNUserNotificationCenter.current()
-        center.getNotificationSettings { settings in
-            guard settings.authorizationStatus == .authorized else { return }
-
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
+            guard granted else { return }
             DispatchQueue.main.async {
-                UIApplication.shared.registerForRemoteNotifications()
+                center.getNotificationSettings { settings in
+                    guard settings.authorizationStatus == .authorized else { return }
+                    UserDefaults.standard.setValue(true, forKey: "notificationsEnabled")
+                    DispatchQueue.main.async {
+                        print("REGISTERING...")
+                        UIApplication.shared.registerForRemoteNotifications()
+                        print("REGISTERED")
+                    }
+                }
             }
         }
     }

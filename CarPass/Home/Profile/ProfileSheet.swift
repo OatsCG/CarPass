@@ -168,36 +168,36 @@ struct ProfileSheet: View {
                         }
                         .buttonStyle(.plain)
                     }
-                    VStack {
-                        HStack {
-                            Text("More Settings")
-                            Spacer()
-                        }
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
-                        .padding(.horizontal, 8)
-                        .padding(.top, 30)
-                        VStack {
-                            HStack {
-                                Toggle(isOn: $notificationsEnabled) {
-                                    Text("Push Notifiations")
-                                }
-                                .onChange(of: notificationsEnabled) { oldValue, newValue in
-                                    UserDefaults.standard.setValue(newValue, forKey: "notificationsEnabled")
-                                    NotificationManager.shared.registerToken()
-                                    if (newValue) {
-                                        NotificationManager.shared.registerForPushNotifications()
-                                    } else {
-                                        NotificationManager.shared.unregisterForPushNotifications()
-                                    }
-                                }
-                                .onAppear {
-                                    notificationsEnabled = UserDefaults.standard.bool(forKey: "notificationsEnabled")
-                                }
-                            }
-                        }
-                        .padding(.horizontal, 8)
-                    }
+//                    VStack {
+//                        HStack {
+//                            Text("More Settings")
+//                            Spacer()
+//                        }
+//                        .font(.subheadline)
+//                        .foregroundStyle(.secondary)
+//                        .padding(.horizontal, 8)
+//                        .padding(.top, 30)
+//                        VStack {
+//                            HStack {
+//                                Toggle(isOn: $notificationsEnabled) {
+//                                    Text("Push Notifiations")
+//                                }
+//                                .onChange(of: notificationsEnabled) { oldValue, newValue in
+//                                    UserDefaults.standard.setValue(newValue, forKey: "notificationsEnabled")
+//                                    NotificationManager.shared.registerToken()
+//                                    if (newValue) {
+//                                        NotificationManager.shared.registerForPushNotifications()
+//                                    } else {
+//                                        NotificationManager.shared.unregisterForPushNotifications()
+//                                    }
+//                                }
+//                                .onAppear {
+//                                    notificationsEnabled = UserDefaults.standard.bool(forKey: "notificationsEnabled")
+//                                }
+//                            }
+//                        }
+//                        .padding(.horizontal, 8)
+//                    }
                 }
                 .safeAreaPadding()
             }

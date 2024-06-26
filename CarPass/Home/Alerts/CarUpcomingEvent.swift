@@ -65,7 +65,7 @@ struct CarUpcomingEvent: View {
                     Button(action: {
                         showingRevokeAlert = true
                     }) {
-                        CapsuleButton(text: Text("Revoke Request"), lit: true, color: .orange)
+                        CapsuleButton(text: Text("Revoke Request"), lit: true, color: color)
                     }
                     .buttonStyle(.plain)
                 }

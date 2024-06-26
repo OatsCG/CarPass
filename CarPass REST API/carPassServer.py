@@ -179,9 +179,9 @@ def registerapn():
 # /carpassapi/testnotif   returns bool
 @app.route('/carpassapi/testnotif', methods=['GET'])
 def testnotif():
-    userid = "D7TE"
-    carPass.sendPushPotification(userid, "testing testing 123!")
-    return jsonify(True)
+    userid = "NAGX"
+    ret = carPass.sendPushPotification(userid, "testing testing 123!")
+    return jsonify(ret)
 
 
 def scheduled_morning_task():
@@ -195,8 +195,8 @@ def scheduled_afternoon_task():
     print("done notifications!")
 
 scheduler = BackgroundScheduler()
-scheduler.add_job(func=scheduled_morning_task, trigger="cron", hour=13, minute=44)
-scheduler.add_job(func=scheduled_afternoon_task, trigger="cron", hour=13, minute=45)
+scheduler.add_job(func=scheduled_morning_task, trigger="cron", hour=11, minute=0)
+scheduler.add_job(func=scheduled_afternoon_task, trigger="cron", hour=13, minute=0)
 scheduler.start()
 
 # Shut down the scheduler when exiting the app
@@ -206,5 +206,5 @@ atexit.register(lambda: scheduler.shutdown())
 
 
 if __name__ == '__main__':
-    app.run(host='192.168.2.233', port=5000, debug=False)
-    #app.run(host='192.168.2.18', port=5000, debug=False)
+    #app.run(host='192.168.2.233', port=5000, debug=False)
+    app.run(host='192.168.2.18', port=5000, debug=False)

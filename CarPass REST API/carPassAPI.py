@@ -459,13 +459,14 @@ class CarPass:
     
     def sendPushPotification(self, userID, message) -> bool:
         token = self.getAPN(userID)
-        badgeset = "1"
-        command = ["node", "carPassAPN.js", "-t", token, "-m", message, "-b", badgeset]
-        print(" ".join(command))
-        print("NOTIF SENDING...")
-        print(command)
-        result = subprocess.run(command, capture_output=True, text=True)
-        return True
+        if token != None:
+            badgeset = "1"
+            command = ["node", "carPassAPN.js", "-t", token, "-m", message, "-b", badgeset]
+            print("NOTIF SENDING...")
+            print(command)
+            result = subprocess.run(command, capture_output=True, text=True)
+            return True
+        return False
 
 
 
