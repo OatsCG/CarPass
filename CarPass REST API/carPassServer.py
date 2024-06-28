@@ -176,10 +176,10 @@ def registerapn():
     ret = carPass.registerAPN(userid, apn)
     return jsonify(ret)
 
-# /carpassapi/testnotif   returns bool
+# /carpassapi/testnotif?id=UserID   returns bool
 @app.route('/carpassapi/testnotif', methods=['GET'])
 def testnotif():
-    userid = "NAGX"
+    userid = request.args.get('userid', default='', type=str)
     ret = carPass.sendPushPotification(userid, "testing testing 123!")
     return jsonify(ret)
 
