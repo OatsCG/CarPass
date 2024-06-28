@@ -29,7 +29,7 @@ if (options.token) {
             note.alert = options.message;
             note.topic = "charliegiannis.CarPass";
             apnProvider.send(note, options.token).then( (result) => {
-                throw '';
+                process.exit(0);
             });
         }
       }

@@ -81,9 +81,9 @@ import SwiftUI
     }
     
     func fetchLoop() {
-        print("isFetchingCar: \(isFetchingCar)")
-        print("isPushUpdatingInfo: \(isPushUpdatingInfo)")
-        print("isPushUpdatingCar: \(isPushUpdatingCar)")
+//        print("isFetchingCar: \(isFetchingCar)")
+//        print("isPushUpdatingInfo: \(isPushUpdatingInfo)")
+//        print("isPushUpdatingCar: \(isPushUpdatingCar)")
         if self.isFetchingCar {
             return
         }

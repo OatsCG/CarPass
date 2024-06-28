@@ -21,9 +21,7 @@ class NotificationManager {
                 fetchServerEndpoint(endpoint: "registerapn?userid=\(userid)&apn=\(token)", fetchHash: UUID(), decodeAs: Bool.self) { (result, returnHash) in
                     switch result {
                     case .success(let data):
-                        if data == true {
-                            UserDefaults.standard.setValue(true, forKey: "notificationsEnabled")
-                        }
+                        print("token registered: \(data)")
                     case .failure(_):
                         print("error registering key")
                     }
@@ -57,13 +55,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func registerForPushNotifications() {
         print("IN REGISTER")
-        let center = UNUserNotificationCenter.current()
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
             guard granted else { return }
             DispatchQueue.main.async {
-                center.getNotificationSettings { settings in
+                UNUserNotificationCenter.current().getNotificationSettings { settings in
                     guard settings.authorizationStatus == .authorized else { return }
-                    UserDefaults.standard.setValue(true, forKey: "notificationsEnabled")
                     DispatchQueue.main.async {
                         print("REGISTERING...")
                         UIApplication.shared.registerForRemoteNotifications()
@@ -75,6 +71,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
 
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        print("in application didregister")
         // Convert device token to string
         let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }
         let token = tokenParts.joined()
@@ -93,6 +90,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 }
 
 func sendDeviceTokenToServer(_ token: String) {
+    print("SENDING TO SERVER...")
     UserDefaults.standard.setValue(token, forKey: "userDeviceNotificationToken")
     NotificationManager.shared.registerToken()
 }
