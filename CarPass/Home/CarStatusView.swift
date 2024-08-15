@@ -12,6 +12,7 @@ struct CarStatusView: View {
     @State var showingHaveCarAlert: Bool = false
     @State var showingRequestSheet: Bool = false
     @State var carimageon: Bool = false
+    @State var loadingIndicator: Bool = false
     var body: some View {
         VStack {
             if let whohasthecar = user.whohasthecar {
@@ -49,8 +50,16 @@ struct CarStatusView: View {
                 Button(action: {
                     showingHaveCarAlert = true
                 }) {
-                    CapsuleButton(text: Text("I Have The Car"), lit: false, color: user.myColor)
+                    if !loadingIndicator {
+                        CapsuleButton(text: Text("I Have The Car"), lit: false, color: user.myColor)
+                    } else {
+                        ZStack {
+                            CapsuleButton(text: Text(""), lit: false, color: user.myColor)
+                            ProgressView().progressViewStyle(.circular)
+                        }
+                    }
                 }
+                .disabled(loadingIndicator || user.whohasthecar?.id == user.userID)
             }
             .bold()
             .buttonStyle(.plain)
@@ -62,6 +71,9 @@ struct CarStatusView: View {
                 Alert(
                     title: Text("Do you really have the car?"),
                     primaryButton: .default(Text("Yes")) {
+                        withAnimation {
+                            loadingIndicator = true
+                        }
                         user.update_ihavecar()
                     },
                     secondaryButton: .cancel()
@@ -70,6 +82,11 @@ struct CarStatusView: View {
             .sheet(isPresented: $showingRequestSheet, content: {
                 RequestCarSheet(showingRequestSheet: $showingRequestSheet)
             })
+            .onChange(of: user.whohasthecar?.id) {
+                withAnimation {
+                    loadingIndicator = false
+                }
+            }
     }
 }
 

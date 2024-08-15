@@ -18,6 +18,7 @@ struct CarUpcomingEvent: View {
     var color: CustomColor
     var mustBring: Bool
     @State var showingRevokeAlert: Bool = false
+    @State var loadingIndicator: Bool = false
     var body: some View {
         HStack(alignment: .bottom) {
             VStack(spacing: 18) {
@@ -65,7 +66,14 @@ struct CarUpcomingEvent: View {
                     Button(action: {
                         showingRevokeAlert = true
                     }) {
-                        CapsuleButton(text: Text("Revoke Request"), lit: true, color: color)
+                        if !loadingIndicator {
+                            CapsuleButton(text: Text("\(Image(systemName: "xmark")) Revoke Request").font(.title3).fontWeight(.medium), lit: true, height: 45, color: color)
+                        } else {
+                            ZStack {
+                                CapsuleButton(text: Text("").font(.title3).fontWeight(.medium), lit: true, height: 45, color: color)
+                                ProgressView().progressViewStyle(.circular)
+                            }
+                        }
                     }
                     .buttonStyle(.plain)
                 }
@@ -81,10 +89,14 @@ struct CarUpcomingEvent: View {
                 .stroke(.quaternary)
         }
         .padding(.bottom, mustBring ? 10 : 0)
+        .disabled(loadingIndicator)
         .alert(isPresented: $showingRevokeAlert) {
             Alert(
                 title: Text("Remove your request for \(range)?"),
                 primaryButton: .default(Text("Yes")) {
+                    withAnimation {
+                        loadingIndicator = true
+                    }
                     user.revoke_car_request(rangeID: rangeID)
                 },
                 secondaryButton: .cancel()
@@ -94,6 +106,8 @@ struct CarUpcomingEvent: View {
 }
 
 #Preview {
-    CarUpcomingEvent(userid: "1234", name: "Simon", rangeID: "5678", reason: "I just want it", range: "Jun 26 - Jun 29", rangeRelative: "In 1 Day", color: .orange, mustBring: true)
+    @State var user = User()
+    return CarUpcomingEvent(userid: "3QQD", name: "Simon", rangeID: "5678", reason: "I just want it", range: "Jun 26 - Jun 29", rangeRelative: "In 1 Day", color: .orange, mustBring: true)
         .padding(10)
+        .environment(user)
 }

@@ -30,6 +30,8 @@ import SwiftUI
     private var syncedTimer: Timer? = nil
     var lastUpdated: Date = Date()
     
+    
+    
     init() {
         fetchUser() { boola in
             if boola {

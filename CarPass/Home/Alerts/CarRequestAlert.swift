@@ -18,6 +18,9 @@ struct CarRequestAlert: View {
     var accepted: Bool = false
     var isMine: Bool
     var acceptedCount: Int
+    @State var loadingIndicator: Bool = false
+    @State var loadingIndicatorMineAcc: Bool = false
+    @State var loadingIndicatorMineCanc: Bool = false
     var body: some View {
         HStack(alignment: .bottom) {
             VStack(spacing: 18) {
@@ -58,27 +61,58 @@ struct CarRequestAlert: View {
                 if !isMine {
                     HStack(spacing: 8) {
                         Button(action: {
+                            withAnimation {
+                                loadingIndicatorMineAcc = true
+                            }
                             user.accept_car_request(rangeID: rangeID)
                         }) {
-                            CapsuleButton(text: Text("\(Image(systemName: "checkmark")) Accept\(accepted ? "ed" : "")").font(.title3).fontWeight(.medium), lit: true, height: 45, color: color)
+                            if !loadingIndicatorMineAcc {
+                                CapsuleButton(text: Text("\(Image(systemName: "checkmark")) Accept\(accepted ? "ed" : "")").font(.title3).fontWeight(.medium), lit: true, height: 45, color: color)
+                            } else {
+                                ZStack {
+                                    CapsuleButton(text: Text("").font(.title3).fontWeight(.medium), lit: true, height: 45, color: color)
+                                    ProgressView().progressViewStyle(.circular)
+                                }
+                            }
                         }
                         .buttonStyle(.plain)
                         .disabled(accepted)
                         if !accepted {
                             Button(action: {
+                                withAnimation {
+                                    loadingIndicatorMineCanc = true
+                                }
                                 user.reject_car_request(rangeID: rangeID)
                             }) {
-                                CapsuleButton(text: Text("\(Image(systemName: "xmark"))").font(.title3).fontWeight(.medium), lit: true, height: 45, color: color)
-                                    .frame(width: 45)
+                                if !loadingIndicatorMineCanc {
+                                    CapsuleButton(text: Text("\(Image(systemName: "xmark"))").font(.title3).fontWeight(.medium), lit: true, height: 45, color: color)
+                                        .frame(width: 45)
+                                } else {
+                                    ZStack {
+                                        CapsuleButton(text: Text("").font(.title3).fontWeight(.medium), lit: true, height: 45, color: color)
+                                            .frame(width: 45)
+                                        ProgressView().progressViewStyle(.circular)
+                                    }
+                                }
                             }
                             .buttonStyle(.plain)
                         }
                     }
                 } else {
                     Button(action: {
+                        withAnimation {
+                            loadingIndicator = true
+                        }
                         user.reject_car_request(rangeID: rangeID)
                     }) {
-                        CapsuleButton(text: Text("\(Image(systemName: "xmark")) Revoke Request").font(.title3).fontWeight(.medium), lit: true, height: 45, color: color)
+                        if !loadingIndicator {
+                            CapsuleButton(text: Text("\(Image(systemName: "xmark")) Revoke Request").font(.title3).fontWeight(.medium), lit: true, height: 45, color: color)
+                        } else {
+                            ZStack {
+                                CapsuleButton(text: Text("").font(.title3).fontWeight(.medium), lit: true, height: 45, color: color)
+                                ProgressView().progressViewStyle(.circular)
+                            }
+                        }
                     }
                     .buttonStyle(.plain)
                 }
@@ -91,13 +125,18 @@ struct CarRequestAlert: View {
             RoundedRectangle(cornerRadius: 30, style: .circular)
                 .fill(cc(color, style: .thin))
                 .stroke(.quaternary)
-            
+        }
+        .disabled(loadingIndicator || loadingIndicatorMineAcc || loadingIndicatorMineCanc)
+        .onChange(of: accepted) {
+            withAnimation {
+                loadingIndicatorMineAcc = false
+            }
         }
     }
 }
 
 #Preview {
-    CarRequestAlert(rangeID: "1234", name: "Simon", reason: "I just want it", range: "Jun 26 - Jun 28", rangeRelative: "Tomorrow", color: .orange, accepted: false, isMine: true, acceptedCount: 2)
+    CarRequestAlert(rangeID: "1234", name: "Simon", reason: "I just want it", range: "Jun 26 - Jun 28", rangeRelative: "Tomorrow", color: .orange, accepted: false, isMine: false, acceptedCount: 2)
         .padding(10)
         .environment(User())
 }
