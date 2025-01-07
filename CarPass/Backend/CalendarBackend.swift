@@ -277,15 +277,15 @@ func dateStatus(rangeStart: Date, rangeEnd: Date, date1: Date) -> CapType {
     
     func forwardMonth() {
         withAnimation {
-            self.currentMonth = nextMonthsMonth(self.currentMonth)
             self.currentYear = nextMonthsYear(m: self.currentMonth, y: self.currentYear)
+            self.currentMonth = nextMonthsMonth(self.currentMonth)
         }
     }
     
     func backwardMonth() {
         withAnimation {
-            self.currentMonth = previousMonthsMonth(self.currentMonth)
             self.currentYear = previousMonthsYear(m: self.currentMonth, y: self.currentYear)
+            self.currentMonth = previousMonthsMonth(self.currentMonth)
         }
     }
 }
